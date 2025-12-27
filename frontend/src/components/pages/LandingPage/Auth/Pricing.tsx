@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../ui/button';
+import { Button } from '../../..//ui/button';
 import { Check, X, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../../ui/accordion';
 
 export function Pricing() {
   const plans = [

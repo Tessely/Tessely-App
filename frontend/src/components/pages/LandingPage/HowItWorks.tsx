@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Database, GitBranch, Brain, BarChart3, Upload, Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';

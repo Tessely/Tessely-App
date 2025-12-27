@@ -1,4 +1,4 @@
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Briefcase, MapPin, Clock, Heart, Book, Globe, Quote } from 'lucide-react';
 import { motion } from 'motion/react';
 

@@ -10,6 +10,7 @@ from jose import JWTError, jwt
 from src.core.config import settings
 from src.core.messages import ErrorMessages, LogMessages
 from src.services.auth_service import AuthService
+from src.core.constants import Supabase
 
 logger = logging.getLogger(__name__)
 security = HTTPBearer()
@@ -61,14 +62,27 @@ def validate_jwt_token(token: str) -> str:
             detail=ErrorMessages.INVALID_TOKEN,
         ) from err
 
-
-async def get_current_user(
+def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> str:
     token = credentials.credentials
-    user_id = validate_jwt_token(token)
-    return user_id
 
+    try:
+        result = Supabase.auth.get_user(token)
+
+        if not result or not result.user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or expired token",
+            )
+
+        return result.user.id
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token",
+        ) from e
 
 def get_auth_service() -> AuthService:
     return AuthService()

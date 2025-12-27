@@ -3,7 +3,7 @@
 import logging
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from fastapi.security import HTTPAuthorizationCredentials
 
 from src.api.dependencies import get_auth_service, get_current_user, security
@@ -167,12 +167,47 @@ async def reset_password(
         raise handle_auth_error(e) from e
 
 
-@router.get("/session-check", status_code=status.HTTP_200_OK)
-async def session_check(
-    current_user: str = Depends(get_current_user),
+@router.get("/session-check-raw", status_code=status.HTTP_200_OK)
+async def session_check_raw(
+    authorization: str | None = Header(default=None),
 ) -> dict[str, Any]:
-    """Check if the current session is valid"""
-    return {"valid": True, "user_id": current_user}
+    """
+    Validate session directly against Supabase using Authorization header
+    """
+    if not authorization:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing Authorization header",
+        )
+
+    if not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid Authorization header format",
+        )
+
+    token = authorization.replace("Bearer ", "", 1)
+
+    try:
+        result = supabase.auth.get_user(token)
+
+        if not result or not result.user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or expired token",
+            )
+
+        return {
+            "valid": True,
+            "user_id": result.user.id,
+            "email": result.user.email,
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Invalid or expired token: {str(e)}",
+        )
 
 
 @router.post("/oauth/login", response_model=OAuthResponse)

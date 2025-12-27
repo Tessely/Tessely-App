@@ -1,7 +1,7 @@
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Target, Eye, Lightbulb, Users, Heart, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { ImageWithFallback } from '../../figma/ImageWithFallback';
 import { useState, useRef } from 'react';
 
 export function About() {

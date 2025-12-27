@@ -1,24 +1,32 @@
-import { Link } from 'react-router-dom';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Checkbox } from '../ui/checkbox';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '../../../ui/button';
+import { Input } from '../../../ui/input';
+import { Checkbox } from '../../../ui/checkbox';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { login } from '../../../../api/auth';
 
 export function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock login
-    alert('Login functionality would be implemented here');
+    const payload = {
+      email: formData.email,
+      password: formData.password,
+      rememberMe: formData.rememberMe,
+    };
+    const result = await login(payload);
+    console.log(result.user.full_name)
+    navigate('/main-dashboard');
   };
-
+      
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -96,9 +104,10 @@ export function Login() {
                   <Checkbox
                     id="rememberMe"
                     checked={formData.rememberMe}
-                    onCheckedChange={(checked) =>
-                      setFormData({ ...formData, rememberMe: checked as boolean })
-                    }
+                    // onCheckedChange={
+                    //   (checked) =>
+                    //   setFormData({ ...formData, rememberMe: checked as boolean })
+                    // }
                   />
                   <label htmlFor="rememberMe" className="text-sm text-gray-600 cursor-pointer">
                     Remember me
@@ -176,9 +185,9 @@ export function Login() {
 
           {/* Sign Up Link */}
           <div className="text-center mt-6">
-            <p className="text-gray-600">
+            <p className="text-sm text-gray-600">
               Don't have an account?{' '}
-              <Link to="/pricing" className="text-[#0047AB] hover:underline">
+              <Link to="/signup" className="text-[#0047AB] hover:underline">
                 Start free trial
               </Link>
             </p>

@@ -1,6 +1,6 @@
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';

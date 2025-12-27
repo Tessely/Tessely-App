@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Factory, DollarSign, Heart, ShoppingCart, Truck, ArrowRight, TrendingUp, Check, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';

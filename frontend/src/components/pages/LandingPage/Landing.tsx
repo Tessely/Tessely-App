@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Zap, Database, TrendingUp, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';

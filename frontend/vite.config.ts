@@ -56,5 +56,15 @@
     server: {
       port: 3000,
       open: true,
+      watch: {
+        usePolling: true,
+        interval: 100,
+        ignored: ['**/node_modules/**', '**/.git/**'], 
+      },
+      hmr: {
+        overlay: true,
+        protocol: 'ws',
+        host: 'localhost',
+      },
     },
   });

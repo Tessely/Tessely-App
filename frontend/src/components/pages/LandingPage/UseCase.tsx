@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
-import { Button } from '../ui/button';
-import { Factory, DollarSign, Heart, ShoppingCart, Truck, CheckCircle, TrendingUp, Clock, DollarSign as Cost, ArrowRight } from 'lucide-react';
+import { Button } from '../../ui/button';
+import { Factory, DollarSign, Heart, Package, Truck, CheckCircle, TrendingUp, Clock, DollarSign as Cost, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -116,40 +116,40 @@ export function UseCase() {
         company: 'City General Hospital',
       },
     },
-    ecommerce: {
-      icon: ShoppingCart,
-      title: 'E-commerce',
-      subtitle: 'Accelerate Fulfillment & Boost Satisfaction',
+    'supply chain': {
+      icon: Package,
+      title: 'Supply Chain',
+      subtitle: 'End-to-End Visibility & Inventory Optimization',
       color: 'from-purple-500 to-purple-600',
-      challenge: 'E-commerce businesses face high cart abandonment rates, slow order processing, and inefficient return workflows that impact customer satisfaction and revenue.',
-      solution: 'Tessely analyzes your entire customer journey from browsing to delivery, identifying friction points and optimization opportunities to increase conversions and reduce fulfillment time.',
+      challenge: 'Global supply chains face unprecedented complexity with multi-tier suppliers, unpredictable demand patterns, inventory imbalances, and lack of real-time visibility across the entire network, leading to stockouts, excess inventory, and missed delivery commitments.',
+      solution: 'Tessely provides complete supply chain transparency by automatically mapping your entire network from raw material suppliers to end customers, identifying risks, bottlenecks, and optimization opportunities across procurement, production, warehousing, and distribution.',
       benefits: [
-        { label: 'Faster Fulfillment', value: '52%', icon: Clock },
-        { label: 'Cart Conversion', value: '28%', icon: TrendingUp },
-        { label: 'Revenue Increase', value: '$4.1M', icon: Cost },
-        { label: 'Customer Retention', value: '41%', icon: CheckCircle },
+        { label: 'Inventory Reduction', value: '35%', icon: Cost },
+        { label: 'Lead Time Cut', value: '42%', icon: Clock },
+        { label: 'Supply Chain Visibility', value: '95%', icon: TrendingUp },
+        { label: 'On-Time Delivery', value: '98%', icon: CheckCircle },
       ],
       features: [
-        'Checkout process optimization',
-        'Cart abandonment analysis',
-        'Order fulfillment tracking',
-        'Return process mapping',
-        'Inventory management insights',
-        'Customer behavior analytics',
+        'Multi-tier supplier network mapping',
+        'Real-time inventory optimization',
+        'Demand forecasting and planning',
+        'Supply risk identification and mitigation',
+        'Lead time analysis and reduction',
+        'Cross-functional collaboration tracking',
       ],
       processSteps: [
-        { name: 'Product Browse', efficiency: 92 },
-        { name: 'Add to Cart', efficiency: 75 },
-        { name: 'Checkout', efficiency: 68 },
-        { name: 'Payment', efficiency: 88 },
-        { name: 'Fulfillment', efficiency: 72 },
-        { name: 'Delivery', efficiency: 85 },
+        { name: 'Supplier Order', efficiency: 88 },
+        { name: 'Procurement', efficiency: 72 },
+        { name: 'Inbound Logistics', efficiency: 68 },
+        { name: 'Warehousing', efficiency: 75 },
+        { name: 'Order Processing', efficiency: 82 },
+        { name: 'Distribution', efficiency: 85 },
       ],
       testimonial: {
-        quote: 'Tessely revealed that our checkout process had 3 unnecessary steps. After streamlining, our conversion rate increased by 28% and cart abandonment dropped significantly.',
-        author: 'Emma Thompson',
-        role: 'Director of Operations',
-        company: 'StyleHub Online',
+        quote: 'Tessely gave us complete visibility into our multi-tier supply chain for the first time. We reduced inventory carrying costs by $5.2M while improving on-time delivery to 98%. The AI identified supplier risks we never knew existed.',
+        author: 'Jennifer Rodriguez',
+        role: 'Chief Supply Chain Officer',
+        company: 'GlobalTech Manufacturing',
       },
     },
     logistics: {
@@ -385,24 +385,14 @@ export function UseCase() {
       <section className="py-16 bg-gradient-to-r from-[#0047AB] to-[#00D9B5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white mb-6">
-            Ready to Transform Your {currentCase.title} Operations?
+            Ready to Get Started?
           </h2>
-          <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-            Start your free trial today and see how Tessely can optimize your processes
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/pricing">
-              <Button className="bg-white text-[#0047AB] hover:bg-gray-100 px-8 py-6">
-                Start Free Trial
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
-            <Link to="/contact">
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6">
-                Book a Demo
-              </Button>
-            </Link>
-          </div>
+          <Link to="/signup">
+            <Button className="bg-white text-[#0047AB] hover:bg-gray-100 px-8 py-6">
+              Start Free Trial
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

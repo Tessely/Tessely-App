@@ -1,4 +1,4 @@
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Calendar, Filter, TrendingUp, TrendingDown, AlertCircle, CheckCircle, Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
