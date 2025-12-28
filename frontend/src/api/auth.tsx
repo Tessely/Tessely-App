@@ -18,6 +18,7 @@ export async function login(payload: LoginPayload) {
 
   if (data.token.access_token) {
     localStorage.setItem(TOKEN_KEY, data.token.access_token);
+    localStorage.setItem('@user_data', JSON.stringify(data.user));
   }
 
   return data;

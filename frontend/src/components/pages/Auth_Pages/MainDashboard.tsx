@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Card } from '../../ui/card';
 import { Button } from '../../ui/button';
 import {
@@ -10,11 +10,38 @@ import {
   ChevronDown,
   User,
   TrendingUp,
-  TrendingDown
+  TrendingDown,
+  LogOut
 } from 'lucide-react';
+import { logout } from '../../../api/auth';
+import { useNavigate } from 'react-router-dom';
 
 export function MainDashboard() {
   const [selectedMetric, setSelectedMetric] = useState('Average Cycle Time');
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const [user, setUser] = useState<{ full_name: string; email: string } | null>({
+    full_name: 'Unknown User',
+    email: 'unknown@example.com'
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userData = localStorage.getItem('@user_data');
+    if (userData) {
+      setUser(JSON.parse(userData));
+      console.log("User data loaded:", JSON.parse(userData));
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -42,10 +69,52 @@ export function MainDashboard() {
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-gray-100 rounded-lg">
+          <div className="flex items-center gap-4 relative">
+            <button className="p-2 hover:bg-gray-100 rounded-lg" onClick={() => setShowAccountMenu(!showAccountMenu)}>
               <User className="w-5 h-5 text-gray-600" />
             </button>
+
+            {/* Account Menu */}
+            <AnimatePresence>
+              {showAccountMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-8 top-0 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
+                  style={{ pointerEvents: 'auto' }}
+                >
+                  <div className="p-4 border-b border-gray-100">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center">
+                        <User className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-900 truncate">
+                          {user?.full_name || 'User'}
+                        </p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {user?.email || 'user@example.com'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-2">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 rounded-lg transition-colors cursor-pointer"
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef2f2'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Log out</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </nav>
@@ -68,7 +137,7 @@ export function MainDashboard() {
             <ChevronDown className="w-4 h-4 text-gray-500" />
           </div>
         </div>
-        
+
         {/* KPI Cards */}
         <div className="flex gap-3 mb-6 overflow-x-auto">
           <Card className="bg-white p-4 border border-gray-200 flex-1 min-w-[200px]">
