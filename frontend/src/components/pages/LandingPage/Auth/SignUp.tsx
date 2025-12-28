@@ -69,7 +69,7 @@ export function Signup() {
       };
 
       const result = await signUp(payload);
-      navigate('/main-dashboard');
+      navigate('/signup-success');
     }
   };
 
