@@ -1,9 +1,10 @@
 import type { SignUpPayload, LoginPayload } from "../types";
 
 const TOKEN_KEY = '@auth_token';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
 
 export async function login(payload: LoginPayload) {
-  const response = await fetch('https://tessely-app-production.up.railway.app/api/v1/auth/login', {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ export async function login(payload: LoginPayload) {
 
 export async function logout() {
   const token = localStorage.getItem(TOKEN_KEY);
-  const response = await fetch('https://tessely-app-production.up.railway.app/api/v1/auth/logout', {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/logout`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -44,7 +45,7 @@ export async function logout() {
 }
 
 export async function signUp(payload: SignUpPayload) {
-  const response = await fetch('http://127.0.0.1:8000/api/v1/auth/signup', {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
