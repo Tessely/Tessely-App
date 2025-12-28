@@ -70,8 +70,8 @@ export function MainDashboard() {
         </div>
         
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mb-6">
-          <Card className="bg-white p-4 border border-gray-200">
+        <div className="flex gap-3 mb-6 overflow-x-auto">
+          <Card className="bg-white p-4 border border-gray-200 flex-1 min-w-[200px]">
             <div className="flex items-start justify-between mb-2">
               <div className="text-sm text-gray-600 flex items-center gap-1">
                 Average Cycle Time
@@ -85,7 +85,7 @@ export function MainDashboard() {
             </div>
           </Card>
 
-          <Card className="bg-white p-4 border border-gray-200">
+          <Card className="bg-white p-4 border border-gray-200 flex-1 min-w-[200px]">
             <div className="flex items-start justify-between mb-2">
               <div className="text-sm text-gray-600 flex items-center gap-1">
                 Top 3 Bottlenecks
@@ -99,7 +99,7 @@ export function MainDashboard() {
             </div>
           </Card>
 
-          <Card className="bg-white p-4 border border-gray-200">
+          <Card className="bg-white p-4 border border-gray-200 flex-1 min-w-[200px]">
             <div className="flex items-start justify-between mb-2">
               <div className="text-sm text-gray-600 flex items-center gap-1">
                 Average STP Rate
@@ -114,7 +114,7 @@ export function MainDashboard() {
             <div className="w-full bg-green-500 h-1.5 rounded-full mt-2"></div>
           </Card>
 
-          <Card className="bg-white p-4 border border-gray-200">
+          <Card className="bg-white p-4 border border-gray-200 flex-1 min-w-[200px]">
             <div className="flex items-start justify-between mb-2">
               <div className="text-sm text-gray-600 flex items-center gap-1">
                 Total Cases Processed
@@ -128,7 +128,7 @@ export function MainDashboard() {
             </div>
           </Card>
 
-          <Card className="bg-white p-4 border border-gray-200">
+          <Card className="bg-white p-4 border border-gray-200 flex-1 min-w-[200px]">
             <div className="flex items-start justify-between mb-2">
               <div className="text-sm text-gray-600 flex items-center gap-1">
                 Deviation Rate
