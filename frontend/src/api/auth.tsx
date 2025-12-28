@@ -1,12 +1,6 @@
-import type { SignUpPayload } from "../types";
+import type { SignUpPayload, LoginPayload } from "../types";
 
 const TOKEN_KEY = '@auth_token';
-
-export type LoginPayload = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-};
 
 export async function login(payload: LoginPayload) {
   const response = await fetch('https://tessely-app-production.up.railway.app/api/v1/auth/login', {

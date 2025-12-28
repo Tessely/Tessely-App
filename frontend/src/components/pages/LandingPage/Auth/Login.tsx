@@ -6,6 +6,7 @@ import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { login } from '../../../../api/auth';
+import type { LoginPayload } from '../../../../types';
 
 export function Login() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const payload = {
+    const payload: LoginPayload = {
       email: formData.email,
       password: formData.password,
       rememberMe: formData.rememberMe,
