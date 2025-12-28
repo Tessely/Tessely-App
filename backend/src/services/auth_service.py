@@ -27,6 +27,7 @@ class AuthService:
                     "options": {
                         "data": {
                             Supabase.FULL_NAME_FIELD: user_data.full_name,
+                            Supabase.COMPANY_FIELD: user_data.company,
                         }
                     },
                 }

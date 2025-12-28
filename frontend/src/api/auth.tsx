@@ -1,3 +1,5 @@
+import type { SignUpPayload } from "../types";
+
 const TOKEN_KEY = '@auth_token';
 
 export type LoginPayload = {
@@ -44,4 +46,25 @@ export async function logout() {
   }
 
   return response.json();
+}
+
+export async function signUp(payload: SignUpPayload) {
+  const response = await fetch('http://127.0.0.1:8000/api/v1/auth/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  const data = await response.json();
+
+  if (data.token.access_token) {
+    localStorage.setItem(TOKEN_KEY, data.token.access_token);
+  }
+
+  return data;
 }

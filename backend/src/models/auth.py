@@ -16,7 +16,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """User creation schema"""
-
+    company: str = Field(..., min_length=1)
     password: str = Field(..., min_length=Validation.MIN_PASSWORD_LENGTH)
     full_name: str = Field(..., min_length=1)
 

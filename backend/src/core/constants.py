@@ -64,6 +64,7 @@ class Supabase:
 
     # User metadata fields
     FULL_NAME_FIELD = "full_name"
+    COMPANY_FIELD = "company"
 
     # GSM secret path template
     SECRET_PATH_TEMPLATE = "projects/{project_id}/secrets/{secret_name}/versions/latest"

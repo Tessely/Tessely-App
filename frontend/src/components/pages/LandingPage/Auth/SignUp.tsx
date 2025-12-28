@@ -4,6 +4,8 @@ import { Button } from '../../../ui/button';
 import { Input } from '../../../ui/input';
 import { Label } from '../../../ui/label';
 import { ArrowLeft } from 'lucide-react';
+import { SignUpPayload } from '../../../../types';
+import { signUp } from '../../../../api/auth';
 
 export function Signup() {
   const navigate = useNavigate();
@@ -56,12 +58,19 @@ export function Signup() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // if (validateForm()) {
-      // Navigate to success page
-      navigate('/signup-success');
-    // }
+    if (validateForm()) {
+      const payload: SignUpPayload = {
+        email: formData.email,
+        full_name: `${formData.firstName} ${formData.lastName}`,
+        company: formData.company,
+        password: formData.password,
+      };
+
+      const result = await signUp(payload);
+      navigate('/main-dashboard');
+    }
   };
 
   return (
