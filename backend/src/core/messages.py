@@ -25,6 +25,7 @@ class SuccessMessages:
 
     LOGOUT_SUCCESS = "Successfully logged out"
     PASSWORD_RESET_SENT = "Password reset email sent"
+    PASSWORD_RESET_SUCCESS = "Password has been reset successfully"
 
 
 class LogMessages:

@@ -13,6 +13,7 @@ import { Login } from './components/pages/LandingPage/Auth/Login';
 import { Signup } from './components/pages/LandingPage/Auth/SignUp';
 import { SignupSuccess } from './components/pages/LandingPage/Auth/SignupSuccess';
 import { ForgotPassword } from './components/pages/LandingPage/Auth/ForgotPassword';
+import { ResetPassword } from './components/pages/LandingPage/Auth/ResetPassword';
 import { UseCase } from './components/pages/LandingPage/UseCase';
 import { useLocation } from 'react-router-dom';
 import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
@@ -47,6 +48,7 @@ function AppContent() {
             </ProtectedRoute>
           } />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/use-case/:industry" element={<UseCase />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

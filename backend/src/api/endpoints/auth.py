@@ -15,6 +15,7 @@ from src.models.auth import (
     OAuthLoginRequest,
     OAuthResponse,
     PasswordResetRequest,
+    PasswordResetConfirmRequest,
     TokenResponse,
     UserCreate,
     UserLogin,
@@ -154,15 +155,46 @@ async def logout(
         raise handle_auth_error(e) from e
 
 
-@router.post("/reset-password", status_code=status.HTTP_200_OK)
+@router.post("/forgot-password", status_code=status.HTTP_200_OK)
 async def reset_password(
     request: PasswordResetRequest,
     auth_service: AuthService = Depends(get_auth_service),
 ) -> dict[str, str]:
-    """Request a password reset"""
+    """Request a password reset by sending an email to the user"""
     try:
         await auth_service.request_password_reset(request.email)
         return {"message": SuccessMessages.PASSWORD_RESET_SENT}
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,  # Use appropriate status code
+            detail=str(e),
+        ) from e
+    except Exception as e:
+        raise handle_auth_error(e) from e
+
+@router.post("/reset-password", status_code=status.HTTP_200_OK)
+async def reset_password(
+    request: PasswordResetConfirmRequest,
+    authorization: str = Header(...),
+    auth_service: AuthService = Depends(get_auth_service)
+) -> dict[str, str]:
+    """Resets the user's password using the token sent via email"""
+    try:
+        if not authorization.startswith("Bearer "):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid authorization header"
+            )
+
+        token = authorization.replace("Bearer ", "", 1)
+        print("Resetting password with new password:", request.new_password)
+        await auth_service.confirm_password_reset(request.new_password, token)
+        return {"message": SuccessMessages.PASSWORD_RESET_SUCCESS}
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        ) from e
     except Exception as e:
         raise handle_auth_error(e) from e
 

@@ -85,10 +85,22 @@ class AuthService:
 
     async def request_password_reset(self, email: str) -> bool:
         try:
-            self.client.auth.reset_password_for_email(email)
+            reset_password_url = "http://tessely-app.vercel.app/reset-password" # Put this in .env later
+            self.client.auth.reset_password_for_email(email, {"redirect_to": reset_password_url})
             return True
         except Exception as e:
-            logger.error(f"Password reset error: {e!s}")
+            logger.error(f"Request password reset error: {e!s}")
+            raise ValueError(f"Password reset request failed: {e!s}") from e
+
+    async def confirm_password_reset(self, new_password: str, access_token: str) -> bool:
+        """Confirm password reset using the token from email link"""
+        try:
+            self.client.auth.set_session(access_token, access_token)
+            self.client.auth.update_user({"password": new_password})
+            logger.info("Password reset completed successfully")
+            return True
+        except Exception as e:
+            logger.error(f"Confirm password reset error: {e!s}")
             return False
 
     async def oauth_login(self, provider: str, redirect_url: str) -> dict[str, Any]:

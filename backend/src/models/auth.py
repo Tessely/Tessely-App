@@ -55,6 +55,11 @@ class PasswordResetRequest(BaseModel):
 
     email: EmailStr
 
+class PasswordResetConfirmRequest(BaseModel):
+    """Password reset confirmation schema"""
+
+    new_password: str = Field(..., min_length=Validation.MIN_PASSWORD_LENGTH)
+
 
 class OAuthProvider(str, Enum):
     """OAuth provider options"""
