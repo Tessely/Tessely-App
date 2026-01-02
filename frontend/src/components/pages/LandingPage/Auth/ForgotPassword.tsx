@@ -4,14 +4,15 @@ import { Input } from '../../../ui/input';
 import { Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { forgetPassword } from '../../../../api/auth';
 
 export function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock password reset
+    await forgetPassword(email);
     setIsSubmitted(true);
   };
 
@@ -33,7 +34,7 @@ export function ForgotPassword() {
             </Link>
             <h1 className="text-gray-900 mb-2">Reset Your Password</h1>
             <p className="text-gray-600">
-              {isSubmitted 
+              {isSubmitted
                 ? "Check your email for reset instructions"
                 : "Enter your email and we'll send you a reset link"
               }
