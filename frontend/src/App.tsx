@@ -48,16 +48,16 @@ function AppContent() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signup-success" element={<SignupSuccess />} />
           <Route path="/main-dashboard" element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
             <ChakraProvider value={system}>
               <MainDashboard />
             </ChakraProvider>
-            // </ProtectedRoute>
+            </ProtectedRoute>
           } />
           <Route path="/data-sources" element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
              <ChakraProvider value={system}><DataSources /></ChakraProvider>
-            // </ProtectedRoute>
+            </ProtectedRoute>
             } />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
