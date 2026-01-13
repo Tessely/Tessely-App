@@ -15,17 +15,28 @@ export function Login() {
     password: '',
     rememberMe: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const payload: LoginPayload = {
-      email: formData.email,
-      password: formData.password,
-      rememberMe: formData.rememberMe,
-    };
-    const result = await login(payload);
-    console.log(result.user.full_name)
-    navigate('/main-dashboard');
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const payload: LoginPayload = {
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      };
+      const result = await login(payload);
+      console.log(result.user.full_name);
+      navigate('/main-dashboard');
+    } catch (err) {
+      console.error('Login failed:', err);
+      setError(err instanceof Error ? err.message : 'Login failed. Please try again.');
+      setIsLoading(false);
+    }
   };
       
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,15 +48,16 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Logo and Header */}
-          <div className="text-center mb-8">
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Logo and Header */}
+            <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center">
                 <span className="text-white text-xl">T</span>
@@ -59,6 +71,13 @@ export function Login() {
           {/* Login Form */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                  <p className="text-sm">{error}</p>
+                </div>
+              )}
+
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm text-gray-700 mb-2">
@@ -201,7 +220,8 @@ export function Login() {
             </Link>
           </div>
         </motion.div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

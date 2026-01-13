@@ -45,7 +45,7 @@ export async function logout() {
 }
 
 export async function signUp(payload: SignUpPayload) {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/signup`, {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export async function signUp(payload: SignUpPayload) {
 }
 
 export async function forgetPassword(email: string) {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/forgot-password`, {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/forgot-password`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export async function forgetPassword(email: string) {
 }
 
 export async function resetPassword(newPassword: string, accessToken: string) {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/reset-password`, {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/reset-password`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../../../ui/button';
 import { Input } from '../../../ui/input';
-import { Mail, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { resetPassword } from '../../../../api/auth';
 
 export function ResetPassword() {
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [accessToken, setAccessToken] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -25,8 +27,18 @@ export function ResetPassword() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check if passwords match
+    if (newPassword !== confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return;
+    }
+
+    // Clear any previous error
+    setPasswordError('');
+
     if (!accessToken) {
-      alert("No reset token found. Please request to forget password again.");
+      setPasswordError('No reset token found. Please request to forget password again.');
       return;
     }
     try {
@@ -55,11 +67,11 @@ export function ResetPassword() {
               </div>
               <span className="text-2xl text-[#0047AB]">Tessely</span>
             </Link>
-            <h1 className="text-gray-900 mb-2">Reset Your Password</h1>
+            <h1 className="text-gray-900 mb-2">New Password</h1>
             <p className="text-gray-600">
               {isSubmitted
                 ? "Password has been reset successfully!"
-                : "Enter your new password."
+                : "Please enter a new password"
               }
             </p>
           </div>
@@ -72,21 +84,51 @@ export function ResetPassword() {
                   <label htmlFor="newPassword" className="block text-sm text-gray-700 mb-2">
                     New Password
                   </label>
-                  <Input
-                    id="newPassword"
-                    name="newPassword"
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                    placeholder="New Password"
-                    className="pl-10 w-full mb-4"
-                  />
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Input
+                      id="newPassword"
+                      name="newPassword"
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => {
+                        setNewPassword(e.target.value);
+                        setPasswordError('');
+                      }}
+                      required
+                      placeholder="New Password"
+                      className="pl-10 w-full mb-4"
+                    />
+                  </div>
+                  <label htmlFor="confirmPassword" className="block text-sm text-gray-700 mb-2">
+                    Confirm Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        setPasswordError('');
+                      }}
+                      required
+                      placeholder="Confirm Password"
+                      className="pl-10 w-full"
+                    />
+                  </div>
+                  {passwordError && (
+                    <p className="text-red-600 text-sm mt-2">
+                      {passwordError}
+                    </p>
+                  )}
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-[#0047AB] to-[#00D9B5] text-white hover:opacity-90 py-6"
+                    className="w-full bg-gradient-to-r from-[#0047AB] to-[#00D9B5] text-white hover:opacity-90 py-6 mt-4"
                   >
-                    Reset Password
+                    Update Password
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>

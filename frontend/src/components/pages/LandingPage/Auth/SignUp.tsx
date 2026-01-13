@@ -18,6 +18,8 @@ export function Signup() {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -60,7 +62,15 @@ export function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    setApiError(null);
+
+    try {
       const payload: SignUpPayload = {
         email: formData.email,
         full_name: `${formData.firstName} ${formData.lastName}`,
@@ -69,13 +79,19 @@ export function Signup() {
       };
 
       const result = await signUp(payload);
+      console.log('Sign up successful:', result);
       navigate('/signup-success');
+    } catch (err) {
+      console.error('Sign up failed:', err);
+      setApiError(err instanceof Error ? err.message : 'Sign up failed. Please try again.');
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full">
         {/* Back Link */}
         <Link to="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-[#0047AB] mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4" />
@@ -93,6 +109,13 @@ export function Signup() {
         {/* Signup Form */}
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* API Error Message */}
+            {apiError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                <p className="text-sm">{apiError}</p>
+              </div>
+            )}
+
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -215,7 +238,8 @@ export function Signup() {
         <p className="text-xs text-gray-500 text-center mt-6">
           By creating an account, you agree to our Terms of Service and Privacy Policy.
         </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
