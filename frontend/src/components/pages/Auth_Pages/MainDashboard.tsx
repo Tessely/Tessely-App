@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { logout } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';
+import { Navbar } from './Components/NavBar';
 
 export function MainDashboard() {
   const [selectedMetric, setSelectedMetric] = useState('Average Cycle Time');
@@ -45,8 +46,9 @@ export function MainDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      <Navbar />
       {/* Top Navigation */}
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+      {/* <nav className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
@@ -68,14 +70,14 @@ export function MainDashboard() {
                 Data Sources
               </button>
             </div>
-          </div>
-          <div className="flex items-center gap-4 relative">
-            <button className="p-2 hover:bg-gray-100 rounded-lg" onClick={() => setShowAccountMenu(!showAccountMenu)}>
+          </div> */}
+          {/* <div className="flex items-center gap-4 relative"> */}
+            {/* <button className="p-2 hover:bg-gray-100 rounded-lg" onClick={() => setShowAccountMenu(!showAccountMenu)}>
               <User className="w-5 h-5 text-gray-600" />
-            </button>
+            </button> */}
 
             {/* Account Menu */}
-            <AnimatePresence>
+            {/* <AnimatePresence>
               {showAccountMenu && (
                 <motion.div
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -114,10 +116,10 @@ export function MainDashboard() {
                   </div>
                 </motion.div>
               )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </nav>
+            </AnimatePresence> */}
+          {/* </div> */}
+        {/* </div> */}
+      {/* </nav> */}
 
       {/* Main Content */}
       <div className="p-6 max-w-[1400px] mx-auto">

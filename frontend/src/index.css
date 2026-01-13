@@ -56,8 +56,10 @@
 
 @layer theme {
   :root, :host {
-    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-sans: "InterVariable", "Inter", ui-sans-serif, system-ui, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --color-ui-primary: #003F72;
     --color-red-50: oklch(.971 .013 17.38);
     --color-red-100: oklch(.936 .032 17.717);
     --color-red-500: oklch(.637 .237 25.331);
@@ -135,8 +137,6 @@
   *, :after, :before, ::backdrop {
     box-sizing: border-box;
     border: 0 solid;
-    margin: 0;
-    padding: 0;
   }
 
   ::file-selector-button {

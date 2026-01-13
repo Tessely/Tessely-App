@@ -14,17 +14,22 @@ import { Signup } from './components/pages/LandingPage/Auth/SignUp';
 import { SignupSuccess } from './components/pages/LandingPage/Auth/SignupSuccess';
 import { ForgotPassword } from './components/pages/LandingPage/Auth/ForgotPassword';
 import { ResetPassword } from './components/pages/LandingPage/Auth/ResetPassword';
+import DataSources from './components/pages/Auth_Pages/DataSources';
 import { UseCase } from './components/pages/LandingPage/UseCase';
 import { useLocation } from 'react-router-dom';
 import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
 import ProtectedRoute from './ProtectedRoute';
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
+import { ThemeProvider } from "next-themes"
+import { system } from "./theme"
 
 function AppContent() {
   const location = useLocation();
   const hideNavAndFooter =
     location.pathname === '/login' ||
     location.pathname === '/forgot-password' ||
-    location.pathname === '/main-dashboard';
+    location.pathname === '/main-dashboard' ||
+    location.pathname ==='/data-sources';
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -43,10 +48,17 @@ function AppContent() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signup-success" element={<SignupSuccess />} />
           <Route path="/main-dashboard" element={
-            <ProtectedRoute>
+            // <ProtectedRoute>
+            <ChakraProvider value={system}>
               <MainDashboard />
-            </ProtectedRoute>
+            </ChakraProvider>
+            // </ProtectedRoute>
           } />
+          <Route path="/data-sources" element={
+            // <ProtectedRoute>
+             <ChakraProvider value={system}><DataSources /></ChakraProvider>
+            // </ProtectedRoute>
+            } />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/use-case/:industry" element={<UseCase />} />
@@ -58,10 +70,11 @@ function AppContent() {
   );
 }
 
+
 export default function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+      <Router>
+        <AppContent />
+      </Router>
   );
 }
