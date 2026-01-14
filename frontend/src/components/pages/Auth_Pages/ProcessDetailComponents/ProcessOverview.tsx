@@ -1,3 +1,12 @@
+import { useCallback } from 'react';
+import {
+  ReactFlow,
+  Node,
+  Edge,
+  Background,
+  NodeTypes,
+} from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 import {
   Box,
   Card,
@@ -6,136 +15,243 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import { RightLabelEdge } from './ProcessMapComponents/RightLabelEdge'
+import { JSONNodeData, JSONNode } from './ProcessMapComponents/JSONNode'
 
-interface ProcessStage {
-  name: string;
-  duration: string;
-  successRate: string;
-  itemCount: number;
-  bgColor: string;
-  minDuration: string;
-  maxDuration: string;
-  minItems: number;
-  maxItems: number;
-}
+type RawNode = {
+  node_id: string;
+  node_type: string;
+  node_category: string;
+  metrics: {
+    case_count_at_node: number;
+    avg_time_to_next_mins: number;
+    success_rate: number; 
+  };
+};
 
-const processStages: ProcessStage[] = [
+type RawEdge = {
+  edge_id: string;
+  from: string;
+  to: string,
+  frequency: number,
+  probability: number, // as a percentage of all outedges from the starting node?
+  average_transition_time_mins: number,
+  join_columns: Array<{
+    from_column: string;
+    to_column: string;
+  }>;
+};
+
+const nodeTypes: NodeTypes = {
+  JSONNode: JSONNode,
+};
+
+const edgeTypes = {
+  rightLabel: RightLabelEdge,
+};
+
+// Nodes Formation
+const rawNodes: RawNode[] = [
   {
-    name: 'Trade Capture',
-    duration: '2 mins',
-    successRate: '99.5%',
-    itemCount: 1250,
+    "node_id": "Order Placed",
+    "node_type": "start",
+    "node_category": "transaction | smth else?", // for custom node shape per category
+    "metrics": {
+      "case_count_at_node": 100,
+      "avg_time_to_next_mins": 20,
+      "success_rate": 0.888
+    }
+  },
+  {
+    "node_id": "Compliance Check",
+    "node_type": "middle",
+    "node_category": "financial | smth else?",
+    "metrics": {
+      "case_count_at_node": 98,
+      "avg_time_to_next_mins": 11,
+      "success_rate": 0.928
+    }
+  },
+  {
+    "node_id": "Trade Executed",
+    "node_type": "middle",
+    "node_category": "financial | smth else?",
+    "metrics": {
+      "case_count_at_node": 99,
+      "avg_time_to_next_mins": 11,
+      "success_rate": 0.928
+    }
+  },
+  {
+    "node_id": "Trade Confirmed",
+    "node_type": "middle",
+    "node_category": "financial | smth else?",
+    "metrics": {
+      "case_count_at_node": 99,
+      "avg_time_to_next_mins": 11,
+      "success_rate": 0.928
+    }
+  },
+  {
+    "node_id": "Settlement",
+    "node_type": "middle",
+    "node_category": "financial | smth else?",
+    "metrics": {
+      "case_count_at_node": 99,
+      "avg_time_to_next_mins": 11,
+      "success_rate": 0.928
+    }
+  },
+  {
+    "node_id": "Post-Trade Reporting",
+    "node_type": "end",
+    "node_category": "financial | smth else?",
+    "metrics": {
+      "case_count_at_node": 99,
+      "avg_time_to_next_mins": 11,
+      "success_rate": 0.970
+    }
+  }
+]
+
+const getNameColor = (nodeType: string): string => {
+  switch(nodeType) {
+    case 'start': return 'red.600';
+    case 'middle': return 'orange.500';
+    case 'end': return 'green.600';
+    default: return 'gray.900';
+  }
+};
+
+const transformedNodes: Node<JSONNodeData>[] = rawNodes.map((node,index)=>({
+  id: node.node_id,
+  type: 'JSONNode',
+  position: { x: 300, y: index * 170 },
+  data:{
+    name: node.node_id,
+    averageDuration: `${node.metrics.avg_time_to_next_mins} mins`,
+    successRate: `${(node.metrics.success_rate * 100).toFixed(1)}%`,
+    itemCount: node.metrics.case_count_at_node,
     bgColor: 'white',
-    minDuration: '1 min',
-    maxDuration: '5 mins',
-    minItems: 1000,
-    maxItems: 1500,
+    nameColor: getNameColor(node.node_type),
+  }
+}));
+
+// Edges Formation
+const rawEdges: RawEdge[] = [
+  {
+    edge_id: "Order Placed->Compliance Check",
+    from: "Order Placed",
+    to: "Compliance Check",
+    frequency: 100,
+    probability: 0.95,
+    average_transition_time_mins: 5.0,
+    join_columns: [
+      { from_column: "OrderPlaced.ORDER_ID", to_column: "ComplianceCheck.ORDER_ID" }
+    ]
   },
   {
-    name: 'Trade Validation',
-    duration: '15 mins',
-    successRate: '98.2%',
-    itemCount: 1240,
-    bgColor: 'yellow.50',
-    minDuration: '10 mins',
-    maxDuration: '30 mins',
-    minItems: 1200,
-    maxItems: 1250,
+    edge_id: "Compliance Check->Trade Executed",
+    from: "Compliance Check",
+    to: "Trade Executed",
+    frequency: 99,
+    probability: 0.93,
+    average_transition_time_mins: 11.0,
+    join_columns: [
+      { from_column: "ComplianceCheck.TRADE_ID", to_column: "TradeExecuted.TRADE_ID" }
+    ]
   },
   {
-    name: 'Execution',
-    duration: '45 mins',
-    successRate: '96.8%',
-    itemCount: 1220,
-    bgColor: 'orange.50',
-    minDuration: '30 mins',
-    maxDuration: '90 mins',
-    minItems: 1150,
-    maxItems: 1240,
+    edge_id: "Trade Executed->Trade Confirmed",
+    from: "Trade Executed",
+    to: "Trade Confirmed",
+    frequency: 99,
+    probability: 0.92,
+    average_transition_time_mins: 8.0,
+    join_columns: [
+      { from_column: "TradeExecuted.EXECUTION_ID", to_column: "TradeConfirmed.EXECUTION_ID" }
+    ]
   },
   {
-    name: 'Settlement',
-    duration: '2 hours',
-    successRate: '99.1%',
-    itemCount: 1210,
-    bgColor: 'white',
-    minDuration: '1 hour',
-    maxDuration: '3 hours',
-    minItems: 1180,
-    maxItems: 1220,
+    edge_id: "Trade Confirmed->Settlement",
+    from: "Trade Confirmed",
+    to: "Settlement",
+    frequency: 99,
+    probability: 0.90,
+    average_transition_time_mins: 30.0,
+    join_columns: [
+      { from_column: "TradeConfirmed.TRADE_ID", to_column: "Settlement.TRADE_ID" }
+    ]
   },
+  {
+    edge_id: "Settlement->Post-Trade Reporting",
+    from: "Settlement",
+    to: "Post-Trade Reporting",
+    frequency: 99,
+    probability: 0.98,
+    average_transition_time_mins: 12.0,
+    join_columns: [
+      { from_column: "Settlement.SETTLEMENT_ID", to_column: "PostTradeReporting.SETTLEMENT_ID" }
+    ]
+  }
 ];
 
+
+const transformedEdges: Edge[] = rawEdges.map((e) => ({
+  id: e.edge_id,
+  source: e.from,
+  target: e.to,
+  type: 'rightLabel',
+  sourceHandle: 'out',
+  targetHandle: 'in',
+  style: { stroke: '#9CA3AF', strokeWidth: 2 },
+  data: {
+    frequency: e.frequency,
+    probability: e.probability,
+    average_transition_time_mins: e.average_transition_time_mins,
+  },
+}));
+
 export function ProcessOverview() {
+  const onNodesChange = useCallback(() => {}, []);
+  const onEdgesChange = useCallback(() => {}, []);
+
   return (
     <Card.Root bg="white" border="1px" borderColor="gray.200" shadow="sm">
       <Card.Body p={6}>
-        <Heading size="lg" mb={6} color="gray.900">
+        <Heading size="md" mb={4} color="gray.900">
           Process Overview
         </Heading>
 
-        {/* Vertical Flowchart */}
-        <VStack gap={0} align="stretch" position="relative">
-          {processStages.map((stage, index) => (
-            <Box key={stage.name} position="relative">
-              {/* Process Stage Box */}
-              <Flex gap={4} align="center">
-                {/* Left side - Min/Max metrics */}
-                <VStack gap={0} align="flex-end" fontSize="xs" color="gray.600" minW="80px">
-                  <Text>{stage.maxDuration}</Text>
-                  <Text color="gray.400">•••</Text>
-                  <Text>{stage.minDuration}</Text>
-                </VStack>
-
-                {/* Stage Card */}
-                <Box
-                  flex="1"
-                  bg={stage.bgColor}
-                  border="1px"
-                  borderColor="gray.300"
-                  borderRadius="md"
-                  p={4}
-                  shadow="sm"
-                >
-                  <Text fontWeight="bold" fontSize="md" mb={2} color="gray.900">
-                    {stage.name}
-                  </Text>
-                  <Flex justify="space-between" fontSize="sm">
-                    <Text color="gray.600">
-                      Duration: <Text as="span" fontWeight="medium" color="gray.900">{stage.duration}</Text>
-                    </Text>
-                    <Text color="gray.600">
-                      Success: <Text as="span" fontWeight="medium" color="green.600">{stage.successRate}</Text>
-                    </Text>
-                  </Flex>
-                  <Text fontSize="sm" color="gray.600" mt={1}>
-                    Items: <Text as="span" fontWeight="medium" color="gray.900">{stage.itemCount.toLocaleString()}</Text>
-                  </Text>
-                </Box>
-
-                {/* Right side - Min/Max item counts */}
-                <VStack gap={0} align="flex-start" fontSize="xs" color="gray.600" minW="80px">
-                  <Text>{stage.maxItems.toLocaleString()}</Text>
-                  <Text color="gray.400">•••</Text>
-                  <Text>{stage.minItems.toLocaleString()}</Text>
-                </VStack>
-              </Flex>
-
-              {/* Connecting Line */}
-              {index < processStages.length - 1 && (
-                <Box
-                  position="absolute"
-                  left="50%"
-                  top="100%"
-                  w="2px"
-                  h="24px"
-                  bg="gray.300"
-                  transform="translateX(-50%)"
-                />
-              )}
-            </Box>
-          ))}
-        </VStack>
+        {/* Flow Chart */}
+        <Box
+          h="800px"
+          border="1px"
+          borderColor="gray.200"
+          borderRadius="md"
+          overflow="hidden"
+          bg="gray.50"
+        >
+          <ReactFlow
+            nodes={transformedNodes}
+            edges={transformedEdges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
+            fitView
+            nodesDraggable={false}
+            nodesConnectable={false}
+            elementsSelectable={false}
+            panOnDrag={false}
+            zoomOnScroll={false}
+            preventScrolling={true}
+            attributionPosition="bottom-right"
+            proOptions={{ hideAttribution: true }}
+          >
+            <Background color="#E5E7EB" gap={16} />
+          </ReactFlow>
+        </Box>
       </Card.Body>
     </Card.Root>
   );

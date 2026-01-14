@@ -3,14 +3,16 @@ import {
   Card,
   Flex,
   Heading,
-  Link,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { AlertCircle, Info, AlertTriangle } from 'lucide-react';
+
+import AlertCircle from '../../../../assets/icons/FiAlertCircle.svg?react';
+import AlertTriangle from '../../../../assets/icons/BiError.svg?react';
+import QuestionCircle from '../../../../assets/icons/AiFillQuestionCircle.svg?react';
 
 interface Insight {
-  type: 'error' | 'info' | 'warning';
+  type: 'error' | 'warning';
   title: string;
   description: string;
   recommendation: string;
@@ -26,7 +28,7 @@ const insights: Insight[] = [
       'Automate trade validation, improve static data quality, and streamline approval workflows',
   },
   {
-    type: 'info',
+    type: 'warning',
     title: 'Trade Processing Delays',
     description:
       'Frequent rework and exceptions in trade processing cause delays across Equity and Fixed Income lifecycles',
@@ -35,67 +37,49 @@ const insights: Insight[] = [
   },
 ];
 
-const iconMap = {
-  error: { Icon: AlertCircle, color: 'red.500', bgColor: 'red.50' },
-  info: { Icon: Info, color: 'blue.500', bgColor: 'blue.50' },
-  warning: { Icon: AlertTriangle, color: 'orange.500', bgColor: 'orange.50' },
-};
-
 export function InsightsPanel() {
   return (
     <Card.Root bg="white" border="1px" borderColor="gray.200" shadow="sm">
       <Card.Body p={6}>
-        <Heading size="lg" mb={6} color="gray.900">
+        <Heading size="md" mb={6} color="gray.900" fontWeight="bold">
           Process Insights (Powered by AI)
         </Heading>
 
-        <VStack gap={4} align="stretch">
-          {insights.map((insight, index) => {
-            const { Icon, color, bgColor } = iconMap[insight.type];
+        <VStack gap={6} align="stretch">
+          {insights.map((insight, index) => (
+            <Box key={index}>
+              {/* Icon and Title */}
+              <Flex align="center" gap={2} mb={2}>
+                {insight.type === 'error' ? (
+                  <Box as={AlertCircle} w="20px" h="20px" color="red.500" flexShrink={0} />
+                ) : (
+                  <Box as={AlertTriangle} w="20px" h="20px" color="orange.400" flexShrink={0} />
+                )}
+                <Text
+                  fontWeight="semibold"
+                  color={insight.type === 'error' ? 'red.600' : 'orange.500'}
+                >
+                  {insight.title}
+                </Text>
+              </Flex>
 
-            return (
-              <Box
-                key={index}
-                p={4}
-                border="1px"
-                borderColor="gray.200"
-                borderRadius="md"
-                bg="gray.50"
-              >
-                {/* Icon and Title */}
-                <Flex align="flex-start" gap={3} mb={2}>
-                  <Box
-                    p={2}
-                    bg={bgColor}
-                    borderRadius="full"
-                    flexShrink={0}
-                  >
-                    <Icon size={16} color={color} />
-                  </Box>
-                  <Text fontWeight="bold" color="gray.900" flex="1">
-                    {insight.title}
+              {/* Description */}
+              <Text fontSize="sm" color="gray.800" mb={3} fontWeight="medium">
+                {insight.description}
+              </Text>
+
+              {/* Recommendation Box */}
+              <Box bg="blue.50" p={3} borderRadius="md">
+                <Flex align="flex-start" gap={2}>
+                  <Box as={QuestionCircle} w="18px" h="18px" color="blue.500" flexShrink={0} mt="2px" />
+                  <Text fontSize="sm" color="blue.600">
+                    <Text as="span" fontWeight="medium">Recommendation:</Text>{' '}
+                    {insight.recommendation}
                   </Text>
                 </Flex>
-
-                {/* Description */}
-                <Text fontSize="sm" color="gray.700" mb={3} pl={10}>
-                  {insight.description}
-                </Text>
-
-                {/* Recommendation Link */}
-                <Flex pl={10}>
-                  <Link
-                    color="blue.600"
-                    fontSize="sm"
-                    fontWeight="medium"
-                    _hover={{ textDecoration: 'underline' }}
-                  >
-                    Recommendation: {insight.recommendation}
-                  </Link>
-                </Flex>
               </Box>
-            );
-          })}
+            </Box>
+          ))}
         </VStack>
       </Card.Body>
     </Card.Root>

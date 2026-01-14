@@ -317,11 +317,11 @@ export function MainDashboard() {
           {/* Performance Metrics */}
           <Card.Root bg="white" border="1px" borderColor="gray.200" shadow="sm">
             <Card.Body p={6}>
-              <Flex justify="space-between" align="center" mb={6}>
-                <Heading size="md" color="gray.900">
-                  Performance Metrics
-                </Heading>
-                <NativeSelectRoot size="sm" variant="outline" width="200px">
+              <Heading size="md" color="gray.900" mb={4}>
+                Performance Metrics
+              </Heading>
+              <Flex justify="center" mb={6}>
+                <NativeSelectRoot size="sm" variant="outline" width="auto">
                   <NativeSelectField
                     value={selectedMetric}
                     onChange={(e) => setSelectedMetric(e.target.value)}
@@ -389,7 +389,7 @@ export function MainDashboard() {
                 {/* Insight Text */}
                 <Box>
                   <Flex align="center" gap={2} mb={2}>
-                    <Text fontWeight="semibold" color="gray.900">
+                    <Text color="gray.900">
                       Overall Process Health
                     </Text>
                     <Info size={16} color="gray" />

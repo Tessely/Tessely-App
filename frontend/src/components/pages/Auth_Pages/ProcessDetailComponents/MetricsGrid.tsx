@@ -2,7 +2,6 @@ import {
   Box,
   Card,
   Flex,
-  Grid,
   Progress,
   Text,
 } from '@chakra-ui/react';
@@ -13,6 +12,7 @@ interface MetricCard {
   value: string;
   trend: 'up' | 'down';
   trendValue: string;
+  trendPositive: boolean;
   hasProgressBar?: boolean;
   progressValue?: number;
   progressColor?: string;
@@ -25,6 +25,7 @@ const metrics: MetricCard[] = [
     trend: 'up',
     trendValue: '+17.6% faster',
     hasProgressBar: false,
+    trendPositive: true
   },
   {
     title: 'STP Rate',
@@ -34,6 +35,7 @@ const metrics: MetricCard[] = [
     hasProgressBar: true,
     progressValue: 96,
     progressColor: 'green',
+    trendPositive: true
   },
   {
     title: 'Manual Intervention Rate',
@@ -41,6 +43,7 @@ const metrics: MetricCard[] = [
     trend: 'down',
     trendValue: '-0.1',
     hasProgressBar: false,
+    trendPositive: true
   },
   {
     title: 'Failed Trade Rate',
@@ -50,6 +53,7 @@ const metrics: MetricCard[] = [
     hasProgressBar: true,
     progressValue: 4,
     progressColor: 'red',
+    trendPositive: false
   },
   {
     title: 'Reconciliation Break Rate',
@@ -59,6 +63,7 @@ const metrics: MetricCard[] = [
     hasProgressBar: true,
     progressValue: 2,
     progressColor: 'red',
+    trendPositive: false
   },
   {
     title: 'Rework Loops per Trade',
@@ -66,13 +71,14 @@ const metrics: MetricCard[] = [
     trend: 'up',
     trendValue: '+0.2',
     hasProgressBar: false,
+    trendPositive: false
   },
 ];
 
 export function MetricsGrid() {
   return (
-    <Grid
-      templateColumns={{ base: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
+    <Flex
+      wrap="wrap"
       gap={4}
     >
       {metrics.map((metric) => (
@@ -82,6 +88,9 @@ export function MetricsGrid() {
           border="1px"
           borderColor="gray.200"
           shadow="sm"
+          flex="1 1 auto"
+          minW={{ base: '100%', sm: 'calc(50% - 8px)', md: 'calc(33.333% - 11px)' }}
+          maxW={{ base: '100%', sm: 'calc(50% - 8px)', md: 'calc(33.333% - 11px)' }}
         >
           <Card.Body p={4}>
             {/* Title with Info Icon */}
@@ -100,13 +109,13 @@ export function MetricsGrid() {
             {/* Trend Indicator */}
             <Flex align="center" gap={1} mb={metric.hasProgressBar ? 3 : 0}>
               {metric.trend === 'up' ? (
-                <TrendingUp size={16} color={metric.trendValue.includes('-') ? 'green' : 'red'} />
+                <TrendingUp size={16} color={metric.trendPositive ? 'green' : 'red'} />
               ) : (
-                <TrendingDown size={16} color="green" />
+                <TrendingDown size={16} color={metric.trendPositive ? 'green' : 'red'} />
               )}
               <Text
                 fontSize="sm"
-                color={metric.trendValue.includes('-') || metric.trend === 'down' ? 'green.600' : 'red.600'}
+                color={metric.trendPositive? 'green.600' : 'red.600'}
               >
                 {metric.trendValue} QoQ
               </Text>
@@ -129,6 +138,6 @@ export function MetricsGrid() {
           </Card.Body>
         </Card.Root>
       ))}
-    </Grid>
+    </Flex>
   );
 }

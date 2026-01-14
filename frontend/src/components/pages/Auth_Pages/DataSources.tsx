@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Heading, VStack, Icon } from '@chakra-ui/react';
+import { Box, Flex, Text, Heading, VStack } from '@chakra-ui/react';
 import MdLockIcon from '../../../assets/icons/DataSources/MdLock.svg?react';
 import ExcelIcon from '../../../assets/icons/DataSources/ExcelIcon.svg?react';
 import SAPECCIcon from '../../../assets/icons/DataSources/SAP_ECC.svg?react';
@@ -51,10 +51,10 @@ function DataSourceCard({ name, LogoIcon, isLocked = false, isActive = false }: 
           alignItems="center"
           justifyContent="center"
         >
-          <Icon as={MdLockIcon} w={10} h={10} />
+          <Box as={MdLockIcon} w={10} h={10} />
         </Flex>
       )}
-      <Icon as={LogoIcon} w="60px" h="60px" mb={2} />
+      <Box as={LogoIcon} w="60px" h="60px" mb={2} />
       <Text fontSize="xs" textAlign="center" color="gray.600" lineHeight="tight">
         {name}
       </Text>
