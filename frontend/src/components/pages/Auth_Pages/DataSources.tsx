@@ -9,7 +9,7 @@ import WorkdayIcon from '../../../assets/icons/DataSources/Workday.svg?react';
 import OracleIcon from '../../../assets/icons/DataSources/Oracle.svg?react';
 import SalesforceIcon from '../../../assets/icons/DataSources/Salesforce.svg?react';
 import ServicenowIcon from '../../../assets/icons/DataSources/Servicenow.svg?react';
-import PostGreSQLIcon from '../../../assets/icons/DataSources/PostGreSQL.svg?react';
+import PostGreSQLIcon from '../../../assets/icons/DataSources/PostgreSQL.svg?react';
 import MySQLIcon from '../../../assets/icons/DataSources/MySQL.svg?react';
 import SnowflakeIcon from '../../../assets/icons/DataSources/Snowflake.svg?react';
 
