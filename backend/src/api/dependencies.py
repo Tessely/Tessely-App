@@ -9,8 +9,8 @@ from jose import JWTError, jwt
 
 from src.core.config import settings
 from src.core.messages import ErrorMessages, LogMessages
+from src.core.supabase_client import get_supabase_client
 from src.services.auth_service import AuthService
-from src.core.constants import Supabase
 
 logger = logging.getLogger(__name__)
 security = HTTPBearer()
@@ -64,21 +64,50 @@ def validate_jwt_token(token: str) -> str:
 
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
-) -> str:
+) -> dict[str, Any]:
+    """
+    Get current authenticated user from JWT token
+
+    Args:
+        credentials: HTTP Bearer token credentials
+
+    Returns:
+        Dictionary containing user information
+
+    Raises:
+        HTTPException: If token is invalid or user not found
+    """
     token = credentials.credentials
 
     try:
-        result = Supabase.auth.get_user(token)
+        # Get Supabase client
+        supabase = get_supabase_client()
+
+        # Verify token with Supabase
+        result = supabase.auth.get_user(token)
 
         if not result or not result.user:
+            logger.warning("Token validation failed: No user found")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid or expired token",
             )
 
-        return result.user.id
+        # Return user info as dict
+        user_dict = {
+            "id": result.user.id,
+            "email": result.user.email,
+            "user_metadata": result.user.user_metadata or {},
+        }
 
+        logger.debug(f"User authenticated: {user_dict['id']}")
+        return user_dict
+
+    except HTTPException:
+        # Re-raise HTTP exceptions
+        raise
     except Exception as e:
+        logger.error(f"Authentication error: {str(e)}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
