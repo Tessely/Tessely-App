@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import {
   Box,
   Breadcrumb,
@@ -9,8 +8,8 @@ import {
   Grid,
   Heading,
   Link,
-  NativeSelectRoot,
   NativeSelectField,
+  NativeSelectRoot,
   Progress,
   Table,
   Text,
@@ -19,11 +18,14 @@ import {
 import {
   ChevronRight,
   Info,
-  TrendingUp,
   TrendingDown,
+  TrendingUp,
 } from 'lucide-react';
-import { logout } from '../../../api/auth';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../../api/auth';
+import { fetchCaseRoots } from '../../../api/processMining';
+import { CaseRootsResponse } from '../../../types';
 
 // KPI Card Data
 const kpiCards = [
@@ -76,14 +78,8 @@ const kpiCards = [
   },
 ];
 
-// Pie chart data
-const pieChartData = [
-  { name: 'Equity Trade Lifecycle (Public Markets)', percentage: 56, cases: 2000, color: '#1e3a5f' },
-  { name: 'Fixed Income Trade Lifecycle (Public Markets)', percentage: 14, cases: 500, color: '#3b82f6' },
-  { name: 'Private Equity Investment Closing', percentage: 28, cases: 1000, color: '#60a5fa' },
-  { name: 'Fund Commitment Process', percentage: 1, cases: 30, color: '#93c5fd' },
-  { name: 'FX Hedging', percentage: 1, cases: 30, color: '#bfdbfe' },
-];
+// Pie chart colors
+const PIE_CHART_COLORS = ['#1e3a5f', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe'];
 
 // Performance metrics data
 const performanceMetrics = [
@@ -114,6 +110,8 @@ export function MainDashboard() {
     full_name: 'Unknown User',
     email: 'unknown@example.com'
   });
+  const [caseRootsData, setCaseRootsData] = useState<CaseRootsResponse | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -123,6 +121,38 @@ export function MainDashboard() {
       setUser(JSON.parse(userData));
     }
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchCaseRoots();
+        setCaseRootsData(data);
+      } catch (error) {
+        console.error('Failed to fetch case roots:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Pie chart data - dynamic from API or fallback to hardcoded
+  const pieChartData = caseRootsData
+    ? caseRootsData.case_roots.map((root, index) => ({
+        name: root.root_table,
+        percentage: Math.round(root.percentage * 100),
+        cases: root.case_count,
+        color: PIE_CHART_COLORS[index % PIE_CHART_COLORS.length],
+      }))
+    : [
+        { name: 'Equity Trade Lifecycle (Public Markets)', percentage: 56, cases: 2000, color: '#1e3a5f' },
+        { name: 'Fixed Income Trade Lifecycle (Public Markets)', percentage: 14, cases: 500, color: '#3b82f6' },
+        { name: 'Private Equity Investment Closing', percentage: 28, cases: 1000, color: '#60a5fa' },
+        { name: 'Fund Commitment Process', percentage: 1, cases: 30, color: '#93c5fd' },
+        { name: 'FX Hedging', percentage: 1, cases: 30, color: '#bfdbfe' },
+      ];
 
   const handleLogout = async () => {
     try {
