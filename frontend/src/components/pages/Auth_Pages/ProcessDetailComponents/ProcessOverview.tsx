@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   ReactFlow,
   Node,
@@ -25,7 +25,7 @@ type RawNode = {
   metrics: {
     case_count_at_node: number;
     avg_time_to_next_mins: number;
-    success_rate: number; 
+    success_rate: number;
   };
 };
 
@@ -115,27 +115,13 @@ const rawNodes: RawNode[] = [
 ]
 
 const getNameColor = (nodeType: string): string => {
-  switch(nodeType) {
+  switch (nodeType) {
     case 'start': return 'red.600';
     case 'middle': return 'orange.500';
     case 'end': return 'green.600';
     default: return 'gray.900';
   }
 };
-
-const transformedNodes: Node<JSONNodeData>[] = rawNodes.map((node,index)=>({
-  id: node.node_id,
-  type: 'JSONNode',
-  position: { x: 300, y: index * 170 },
-  data:{
-    name: node.node_id,
-    averageDuration: `${node.metrics.avg_time_to_next_mins} mins`,
-    successRate: `${(node.metrics.success_rate * 100).toFixed(1)}%`,
-    itemCount: node.metrics.case_count_at_node,
-    bgColor: 'white',
-    nameColor: getNameColor(node.node_type),
-  }
-}));
 
 // Edges Formation
 const rawEdges: RawEdge[] = [
@@ -196,25 +182,51 @@ const rawEdges: RawEdge[] = [
   }
 ];
 
-
-const transformedEdges: Edge[] = rawEdges.map((e) => ({
-  id: e.edge_id,
-  source: e.from,
-  target: e.to,
-  type: 'rightLabel',
-  sourceHandle: 'out',
-  targetHandle: 'in',
-  style: { stroke: '#9CA3AF', strokeWidth: 2 },
-  data: {
-    frequency: e.frequency,
-    probability: e.probability,
-    average_transition_time_mins: e.average_transition_time_mins,
-  },
-}));
-
 export function ProcessOverview() {
-  const onNodesChange = useCallback(() => {}, []);
-  const onEdgesChange = useCallback(() => {}, []);
+  const onNodesChange = useCallback(() => { }, []);
+  const onEdgesChange = useCallback(() => { }, []);
+
+  const transformedNodes: Node<JSONNodeData>[] = useMemo(() => {
+    const nodeCount = rawNodes.length;
+    const nodeHeight = 120; // Approximate height of each node
+    const nodeWidth = 280; // Approximate width of each node
+    const verticalSpacing = 200; // Space between nodes vertically
+    const horizontalCenter = 400; // Center X position
+
+    return rawNodes.map((node, index) => ({
+      id: node.node_id,
+      type: 'JSONNode',
+      position: {
+        x: horizontalCenter - (nodeWidth / 2),
+        y: index * verticalSpacing + 50
+      },
+      data: {
+        name: node.node_id,
+        averageDuration: `${node.metrics.avg_time_to_next_mins} mins`,
+        successRate: `${(node.metrics.success_rate * 100).toFixed(1)}%`,
+        itemCount: node.metrics.case_count_at_node,
+        bgColor: 'white',
+        nameColor: getNameColor(node.node_type),
+      }
+    }));
+  }, []);
+
+  const transformedEdges: Edge[] = useMemo(() => {
+    return rawEdges.map((e) => ({
+      id: e.edge_id,
+      source: e.from,
+      target: e.to,
+      type: 'rightLabel',
+      sourceHandle: 'out',
+      targetHandle: 'in',
+      style: { stroke: '#9CA3AF', strokeWidth: 2 },
+      data: {
+        frequency: e.frequency,
+        probability: e.probability,
+        average_transition_time_mins: e.average_transition_time_mins,
+      },
+    }));
+  }, []);
 
   return (
     <Card.Root bg="white" border="1px" borderColor="gray.200" shadow="sm">
@@ -240,12 +252,20 @@ export function ProcessOverview() {
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             fitView
+            fitViewOptions={{
+              padding: 0.0,
+              minZoom: 0.5,
+              maxZoom: 1.5,
+            }}
             nodesDraggable={false}
             nodesConnectable={false}
             elementsSelectable={false}
-            panOnDrag={false}
-            zoomOnScroll={false}
+            panOnDrag={true}
+            zoomOnScroll={true}
+            zoomOnPinch={true}
             preventScrolling={true}
+            minZoom={0.1}
+            maxZoom={2}
             attributionPosition="bottom-right"
             proOptions={{ hideAttribution: true }}
           >
