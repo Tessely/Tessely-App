@@ -280,47 +280,32 @@ export function MainDashboard() {
                   <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
                     {/* Background circle */}
                     <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" strokeWidth="20" />
-                    {/* Pie segments - simplified representation */}
-                    <circle
-                      cx="50" cy="50" r="40"
-                      fill="none"
-                      stroke="#1e3a5f"
-                      strokeWidth="20"
-                      strokeDasharray="140.8 251.2"
-                      strokeDashoffset="0"
-                    />
-                    <circle
-                      cx="50" cy="50" r="40"
-                      fill="none"
-                      stroke="#60a5fa"
-                      strokeWidth="20"
-                      strokeDasharray="70.4 251.2"
-                      strokeDashoffset="-140.8"
-                    />
-                    <circle
-                      cx="50" cy="50" r="40"
-                      fill="none"
-                      stroke="#3b82f6"
-                      strokeWidth="20"
-                      strokeDasharray="35.2 251.2"
-                      strokeDashoffset="-211.2"
-                    />
-                    <circle
-                      cx="50" cy="50" r="40"
-                      fill="none"
-                      stroke="#93c5fd"
-                      strokeWidth="20"
-                      strokeDasharray="2.5 251.2"
-                      strokeDashoffset="-246.4"
-                    />
-                    <circle
-                      cx="50" cy="50" r="40"
-                      fill="none"
-                      stroke="#bfdbfe"
-                      strokeWidth="20"
-                      strokeDasharray="2.5 251.2"
-                      strokeDashoffset="-248.9"
-                    />
+                    {/* Dynamic Pie segments */}
+                    {(() => {
+                      const radius = 40;
+                      const circumference = 2 * Math.PI * radius;
+                      let cumulativeOffset = 0;
+
+                      return pieChartData.map((segment, index) => {
+                        const arcLength = (segment.percentage / 100) * circumference;
+                        const currentOffset = cumulativeOffset;
+                        cumulativeOffset += arcLength;
+
+                        return (
+                          <circle
+                            key={segment.name}
+                            cx="50"
+                            cy="50"
+                            r={radius}
+                            fill="none"
+                            stroke={segment.color}
+                            strokeWidth="20"
+                            strokeDasharray={`${arcLength} ${circumference}`}
+                            strokeDashoffset={-currentOffset}
+                          />
+                        );
+                      });
+                    })()}
                   </svg>
                 </Box>
 
