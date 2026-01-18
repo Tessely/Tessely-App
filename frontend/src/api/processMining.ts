@@ -9,7 +9,7 @@ export async function fetchCaseRoots(): Promise<CaseRootsResponse> {
     throw new Error('No authentication token found');
   }
 
-  const response = await fetch(`${API_URL}/process-mining/case-roots`, {
+  const response = await fetch(`${API_URL}/api/v1/process-mining/case-roots`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
