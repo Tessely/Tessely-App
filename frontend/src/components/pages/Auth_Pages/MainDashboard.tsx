@@ -14,6 +14,7 @@ import {
   Table,
   Text,
   VStack,
+  ProgressCircle
 } from '@chakra-ui/react';
 import {
   ChevronRight,
@@ -141,18 +142,18 @@ export function MainDashboard() {
   // Pie chart data - dynamic from API or fallback to hardcoded
   const pieChartData = caseRootsData
     ? caseRootsData.case_roots.map((root, index) => ({
-        name: root.root_table,
-        percentage: Math.round(root.percentage * 100),
-        cases: root.case_count,
-        color: PIE_CHART_COLORS[index % PIE_CHART_COLORS.length],
-      }))
+      name: root.root_table,
+      percentage: Math.round(root.percentage * 100),
+      cases: root.case_count,
+      color: PIE_CHART_COLORS[index % PIE_CHART_COLORS.length],
+    }))
     : [
-        { name: 'Equity Trade Lifecycle (Public Markets)', percentage: 56, cases: 2000, color: '#1e3a5f' },
-        { name: 'Fixed Income Trade Lifecycle (Public Markets)', percentage: 14, cases: 500, color: '#3b82f6' },
-        { name: 'Private Equity Investment Closing', percentage: 28, cases: 1000, color: '#60a5fa' },
-        { name: 'Fund Commitment Process', percentage: 1, cases: 30, color: '#93c5fd' },
-        { name: 'FX Hedging', percentage: 1, cases: 30, color: '#bfdbfe' },
-      ];
+      { name: 'Equity Trade Lifecycle (Public Markets)', percentage: 56, cases: 2000, color: '#1e3a5f' },
+      { name: 'Fixed Income Trade Lifecycle (Public Markets)', percentage: 14, cases: 500, color: '#3b82f6' },
+      { name: 'Private Equity Investment Closing', percentage: 28, cases: 1000, color: '#60a5fa' },
+      { name: 'Fund Commitment Process', percentage: 1, cases: 30, color: '#93c5fd' },
+      { name: 'FX Hedging', percentage: 1, cases: 30, color: '#bfdbfe' },
+    ];
 
   const handleLogout = async () => {
     try {
@@ -276,55 +277,65 @@ export function MainDashboard() {
               </Heading>
               <Flex align="center" justify="center" gap={8}>
                 {/* Pie Chart SVG */}
-                <Box position="relative" w="200px" h="200px">
-                  <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
-                    {/* Background circle */}
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" strokeWidth="20" />
-                    {/* Dynamic Pie segments */}
-                    {(() => {
-                      const radius = 40;
-                      const circumference = 2 * Math.PI * radius;
-                      let cumulativeOffset = 0;
+                {loading ? (
+                  <ProgressCircle.Root value={null}>
+                    <ProgressCircle.Circle css={{ "--thickness": "5px" }}>
+                      <ProgressCircle.Track />
+                      <ProgressCircle.Range />
+                    </ProgressCircle.Circle>
+                  </ProgressCircle.Root>) : (
+                  <>
+                    <Box position="relative" w="200px" h="300px">
+                      <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
+                        {/* Background circle */}
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" strokeWidth="20" />
+                        {/* Dynamic Pie segments */}
+                        {(() => {
+                          const radius = 40;
+                          const circumference = 2 * Math.PI * radius;
+                          let cumulativeOffset = 0;
 
-                      return pieChartData.map((segment, index) => {
-                        const arcLength = (segment.percentage / 100) * circumference;
-                        const currentOffset = cumulativeOffset;
-                        cumulativeOffset += arcLength;
+                          return pieChartData.map((segment, index) => {
+                            const arcLength = (segment.percentage / 100) * circumference;
+                            const currentOffset = cumulativeOffset;
+                            cumulativeOffset += arcLength;
 
-                        return (
-                          <circle
-                            key={segment.name}
-                            cx="50"
-                            cy="50"
-                            r={radius}
-                            fill="none"
-                            stroke={segment.color}
-                            strokeWidth="20"
-                            strokeDasharray={`${arcLength} ${circumference}`}
-                            strokeDashoffset={-currentOffset}
-                          />
-                        );
-                      });
-                    })()}
-                  </svg>
-                </Box>
+                            return (
+                              <circle
+                                key={segment.name}
+                                cx="50"
+                                cy="50"
+                                r={radius}
+                                fill="none"
+                                stroke={segment.color}
+                                strokeWidth="20"
+                                strokeDasharray={`${arcLength} ${circumference}`}
+                                strokeDashoffset={-currentOffset}
+                              />
+                            );
+                          });
+                        })()}
+                      </svg>
+                    </Box>
 
-                {/* Legend */}
-                <VStack align="flex-start" gap={2} fontSize="xs">
-                  {pieChartData.map((item) => (
-                    <Flex key={item.name} align="center" gap={2}>
-                      <Box w="10px" h="10px" borderRadius="sm" bg={item.color} />
-                      <VStack align="flex-start" gap={0}>
-                        <Text fontWeight="medium" color="gray.700" lineHeight="tight">
-                          {item.name}
-                        </Text>
-                        <Text color="gray.500">
-                          {item.percentage}%, {item.cases.toLocaleString()} Cases
-                        </Text>
-                      </VStack>
-                    </Flex>
-                  ))}
-                </VStack>
+                    {/* Legend */}
+                    <VStack align="flex-start" gap={2} fontSize="xs">
+                      {pieChartData.map((item) => (
+                        <Flex key={item.name} align="center" gap={2}>
+                          <Box w="10px" h="10px" borderRadius="sm" bg={item.color} />
+                          <VStack align="flex-start" gap={0}>
+                            <Text fontWeight="medium" color="gray.700" lineHeight="tight">
+                              {item.name}
+                            </Text>
+                            <Text color="gray.500">
+                              {item.percentage}%, {item.cases.toLocaleString()} Cases
+                            </Text>
+                          </VStack>
+                        </Flex>
+                      ))}
+                    </VStack>
+                  </>
+                )}
               </Flex>
             </Card.Body>
           </Card.Root>
