@@ -10,3 +10,15 @@ export type LoginPayload = {
   password: string;
   rememberMe: boolean;
 };
+
+export type CaseRoot = {
+  root_table: string;
+  root_primary_key: string;
+  case_count: number;
+  percentage: number;
+};
+
+export type CaseRootsResponse = {
+  case_roots: CaseRoot[];
+  total_cases: number;
+};

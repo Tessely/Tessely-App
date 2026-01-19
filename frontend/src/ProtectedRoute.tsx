@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { ReactNode, useEffect, useState } from 'react';
+import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -27,7 +28,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/login" replace />;
   }
   
-  return <>{children}</>;
+  return (
+    <ChakraProvider value={defaultSystem}>
+      {children}
+    </ChakraProvider>
+  );
 };
 
 export default ProtectedRoute;
