@@ -25,7 +25,7 @@ import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
 import { Processes } from './components/pages/Auth_Pages/Processes';
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
 import { ThemeProvider } from "next-themes"
-import { Toaster, toaster } from "../src/components/ui/toaster"
+import { Toaster, toaster } from "./components/ui/toaster"
 import { system } from "./theme"
 
 function AppContent() {
