@@ -1,9 +1,10 @@
 # src/api/routes/upload.py (or wherever your router is)
 
-from fastapi import APIRouter, File, UploadFile, HTTPException, Depends
+from fastapi import Header,APIRouter, File, UploadFile, HTTPException, Depends
 from datetime import datetime
 import logging
 from src.core.supabase_client import get_supabase_service_client
+from src.core.supabase_client import get_supabase_client_for_user
 from src.core.supabase_client import get_supabase_client
 from src.api.dependencies import get_current_user
 
@@ -38,18 +39,21 @@ async def get_user_csv_files(
 
 @router.delete("/files/{file_id}")
 async def delete_csv_file(
-    file_id: int,  # Assuming your primary key is an integer ID
+    file_id: int,
     current_user: dict = Depends(get_current_user),
+    authorization: str = Header(...),
 ):
     """
     Delete a specific CSV file from both Storage and Database
     """
     try:
-        supabase = get_supabase_service_client()
+        token = authorization.replace("Bearer ", "", 1) if authorization.startswith("Bearer ") else authorization
+        supabase = get_supabase_client()
+        supabase.postgrest.auth(token)
+        supabase.storage._client.headers["Authorization"] = f"Bearer {token}"
+        
         user_id = current_user.get('id')
 
-        # 1. Fetch the file details first to get the storage path (file_url)
-        # We filter by user_id to ensure a user can only delete their own files
         file_record = supabase.table("uploaded_csv_files")\
             .select("file_url")\
             .eq("id", file_id)\
@@ -62,10 +66,8 @@ async def delete_csv_file(
 
         file_path = file_record.data['file_url']
 
-        # 2. Delete from Supabase Storage
         storage_response = supabase.storage.from_("uploaded_csv_files").remove([file_path])
         
-        # 3. Delete from Database
         db_response = supabase.table("uploaded_csv_files")\
             .delete()\
             .eq("id", file_id)\
@@ -85,25 +87,31 @@ async def delete_csv_file(
     except Exception as e:
         logger.error(f"Delete failed for file {file_id}: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}")
-    
+
 @router.post("/upload")
 async def upload_csv(
     file: UploadFile = File(...),
     current_user: dict = Depends(get_current_user),
+    authorization: str = Header(...)
 ):    
     try:
-        supabase = get_supabase_service_client()
+
+        token = authorization.replace("Bearer ", "", 1) if authorization.startswith("Bearer ") else authorization
+        supabase = get_supabase_client()
+        supabase.postgrest.auth(token)
+        supabase.storage._client.headers["Authorization"] = f"Bearer {token}"
+        
         contents = await file.read()        
         timestamp = datetime.now().isoformat()
         file_name = f"{timestamp}_{file.filename}"
         file_path = f"{current_user.get('id')}/{file_name}"
-        
+
         storage_response = supabase.storage.from_("uploaded_csv_files").upload(
             path=file_path,
             file=contents,
             file_options={"content-type": "text/csv", "upsert": "false"}
         )
-        
+
         db_response = supabase.table("uploaded_csv_files").insert({
             "user_id": current_user.get('id'),
             "file_name": file.filename,
