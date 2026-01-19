@@ -7,7 +7,7 @@ from src.core.supabase_client import get_supabase_client
 from src.api.dependencies import get_current_user
 
 router = APIRouter()
-logger = logging.getLogger("uvicorn")
+logger = logging.getLogger(__name__)
 
 @router.get("/files")
 async def get_user_csv_files(
