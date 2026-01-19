@@ -2,6 +2,7 @@ import { VStack, FileUpload, Icon, Card,Image,Text, Box,Dialog, Button, Portal, 
 import {Lock, Upload} from 'lucide-react';
 import { useState } from "react";
 import { DataLoading } from "./DataLoading";
+import { uploadCSV } from "../../../../api/datasource";
 
 interface DataUploadProps {
     files: File[];
@@ -16,11 +17,10 @@ export function DataUpload({ files, setFiles, setIsUploading }: DataUploadProps)
           return alert("Please select files first.");
 
         setIsUploading(true); // start loading
+        uploadCSV(files);
         console.log("Uploading files:", files);
-        setTimeout(() => {
-            console.log("Files processed:", files.map(f => f.name));
-            setIsUploading(false);
-        }, 100000);
+        setIsUploading(false); // stop loading
+        setFiles([]); // clear files after upload
     }
 
   return (

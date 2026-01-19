@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     # Supabase - make these optional with defaults
     SUPABASE_URL: str = ""
     SUPABASE_KEY: str = ""
+    SUPABASE_SERVICE_KEY: str = ""
+    SUPABASE_ANON_KEY: str = ""
     SUPABASE_JWT_SECRET: str = ""
 
     # Application settings

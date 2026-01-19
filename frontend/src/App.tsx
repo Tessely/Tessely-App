@@ -23,7 +23,6 @@ import DataSources from './components/pages/Auth_Pages/DataSources';
 import ProtectedRoute from './ProtectedRoute';
 import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
 import { Processes } from './components/pages/Auth_Pages/Processes';
-import { DataSources } from './components/pages/Auth_Pages/DataSources';
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
 import { ThemeProvider } from "next-themes"
 import { system } from "./theme"
