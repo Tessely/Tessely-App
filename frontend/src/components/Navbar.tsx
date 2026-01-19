@@ -57,7 +57,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <Link to="/login">
               <Button className="bg-[#0047AB] hover:bg-[#003380] text-white">
-                Log In
+                Login
               </Button>
             </Link>
           </div>

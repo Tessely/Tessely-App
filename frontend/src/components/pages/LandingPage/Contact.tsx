@@ -30,14 +30,14 @@ export function Contact() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 py-20">
+      <section className="max-w-7xl mx-auto bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-gray-900 mb-6">
+            <h1 className="text-gray-900 mb-6" style={{fontWeight: 'bold'}}>
               Let's Talk About Your Workflow.
             </h1>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -50,7 +50,7 @@ export function Contact() {
       {/* Contact Form & Info */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className=" lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -132,8 +132,106 @@ export function Contact() {
                 </form>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
 
-            {/* Contact Information */}
+      {/* Investor Relations Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-gray-900 mb-4" style={{ fontWeight: 'bold' }}>Investor Relations</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Interested in partnering with us to transform the future of AI-powered process optimization?
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="rounded-2xl p-8"
+                style={{ backgroundColor: '#003F72' }}
+              >
+                <h3 className="text-white mb-4" style={{ fontWeight: 'bold' }}>Investment Inquiries</h3>
+                <p className="text-white/80 text-sm mb-6">
+                  We're always open to conversations with strategic partners and investors who share our vision of democratizing AI-powered process intelligence.
+                </p>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-[#5ECFC0]"style={{ color:'#5ECFC0' }}/>
+                  <a href="mailto:investors@tessely.ai" className="hover:underline text-sm"  style={{ color:'#5ECFC0' }}>
+                    investors@tessely.ai
+                  </a>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="rounded-2xl p-8"
+                style={{ backgroundColor: '#003F72' }}
+              >
+                <h3 className="text-white mb-4" style={{ fontWeight: 'bold' }}>Company Information</h3>
+                <div className="space-y-3 text-sm text-white/90">
+                  <div>
+                    <span className="text-white/70">Founded:</span>
+                    <span className="ml-2">2023</span>
+                  </div>
+                  <div>
+                    <span className="text-white/70">Headquarters:</span>
+                    <span className="ml-2">San Francisco, CA</span>
+                  </div>
+                  <div>
+                    <span className="text-white/70">Stage:</span>
+                    <span className="ml-2">Growth Stage</span>
+                  </div>
+                  <div>
+                    <span className="text-white/70">Focus:</span>
+                    <span className="ml-2">AI-Powered Process Mining</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-8 rounded-2xl p-8 border border-gray-100"
+              style={{ backgroundColor: '#E8F5F3' }}
+            >
+              <h3 className="text-gray-900 mb-6" style={{ fontWeight: 'bold' }}>Why Invest in Tessely?</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <div className="text-2xl mb-2" style={{ color: '#5ECFC0', fontWeight: 'bold' }}>$50B+</div>
+                  <p className="text-gray-600 text-sm">Process mining market by 2030</p>
+                </div>
+                <div>
+                  <div className="text-2xl mb-2" style={{ color: '#5ECFC0', fontWeight: 'bold' }}>80%</div>
+                  <p className="text-gray-600 text-sm">Reduction in data preparation time</p>
+                </div>
+                <div>
+                  <div className="text-2xl mb-2" style={{ color: '#5ECFC0', fontWeight: 'bold' }}>24hrs</div>
+                  <p className="text-gray-600 text-sm">Average implementation time</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Information Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="lg:grid-cols-2 gap-12">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -192,24 +290,13 @@ export function Contact() {
               <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-2xl h-64 flex items-center justify-center border border-gray-100">
                 <MapPin className="w-16 h-16 text-[#0047AB]/30" />
               </div>
-
-              {/* Book Demo CTA */}
-              <div className="bg-gradient-to-br from-[#0047AB] to-[#00D9B5] rounded-2xl p-8 text-white">
-                <h3 className="mb-3">Prefer a Live Demo?</h3>
-                <p className="text-white/90 text-sm mb-6">
-                  Schedule a personalized walkthrough with our team
-                </p>
-                <Button className="bg-white text-[#0047AB] hover:bg-gray-100 w-full py-6">
-                  Book a Demo
-                </Button>
-              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20 bg-gradient-to-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-gray-900 mb-4">Quick Answers</h2>
@@ -253,96 +340,16 @@ export function Contact() {
         </div>
       </section>
 
-      {/* Investor Relations Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-gray-900 mb-4">Investor Relations</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Interested in partnering with us to transform the future of AI-powered process optimization?
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 border border-gray-100"
-              >
-                <h3 className="text-gray-900 mb-4">Investment Inquiries</h3>
-                <p className="text-gray-600 text-sm mb-6">
-                  We're always open to conversations with strategic partners and investors who share our vision of democratizing AI-powered process intelligence.
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-[#0047AB]" />
-                    <a href="mailto:investors@tessely.ai" className="text-[#0047AB] hover:underline text-sm">
-                      investors@tessely.ai
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-gray-100"
-              >
-                <h3 className="text-gray-900 mb-4">Company Information</h3>
-                <div className="space-y-4 text-sm">
-                  <div>
-                    <span className="text-gray-500">Founded:</span>
-                    <span className="text-gray-900 ml-2">2023</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Headquarters:</span>
-                    <span className="text-gray-900 ml-2">San Francisco, CA</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Stage:</span>
-                    <span className="text-gray-900 ml-2">Growth Stage</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Focus:</span>
-                    <span className="text-gray-900 ml-2">AI-Powered Process Mining</span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-8 bg-gradient-to-r from-[#0047AB]/5 to-[#00D9B5]/5 rounded-2xl p-8 border border-gray-100"
-            >
-              <h3 className="text-gray-900 mb-4">Why Invest in Tessely?</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <div className="text-2xl text-[#0047AB] mb-2">$50B+</div>
-                  <p className="text-gray-600 text-sm">Process mining market by 2030</p>
-                </div>
-                <div>
-                  <div className="text-2xl text-[#0047AB] mb-2">80%</div>
-                  <p className="text-gray-600 text-sm">Reduction in data preparation time</p>
-                </div>
-                <div>
-                  <div className="text-2xl text-[#0047AB] mb-2">24hrs</div>
-                  <p className="text-gray-600 text-sm">Average implementation time</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* Book Demo CTA */}
+      <div className="max-w-7xl mx-auto rounded-2xl p-8 text-white" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)', marginBottom: '20px' }}>
+        <h3 className="mb-3">Prefer a Live Demo?</h3>
+        <p className="text-white/90 text-sm mb-6">
+          Schedule a personalized walkthrough with our team
+        </p>
+        <Button className="bg-white text-[#0047AB] hover:bg-gray-100 w-full py-6">
+          Book a Demo
+        </Button>
+      </div>
     </div>
   );
 }

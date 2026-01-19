@@ -3,6 +3,7 @@ import { Target, Eye, Lightbulb, Users, Heart, Zap, ChevronLeft, ChevronRight } 
 import { motion } from 'motion/react';
 import { ImageWithFallback } from '../../figma/ImageWithFallback';
 import { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 export function About() {
   const values = [
@@ -124,7 +125,7 @@ export function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-gray-900 mb-6">
+            <h1 className="text-gray-900 mb-6" style={{fontWeight: 'bold'}}>
               Empowering Every Business to Be AI-Ready.
             </h1>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -142,9 +143,9 @@ export function About() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 border border-gray-100"
+              className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-gray-100"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
                 <Target className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-gray-900 mb-4">Our Mission</h2>
@@ -159,7 +160,7 @@ export function About() {
               viewport={{ once: true }}
               className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-gray-100"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00D9B5] to-[#0047AB] flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
                 <Eye className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-gray-900 mb-4">Our Vision</h2>
@@ -175,7 +176,7 @@ export function About() {
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Our Values</h2>
+            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Our Values</h2>
             <p className="text-gray-600">
               The principles that guide everything we do
             </p>
@@ -206,7 +207,7 @@ export function About() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Meet the Team</h2>
+            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Meet the Team</h2>
             <p className="text-gray-600 mb-2">
               Passionate experts dedicated to your success
             </p>
@@ -292,12 +293,11 @@ export function About() {
       </section>
 
       {/* Story Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20 bg-gradient-to-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-gray-900 mb-6">Our Story</h2>
           </div>
-
           <div className="bg-white rounded-2xl p-8 md:p-12 border border-gray-100 shadow-sm">
             <div className="space-y-6 text-gray-600">
               <p>
@@ -318,23 +318,29 @@ export function About() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#0047AB] to-[#00D9B5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white mb-6">
-            Want to Join Our Mission?
-          </h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/careers">
-              <Button className="bg-white text-[#0047AB] hover:bg-gray-100 px-8 py-6">
-                View Open Positions
-              </Button>
-            </a>
-            <a href="/contact">
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6">
-                Get in Touch
-              </Button>
-            </a>
-          </div>
+      <section className="max-w-7xl mx-auto py-20 rounded-2xl" style={{ background: 'radial-gradient(circle at center, #003F72 0%, #bdebe6 100%)', marginBottom: '20px' }}>
+        <div className="px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-white mb-6">
+              Want to Join Our Mission?
+            </h2>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/solutions">
+                <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
+                  Explore Solutions
+                </Button>
+              </Link>
+              <Link to="/how-it-works">
+                <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
+                  Try Demo
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>

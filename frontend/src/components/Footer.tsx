@@ -51,28 +51,28 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-gray-900 mb-4" style={{fontWeight: '500'}}>Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
+            <div className="space-y-2">
+              <div>
                 <Link to="/how-it-works" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
                   How It Works
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div>
                 <Link to="/solutions" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
                   Solutions
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div>
                 <Link to="/about" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
                   About
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div>
                 <Link to="/careers" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
                   Careers
                 </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
           {/* Newsletter */}

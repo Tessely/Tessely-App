@@ -288,8 +288,8 @@ export function Landing() {
 we also offer consultation to accelerate adoption.
         </p>
       </motion.div>
-      <section className="max-w-7xl mx-auto py-20" style={{ background: 'linear-gradient(to bottom right, #003f72, #006ba8)' }}>
-        <div className=" px-4 sm:px-6 lg:px-8 text-center">
+      <section className="max-w-7xl mx-auto py-20 rounded-2xl" style={{ background: 'radial-gradient(circle at center, #003F72 0%, #bdebe6 100%)', marginBottom: '20px' }}>
+        <div className="px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -299,8 +299,8 @@ we also offer consultation to accelerate adoption.
               Ready to see your process clearly?
             </h2>
             <Link to="/contact">
-              <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003f72' }}>
-                Get in Touch
+              <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
+                Start Free Today
               </Button>
             </Link>
           </motion.div>
