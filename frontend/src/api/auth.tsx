@@ -1,6 +1,7 @@
 import type { SignUpPayload, LoginPayload } from "../types";
 
 const TOKEN_KEY = '@auth_token';
+// const API_BASE_URL = 'http://localhost:8000';
 const API_BASE_URL = 'https://tessely-app-production.up.railway.app';
 
 export async function login(payload: LoginPayload) {

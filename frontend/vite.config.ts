@@ -6,7 +6,7 @@
 
   export default defineConfig({
     plugins: [
-      react(),
+      react(), tsconfigPaths(),
       svgr({
         svgrOptions: {
           // Makes it easier to style SVGs

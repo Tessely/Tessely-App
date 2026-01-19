@@ -75,7 +75,7 @@ const DataSources: React.FC<DataSourcesProps> = () => {
                                 <DataSourceCard imageSrc="sap_ecc" label="SAP ERP Central Component " variant='locked'/>
                                 <DataSourceCard imageSrc="dynamics" label="Dynamics 365" variant='locked'/>
                                 <DataSourceCard imageSrc="netsuite" label="Netsuite" variant='locked'/>
-                                <DataSourceCard imageSrc="workday" label="Workday" variant='locked'/> 
+                                <DataSourceCard imageSrc="workday" label="Workday" variant='locked'/>
                             </HStack>
                         </VStack>
                         <VStack alignItems="start">
@@ -84,7 +84,7 @@ const DataSources: React.FC<DataSourcesProps> = () => {
                                 <DataSourceCard imageSrc="sap_crm" label="SAP CRM" variant='locked'/>
                                 <DataSourceCard imageSrc="siebel" label="Oracle Siebel" variant='locked'/>
                                 <DataSourceCard imageSrc="salesforce" label="Salesforce" variant='locked'/>
-                                <DataSourceCard imageSrc="servicenow" label="ServiceNow" variant='locked'/> 
+                                <DataSourceCard imageSrc="servicenow" label="ServiceNow" variant='locked'/>
                             </HStack>
                         </VStack>
                         <VStack alignItems="start">

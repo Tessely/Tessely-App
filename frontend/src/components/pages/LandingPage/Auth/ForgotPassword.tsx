@@ -5,6 +5,7 @@ import { Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { forgetPassword } from '../../../../api/auth';
+import TesselyLogo from '../../../../assets/icons/TesselyLogo.svg';
 
 export function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -27,12 +28,10 @@ export function ForgotPassword() {
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center">
-                <span className="text-white text-xl">T</span>
-              </div>
-              <span className="text-2xl text-[#0047AB]">Tessely</span>
+              <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
+              <span className="text-2xl text-[#0047AB]">Tessely.ai</span>
             </Link>
-            <h1 className="text-gray-900 mb-2">Reset Your Password</h1>
+            <h1 className="text-gray-900 mb-2" style={{fontWeight: 'bold'}}>Reset Your Password</h1>
             <p className="text-gray-600">
               {isSubmitted
                 ? "Check your email for reset instructions"

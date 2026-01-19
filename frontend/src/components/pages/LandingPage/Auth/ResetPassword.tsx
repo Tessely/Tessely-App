@@ -5,6 +5,7 @@ import { Lock, Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { resetPassword } from '../../../../api/auth';
+import TesselyLogo from '../../../../assets/icons/TesselyLogo.svg';
 
 export function ResetPassword() {
   const [newPassword, setNewPassword] = useState('');
@@ -62,12 +63,10 @@ export function ResetPassword() {
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center">
-                <span className="text-white text-xl">T</span>
-              </div>
-              <span className="text-2xl text-[#0047AB]">Tessely</span>
+              <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
+              <span className="text-2xl text-[#0047AB]">Tessely.ai</span>
             </Link>
-            <h1 className="text-gray-900 mb-2">New Password</h1>
+            <h1 className="text-gray-900 mb-2" style={{fontWeight: 'bold'}}>New Password</h1>
             <p className="text-gray-600">
               {isSubmitted
                 ? "Password has been reset successfully!"
@@ -126,7 +125,7 @@ export function ResetPassword() {
                   )}
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-[#0047AB] to-[#00D9B5] text-white hover:opacity-90 py-6 mt-4"
+                    className="w-full bg-[#0047AB] hover:bg-[#003380] text-white text-white hover:opacity-90 py-6 mt-4"
                   >
                     Update Password
                     <ArrowRight className="w-4 h-4 ml-2" />

@@ -1,11 +1,39 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../../ui/button';
-import { Factory, DollarSign, Heart, ShoppingCart, Truck, ArrowRight, TrendingUp, Check, Sparkles } from 'lucide-react';
+import { Factory, DollarSign, Heart, ShoppingCart, Truck, ArrowRight, TrendingUp, Check, Sparkles, ChevronDown } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 
 export function Solutions() {
   const [activeMetric, setActiveMetric] = useState(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: 'What happens after my free trial ends?',
+      answer: 'After your 14-day free trial ends, you can choose to upgrade to a paid plan or continue with limited features. Your data will be preserved for 30 days.'
+    },
+    {
+      question: 'Can I cancel anytime?',
+      answer: 'Yes, you can cancel your subscription at any time. There are no long-term contracts or cancellation fees.'
+    },
+    {
+      question: 'Do you offer discounts for annual plans?',
+      answer: 'Yes, we offer a 20% discount when you choose annual billing instead of monthly billing.'
+    },
+    {
+      question: 'What payment methods do you accept?',
+      answer: 'We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for enterprise plans.'
+    },
+    {
+      question: 'Is my data secure?',
+      answer: 'Absolutely. We use enterprise-grade encryption, SOC 2 compliance, and follow industry best practices to keep your data safe and secure.'
+    },
+    {
+      question: 'Can I upgrade or downgrade my plan?',
+      answer: 'Yes, you can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle.'
+    }
+  ];
 
   const solutions = [
     {
@@ -62,8 +90,8 @@ export function Solutions() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-gray-900 mb-6">
-              Solutions That Work — Across Every Industry.
+            <h1 className="text-gray-900 mb-6" style={{fontWeight: 'bold'}}>
+              Solutions That Work Across Every Industry.
             </h1>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Tailored process intelligence for your specific business needs
@@ -86,7 +114,7 @@ export function Solutions() {
                 className="group"
               >
                 <div className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-all h-full flex flex-col">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${solution.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform" style={{ backgroundColor: '#5ECFC0' }}>
                     <solution.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-gray-900 mb-3">{solution.title}</h3>
@@ -106,10 +134,10 @@ export function Solutions() {
       </section>
 
       {/* Success Metrics Carousel */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20 bg-gradient-to-b ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Proven Results</h2>
+            <h2 className="text-gray-900 mb-4" style={{ fontWeight: 'bold' }}>Proven Results</h2>
             <p className="text-gray-600">
               Real outcomes from businesses like yours
             </p>
@@ -129,6 +157,7 @@ export function Solutions() {
                     ? 'bg-gradient-to-br from-[#0047AB] to-[#00D9B5] text-white shadow-lg scale-105'
                     : 'bg-white border border-gray-100 text-gray-900'
                 }`}
+                style={{ background: (activeMetric === index) ? 'linear-gradient(to bottom, #003F72, #C6EBE7)':'white' }}
               >
                 <metric.icon className={`w-8 h-8 mx-auto mb-3 ${activeMetric === index ? 'text-white' : 'text-[#0047AB]'}`} />
                 <div className="text-3xl mb-2">{metric.value}</div>
@@ -168,19 +197,19 @@ export function Solutions() {
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 text-gray-700">
-                    <div className="w-6 h-6 rounded-full bg-[#00D9B5] flex items-center justify-center text-white text-sm">✓</div>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm" style={{backgroundColor: '#003F72'}}>✓</div>
                     Industry-specific KPIs and metrics
                   </li>
                   <li className="flex items-center gap-3 text-gray-700">
-                    <div className="w-6 h-6 rounded-full bg-[#00D9B5] flex items-center justify-center text-white text-sm">✓</div>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm" style={{backgroundColor: '#003F72'}}>✓</div>
                     Compliance and regulatory support
                   </li>
                   <li className="flex items-center gap-3 text-gray-700">
-                    <div className="w-6 h-6 rounded-full bg-[#00D9B5] flex items-center justify-center text-white text-sm">✓</div>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm" style={{backgroundColor: '#003F72'}}>✓</div>
                     Pre-configured integration templates
                   </li>
                   <li className="flex items-center gap-3 text-gray-700">
-                    <div className="w-6 h-6 rounded-full bg-[#00D9B5] flex items-center justify-center text-white text-sm">✓</div>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm" style={{backgroundColor: '#003F72'}}>✓</div>
                     Expert support and best practices
                   </li>
                 </ul>
@@ -188,8 +217,8 @@ export function Solutions() {
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                 <div className="space-y-4">
                   {['Process Templates', 'Custom Dashboards', 'Integration Hub', 'Analytics Engine'].map((feature, index) => (
-                    <div key={feature} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center text-white">
+                    <div key={feature} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg" >
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center text-white" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
                         {index + 1}
                       </div>
                       <span className="text-gray-700">{feature}</span>
@@ -206,7 +235,7 @@ export function Solutions() {
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Choose Your Plan</h2>
+            <h2 className="text-gray-900 mb-4" style={{ fontWeight: 'bold' }}>Choose Your Plan</h2>
             <p className="text-gray-600">
               Start free and scale as you grow
             </p>
@@ -262,15 +291,11 @@ export function Solutions() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl border-2 border-[#0047AB] shadow-xl scale-105 overflow-hidden relative"
+              className="bg-white rounded-2xl border-2 hadow-xl scale-105 overflow-hidden relative"
+              style={{borderColor: '#5ECFC0 '}}
             >
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <div className="flex items-center gap-2 bg-gradient-to-r from-[#0047AB] to-[#00D9B5] text-white px-4 py-2 rounded-full text-sm">
-                  <Sparkles className="w-4 h-4" />
-                  Most Popular
-                </div>
-              </div>
-              <div className="p-8 bg-gradient-to-br from-[#0047AB] to-[#00D9B5] text-white">
+
+              <div className="p-8 bg-gradient-to-br text-white" style={{backgroundColor: '#5ECFC0 '}}>
                 <h3 className="mb-2">Professional</h3>
                 <div className="flex items-baseline gap-2 mb-2">
                   <span className="text-4xl">Coming Soon</span>
@@ -297,7 +322,7 @@ export function Solutions() {
                   </li>
                 </ul>
                 <Link to="/pricing">
-                  <Button className="w-full bg-gradient-to-r from-[#0047AB] to-[#00D9B5] text-white hover:opacity-90">
+                  <Button className="w-full bg-gradient-to-r text-white hover:opacity-90" style={{backgroundColor: '#5ECFC0 '}}>
                     Join Waitlist
                   </Button>
                 </Link>
@@ -359,17 +384,92 @@ export function Solutions() {
         </div>
       </section>
 
+      {/* All Plans Include Section */}
+      <section className="pt-10 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-gray-900 mb-4" style={{ fontWeight: 'bold' }}>All Plans Include</h2>
+            <p className="text-gray-600">Core features available to everyone</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              'AI-Powered Insights',
+              'Process Mapping',
+              'Real-Time Dashboards',
+              'Data Security',
+              'Cloud Storage',
+              'Mobile Access',
+              'Export Reports',
+              'Regular Updates'
+            ].map((feature) => (
+              <motion.div
+                key={feature}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-2xl p-6 text-center shadow-sm"
+              >
+                <Check className="w-6 h-6 mx-auto mb-3" style={{ color: '#003F72' }} />
+                <p className="text-gray-900 text-sm font-medium">{feature}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-gray-900 mb-4" style={{ fontWeight: 'bold' }}>Frequently Asked Questions</h2>
+            <p className="text-gray-600">Everything you need to know about pricing</p>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-2xl border border-gray-100 px-8 py-4 overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-5 flex items-center justify-between text-left transition-colors"
+                >
+                  <span className="text-gray-900 font-medium">{faq.question}</span>
+                  <ChevronDown
+                    className={`w-5 h-5 text-gray-500 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 pb-5">
+                    <p className="text-gray-600">{faq.answer}</p>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#0047AB] to-[#00D9B5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white mb-6">
-            Ready to Transform Your Operations?
-          </h2>
-          <Link to="/pricing">
-            <Button className="bg-white text-[#0047AB] hover:bg-gray-100 px-8 py-6">
-              Start Free Trial
-            </Button>
-          </Link>
+      <section className="max-w-7xl mx-auto py-20 rounded-2xl" style={{ background: 'radial-gradient(circle at center, #003F72 0%, #bdebe6 100%)', marginBottom: '20px' }}>
+        <div className="px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-white mb-6">
+              Ready to see your process clearly?
+            </h2>
+            <Link to="/pricing">
+              <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
+                Start Free Today
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>

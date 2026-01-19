@@ -1,6 +1,7 @@
 import { Button } from '../../ui/button';
 import { Briefcase, MapPin, Clock, Heart, Book, Globe, Quote } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 
 export function Careers() {
   const openRoles = [
@@ -93,7 +94,7 @@ export function Careers() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-gray-900 mb-6">
+            <h1 className="text-gray-900 mb-6" style={{fontWeight: 'bold'}}>
               Build the Future of Process Intelligence.
             </h1>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
@@ -107,7 +108,7 @@ export function Careers() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Open Positions</h2>
+            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Open Positions</h2>
             <p className="text-gray-600">
               Find your next opportunity
             </p>
@@ -158,7 +159,7 @@ export function Careers() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="max-w-7xl mx-auto py-20 rounded-3xl" style={{backgroundColor: '#CCEDEA'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-gray-900 mb-4">What Our Team Says</h2>
@@ -193,7 +194,7 @@ export function Careers() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Perks & Benefits</h2>
+            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Perks & Benefits</h2>
             <p className="text-gray-600">
               We invest in our team's growth and well-being
             </p>
@@ -221,42 +222,48 @@ export function Careers() {
       </section>
 
       {/* Culture Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl p-12">
-            <div className="text-center mb-8">
-              <h2 className="text-gray-900 mb-4">Our Culture</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                We're building more than a product — we're building a team that values curiosity, collaboration, and continuous learning.
-              </p>
-            </div>
+      <section className="py-20 max-w-7xl mx-auto">
+        <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl p-12">
+          <div className="text-center mb-8">
+            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Our Culture</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              We're building more than a product — we're building a team that values curiosity, collaboration, and continuous learning.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {['Innovation First', 'Remote-Friendly', 'Inclusive & Diverse'].map((value, index) => (
-                <div key={value} className="bg-white rounded-xl p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#0047AB] to-[#00D9B5] text-white flex items-center justify-center">
-                    {index + 1}
-                  </div>
-                  <p className="text-gray-900">{value}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {['Innovation First', 'Remote-Friendly', 'Inclusive & Diverse'].map((value, index) => (
+              <div key={value} className="bg-white rounded-xl p-6 text-center">
+                <div className="w-12 h-12 mx-auto mb-3 rounded-full text-white flex items-center justify-center" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
+                  {index + 1}
                 </div>
-              ))}
-            </div>
+                <p className="text-gray-900">{value}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#0047AB] to-[#00D9B5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white mb-6">
-            Don't See the Right Role?
-          </h2>
-          <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-            We're always looking for talented people. Send us your resume and tell us how you'd like to contribute.
-          </p>
-          <Button className="bg-white text-[#0047AB] hover:bg-gray-100 px-8 py-6">
-            Send Open Application
-          </Button>
+      <section className="max-w-7xl mx-auto py-20 rounded-2xl" style={{ background: 'radial-gradient(circle at center, #003F72 0%, #bdebe6 100%)', marginBottom: '20px' }}>
+        <div className="px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-white mb-6">
+              Don't See the Right Role?
+            </h2>
+            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+              We're always looking for talented people. Send us your resume and tell us how you'd like to contribute.
+            </p>
+            <Link to="/">
+              <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
+                Send Open Application
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>

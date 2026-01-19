@@ -7,6 +7,7 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { login } from '../../../../api/auth';
 import type { LoginPayload } from '../../../../types';
+import TesselyLogo from '../../../../assets/icons/TesselyLogo.svg';
 
 export function Login() {
   const navigate = useNavigate();
@@ -59,12 +60,10 @@ export function Login() {
             {/* Logo and Header */}
             <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center">
-                <span className="text-white text-xl">T</span>
-              </div>
-              <span className="text-2xl text-[#0047AB]">Tessely</span>
+              <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
+              <span className="text-2xl text-[#0047AB]">Tessely.ai</span>
             </Link>
-            <h1 className="text-gray-900 mb-2">Welcome Back</h1>
+            <h1 className="text-gray-900 mb-2" style={{fontWeight: 'bold'}}>Welcome Back</h1>
             <p className="text-gray-600">Sign in to your account to continue</p>
           </div>
 
@@ -141,7 +140,7 @@ export function Login() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-[#0047AB] to-[#00D9B5] text-white hover:opacity-90 py-6"
+                className="w-full bg-[#0047AB] hover:bg-[#003380] text-white py-6"
               >
                 Sign In
                 <ArrowRight className="w-4 h-4 ml-2" />
