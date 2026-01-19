@@ -3,8 +3,6 @@
 from fastapi import Header,APIRouter, File, UploadFile, HTTPException, Depends
 from datetime import datetime
 import logging
-from src.core.supabase_client import get_supabase_service_client
-from src.core.supabase_client import get_supabase_client_for_user
 from src.core.supabase_client import get_supabase_client
 from src.api.dependencies import get_current_user
 
