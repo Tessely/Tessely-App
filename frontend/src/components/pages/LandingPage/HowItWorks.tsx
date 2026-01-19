@@ -74,16 +74,16 @@ export function HowItWorks() {
                 }`}
               >
                 <div className="flex-1">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center text-white">
-                      <step.icon className="w-8 h-8" />
-                    </div>
-                    <div className="w-12 h-12 rounded-full border-2 border-[#0047AB] flex items-center justify-center text-[#0047AB]">
-                      {step.number}
-                    </div>
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-4" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
+                    <step.icon className="w-8 h-8" />
                   </div>
-                  <h2 className="text-gray-900 mb-3">{step.title}</h2>
-                  <p className="text-gray-600 mb-2">{step.description}</p>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="w-6 h-6 rounded-full bg-[#0047AB] flex items-center justify-center text-white text-sm font-medium">
+                      {step.number}
+                    </span>
+                    <h2 className="text-gray-900">{step.title}</h2>
+                  </div>
+                  <p className="text-gray-600 mb-2" style={{color: '#235D86'}}>{step.description}</p>
                   <p className="text-sm text-gray-500">{step.details}</p>
                 </div>
                 <div className="flex-1">
@@ -93,6 +93,27 @@ export function HowItWorks() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Video Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-gray-900 mb-4">From Chaos to Clarity</h2>
+            <p className="text-gray-600">
+              Watch how Tessely transforms complex data into actionable insights
+            </p>
+          </div>
+
+          <div className="relative aspect-video bg-gradient-to-br from-[#0047AB]/10 to-[#00D9B5]/10 rounded-2xl overflow-hidden group cursor-pointer">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                <Play className="w-8 h-8 text-[#0047AB] ml-1" />
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
         </div>
       </section>
@@ -154,27 +175,6 @@ export function HowItWorks() {
                 </div>
               )}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">From Chaos to Clarity</h2>
-            <p className="text-gray-600">
-              Watch how Tessely transforms complex data into actionable insights
-            </p>
-          </div>
-
-          <div className="relative aspect-video bg-gradient-to-br from-[#0047AB]/10 to-[#00D9B5]/10 rounded-2xl overflow-hidden group cursor-pointer">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                <Play className="w-8 h-8 text-[#0047AB] ml-1" />
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
         </div>
       </section>

@@ -23,8 +23,6 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../../../api/auth';
 import { fetchCaseRoots } from '../../../api/processMining';
 import { CaseRootsResponse } from '../../../types';
 
@@ -79,8 +77,16 @@ const kpiCards = [
   },
 ];
 
-// Pie chart colors
-const PIE_CHART_COLORS = ['#1e3a5f', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe'];
+// Pie chart colors (maximum 7 colors)
+const PIE_CHART_COLORS = [
+  '#1e3a5f',
+  '#3b82f6',
+  '#60a5fa',
+  '#93c5fd',
+  '#bfdbfe',
+  '#8b5cf6',
+  '#c084fc'
+];
 
 // Performance metrics data
 const performanceMetrics = [
@@ -114,8 +120,6 @@ export function MainDashboard() {
   const [caseRootsData, setCaseRootsData] = useState<CaseRootsResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const userData = localStorage.getItem('@user_data');
     if (userData) {
@@ -140,29 +144,32 @@ export function MainDashboard() {
   }, []);
 
   // Pie chart data - dynamic from API or fallback to hardcoded
-  const pieChartData = caseRootsData
-    ? caseRootsData.case_roots.map((root, index) => ({
-      name: root.root_table,
-      percentage: Math.round(root.percentage * 100),
-      cases: root.case_count,
-      color: PIE_CHART_COLORS[index % PIE_CHART_COLORS.length],
-    }))
-    : [
-      { name: 'Equity Trade Lifecycle (Public Markets)', percentage: 56, cases: 2000, color: '#1e3a5f' },
-      { name: 'Fixed Income Trade Lifecycle (Public Markets)', percentage: 14, cases: 500, color: '#3b82f6' },
-      { name: 'Private Equity Investment Closing', percentage: 28, cases: 1000, color: '#60a5fa' },
-      { name: 'Fund Commitment Process', percentage: 1, cases: 30, color: '#93c5fd' },
-      { name: 'FX Hedging', percentage: 1, cases: 30, color: '#bfdbfe' },
-    ];
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate('/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
+  const pieChartData = (() => {
+    if (caseRootsData) {
+      const totalCases = caseRootsData.case_roots.reduce((sum, root) => sum + root.case_count, 0);
+      return caseRootsData.case_roots.map((root, index) => ({
+        name: root.root_table,
+        percentage: totalCases > 0 ? Math.round((root.case_count / totalCases) * 100) : 0,
+        cases: root.case_count,
+        color: PIE_CHART_COLORS[index % PIE_CHART_COLORS.length],
+      }));
+    } else {
+      // Fallback hardcoded data
+      const fallbackData = [
+        { name: 'Equity Trade Lifecycle (Public Markets)', cases: 2000 },
+        { name: 'Fixed Income Trade Lifecycle (Public Markets)', cases: 500 },
+        { name: 'Private Equity Investment Closing', cases: 1000 },
+        { name: 'Fund Commitment Process', cases: 30 },
+        { name: 'FX Hedging', cases: 30 }
+      ];
+      const totalCases = fallbackData.reduce((sum, item) => sum + item.cases, 0);
+      return fallbackData.map((item, index) => ({
+        ...item,
+        percentage: totalCases > 0 ? Math.round((item.cases / totalCases) * 100) : 0,
+        color: PIE_CHART_COLORS[index % PIE_CHART_COLORS.length],
+      }));
     }
-  };
+  })();
 
   return (
     <Box minH="100vh" bg="gray.50">

@@ -269,7 +269,7 @@ export function ProcessOverview() {
             attributionPosition="bottom-right"
             proOptions={{ hideAttribution: true }}
           >
-            <Background color="#E5E7EB" gap={16} />
+            <Background color="#cfafaf" gap={16} />
           </ReactFlow>
         </Box>
       </Card.Body>

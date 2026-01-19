@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Menu, X } from 'lucide-react';
+import TesselyLogo from '../assets/icons/TesselyLogo.svg';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,9 +21,9 @@ export function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'How It Works', path: '/how-it-works' },
     { name: 'Solutions', path: '/solutions' },
-    { name: 'About', path: '/about' },
+    { name: 'About Us', path: '/about' },
     { name: 'Careers', path: '/careers' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Contact Us', path: '/contact' },
   ];
 
   return (
@@ -34,9 +35,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center">
-              <span className="text-white">T</span>
-            </div>
+            <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
             <span className="text-[#0047AB]">Tessely</span>
           </Link>
 
@@ -57,13 +56,8 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-3">
             <Link to="/login">
-              <Button variant="ghost" className="text-gray-600 hover:text-[#0047AB]">
-                Log In
-              </Button>
-            </Link>
-            <Link to="/pricing">
               <Button className="bg-[#0047AB] hover:bg-[#003380] text-white">
-                Free Trial
+                Log In
               </Button>
             </Link>
           </div>
@@ -102,9 +96,9 @@ export function Navbar() {
                   Log In
                 </Button>
               </Link>
-              <Link to="/pricing" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button className="bg-[#0047AB] hover:bg-[#003380] text-white w-full">
-                  Free Trial
+                  Log In
                 </Button>
               </Link>
             </div>

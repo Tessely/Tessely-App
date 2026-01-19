@@ -3,6 +3,7 @@ import { Linkedin, Twitter } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useState } from 'react';
+import TesselyLogo from '../assets/icons/TesselyLogo.svg';
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -21,9 +22,7 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0047AB] to-[#00D9B5] flex items-center justify-center">
-                <span className="text-white">T</span>
-              </div>
+              <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
               <span className="text-[#0047AB]">Tessely</span>
             </Link>
             <p className="text-gray-600 text-sm mb-4">
@@ -51,7 +50,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-gray-900 mb-4">Quick Links</h3>
+            <h3 className="text-gray-900 mb-4" style={{fontWeight: '500'}}>Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/how-it-works" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
@@ -78,7 +77,7 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-gray-900 mb-4">Stay Updated</h3>
+            <h3 className="text-gray-900 mb-4" style={{fontWeight: '500'}}>Stay Updated</h3>
             <form onSubmit={handleNewsletterSubmit} className="space-y-2">
               <Input
                 type="email"
