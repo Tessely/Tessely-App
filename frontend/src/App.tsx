@@ -35,11 +35,6 @@ function AppContent() {
     location.pathname ==='/data-sources' ||
     location.pathname === '/processes' ||
     location.pathname === '/data-sources';
-  const AuthNav =
-    location.pathname === '/main-dashboard'||
-    location.pathname === '/processes' ||
-    location.pathname === '/data-sources';
-
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {!hideNavAndFooter && <Navbar />}
