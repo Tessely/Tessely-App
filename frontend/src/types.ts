@@ -22,3 +22,10 @@ export type CaseRootsResponse = {
   case_roots: CaseRoot[];
   total_cases: number;
 };
+
+export type UserCSVFile = {
+  id: string;
+  file_name: string;
+  file_url: string;
+  uploaded_at: string;
+}

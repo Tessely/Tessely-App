@@ -1,231 +1,213 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import TesselyLogo from '../assets/icons/TesselyLogo.svg?react';
-import {
-  Box,
-  Flex,
-  HStack,
-  Text,
-  Icon,
-  VStack,
-} from '@chakra-ui/react';
-import {
-  Database,
-  FileStack,
-  User,
-  LogOut,
-  Home
-} from 'lucide-react';
 import { logout } from '../api/auth';
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  Menu as MenuIcon,
+  X,
+  House,
+  List,
+  Database,
+  LogOut,
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useNavigate } from "react-router-dom";
 
-
-// Navigation link component
-interface NavLinkProps {
-  to: string;
-  icon: React.ElementType;
-  label: string;
-  isActive: boolean;
-}
-
-function NavLink({ to, icon, label, isActive }: NavLinkProps) {
-  return (
-    <Link to={to} style={{ textDecoration: 'none' }}>
-      <Flex
-        align="center"
-        gap={2}
-        px={3}
-        py={2}
-        borderRadius="lg"
-        fontSize="sm"
-        fontWeight={isActive ? 'medium' : 'normal'}
-        color={isActive ? '#0047AB' : 'gray.600'}
-        bg={isActive ? 'blue.50' : 'transparent'}
-        transition="all 0.2s"
-        _hover={{
-          color: isActive ? '#0047AB' : 'gray.900',
-          bg: isActive ? 'blue.50' : 'gray.50',
-        }}
-      > 
-        <Icon as={icon} boxSize={4} />
-        {label}
-      </Flex>
-    </Link>
-  );
-}
+import {
+  CloseButton,
+  Drawer,
+  VStack,
+  Menu,
+  Popover,
+  Portal,
+  Button,
+  Avatar,
+  AvatarGroup,
+  Box,
+  HStack,
+  Link,
+  Text,
+  IconButton,
+} from "@chakra-ui/react";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 export function AuthNavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showAccountMenu, setShowAccountMenu] = useState(false);
-  const [user, setUser] = useState<{ full_name: string; email: string } | null>({
-    full_name: 'Unknown User',
-    email: 'unknown@example.com',
-  });
-  const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const [user, setUser] = useState<{ full_name: string; email: string } | null>(
+    {
+      full_name: "Unknown User",
+      email: "unknown@example.com",
+    }
+  );
+  const variant = useBreakpointValue({ base: 'mobile', md: 'desktop' });
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Current location:", location);
+    console.log("Current pathname:", location.pathname);
+  }, [location]);
+  useEffect(() => {
+    const userData = localStorage.getItem("@user_data");
+    if (userData) {
+      setUser(JSON.parse(userData));
+      console.log("User data loaded:", JSON.parse(userData));
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const userData = localStorage.getItem('@user_data');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
-  }, []);
+  const navLinks = [
+    { name: "Dashboard", path: "/main-dashboard", icon: House },
+    { name: "Processes", path: "/processes", icon: List },
+    { name: "Data Sources", path: "/data-sources", icon: Database },
+  ];
 
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (showAccountMenu && !target.closest('[data-account-menu]')) {
-        setShowAccountMenu(false);
-      }
+  const loadNavLinks = () => {
+      return navLinks.map((link) => {
+        const Icon = link.icon;
+        const isCurrent = location.pathname.startsWith(link.path);
+        return (
+          <Link
+            key={link.path}
+            href={link.path}
+            aria-current={isCurrent ? "page" : undefined}
+            display="flex"
+            alignItems="center"
+            gap={2}
+            p={2}
+            rounded="xl"
+            _currentPage={{ color: "brand.primary", bg: "brand.selected" }}
+            _hover={{ bg: "brand.selected", color: "brand.primary" }}
+            transition="all 0.2s"
+          >
+            {Icon && <Icon size={16} />}
+            <Text>{link.name}</Text>
+          </Link>
+        );
+      });
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showAccountMenu]);
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate('/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
-
-  return (
-    <Box
-      as="nav"
-      position="sticky"
-      top={0}
-      zIndex={50}
-      bg="white"
-      borderBottom="1px solid"
-      borderColor="gray.200"
-      transition="all 0.3s"
-      shadow={isScrolled ? 'sm' : 'none'}
-    >
-      <Box w="full" px={6} py={4}>
-        <Flex align="center" justify="space-between">
-          {/* Left side: Logo and Navigation Tabs */}
-          <HStack gap={8}>
-            {/* Logo */}
-            <TesselyLogo/>
-
-            {/* Navigation Tabs */}
-            <HStack gap={2}>
-              <NavLink
-                to="/main-dashboard"
-                icon={Home}
-                label="Dashboard"
-                isActive={location.pathname === '/main-dashboard'}
-              />
-              <NavLink
-                to="/processes"
-                icon={FileStack}
-                label="Processes"
-                isActive={location.pathname === '/processes'}
-              />
-              <NavLink
-                to="/data-sources"
-                icon={Database}
-                label="Data Sources"
-                isActive={location.pathname === '/data-sources'}
-              />
-            </HStack>
-          </HStack>
-
-          {/* Right side: Profile Icon */}
-          <Box position="relative" data-account-menu>
-            <Flex
-              as="button"
-              p={2}
-              borderRadius="lg"
-              cursor="pointer"
-              transition="all 0.2s"
-              _hover={{ bg: 'gray.100' }}
-              onClick={() => setShowAccountMenu(!showAccountMenu)}
-            >
-              <Icon as={User} boxSize={5} color="gray.600" />
-            </Flex>
-
-            {/* Account Menu Dropdown */}
-            {showAccountMenu && (
-              <Box
-                position="absolute"
-                right={0}
-                top={12}
-                bg="white"
-                borderRadius="lg"
-                shadow="lg"
-                border="1px solid"
-                borderColor="gray.200"
-                zIndex={50}
-                minW="200px"
-                overflow="hidden"
+    
+  const mobileNav=()=>{
+    return (
+      <Drawer.Root
+            placement="bottom"
+            size="xs"
+            open={isMobileMenuOpen}
+            onOpenChange={(e) => setIsMobileMenuOpen(e.open)}
+          >
+            <Drawer.Trigger asChild>
+              <IconButton
+                variant={"plain"}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {/* User Info */}
-                <Box p={4} borderBottom="1px solid" borderColor="gray.100">
-                  <HStack gap={3}>
-                    <Flex
-                      w={12}
-                      h={12}
-                      borderRadius="full"
-                      bgGradient="linear(to-br, #0047AB, #00D9B5)"
-                      align="center"
-                      justify="center"
-                      flexShrink={0}
-                    >
-                      <Icon as={User} boxSize={6} color="white" />
-                    </Flex>
-                    <VStack align="flex-start" gap={0} flex={1} minW={0}>
-                      <Text
-                        fontSize="sm"
-                        fontWeight="semibold"
-                        color="gray.900"
-                        lineClamp={1}
-                      >
-                        {user?.full_name || 'User'}
-                      </Text>
-                      <Text fontSize="xs" color="gray.500" lineClamp={1}>
-                        {user?.email || 'user@example.com'}
-                      </Text>
-                    </VStack>
-                  </HStack>
-                </Box>
+                {isMobileMenuOpen ? <X /> : <MenuIcon />}
+              </IconButton>
+            </Drawer.Trigger>
+            <Portal>
+              <Drawer.Backdrop />
+              <Drawer.Positioner>
+                <Drawer.Content pb={10}>
+                  <Drawer.Header>
+                    <Drawer.Title>Navigation</Drawer.Title>
+                  </Drawer.Header>
+                  <Drawer.Body>
+                    {loadNavLinks()}
+                  </Drawer.Body>
+                  <Drawer.CloseTrigger asChild>
+                    <CloseButton size="sm" />
+                  </Drawer.CloseTrigger>
+                </Drawer.Content>
+              </Drawer.Positioner>
+            </Portal>
+          </Drawer.Root>
+    );
+  }
 
-                {/* Logout Button */}
-                <Box p={2}>
-                  <Flex
-                    as="button"
-                    w="full"
-                    align="center"
-                    gap={3}
-                    px={3}
-                    py={2}
-                    fontSize="sm"
-                    color="red.600"
-                    borderRadius="lg"
-                    cursor="pointer"
-                    transition="all 0.2s"
-                    _hover={{ bg: 'red.50' }}
-                    onClick={handleLogout}
-                  >
-                    <Icon as={LogOut} boxSize={4} />
-                    <Text>Log out</Text>
-                  </Flex>
-                </Box>
+  const desktopNav=()=>{
+    return (
+      <HStack>
+            {loadNavLinks()}
+      </HStack>
+    );
+  }
+  
+  return (
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-white"
+      }`}
+    >
+      <HStack px={4} className="flex h-16 items-center justify-between">
+        {/* Left side*/}
+        <div className="flex items-center ml-4 gap-8">
+          <img
+            src="/images/Logo.png"
+            alt="Tessely"
+            style={{ height: "38px", width: "auto" }}
+          />
+          {variant === 'mobile' ? mobileNav() : desktopNav()}
+        </div>
+        {/* Right side*/}
+        <div>
+          <Menu.Root>
+            <Menu.Trigger cursor="pointer" asChild>
+              <Box>
+                <Avatar.Root variant="outline">
+                  <Avatar.Fallback name={user?.full_name || "User"} />
+                  <Avatar.Image />
+                </Avatar.Root>
               </Box>
-            )}
-          </Box>
-        </Flex>
-      </Box>
-    </Box>
+            </Menu.Trigger>
+            <Portal>
+              <Menu.Positioner>
+                <Menu.Content>
+                  <VStack
+                    p={2}
+                    align="end"
+                    borderBottom="1px solid"
+                    borderColor="brand.border"
+                    mb={2}
+                  >
+                    <Text>{user?.full_name}</Text>
+                    <Text>{user?.email}</Text>
+                  </VStack>
+                  <Menu.Item
+                    cursor="pointer"
+                    value="account-settings"
+                    onSelect={() => navigate("/")}
+                  >
+                    Account Settings
+                  </Menu.Item>
+                  <Menu.Item
+                    cursor="pointer"
+                    value="logout"
+                    color="brand.error"
+                    onSelect={handleLogout}
+                  >
+                    Log Out
+                  </Menu.Item>
+                </Menu.Content>
+              </Menu.Positioner>
+            </Portal>
+          </Menu.Root>
+        </div>
+      </HStack>
+    </nav>
   );
 }

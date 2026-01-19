@@ -25,6 +25,7 @@ import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
 import { Processes } from './components/pages/Auth_Pages/Processes';
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
 import { ThemeProvider } from "next-themes"
+import { Toaster, toaster } from "../src/components/ui/toaster"
 import { system } from "./theme"
 
 function AppContent() {
@@ -44,6 +45,7 @@ function AppContent() {
     <div className="min-h-screen bg-white flex flex-col">
       {!hideNavAndFooter && <Navbar />}
       <main className="flex-1">
+        
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
@@ -63,27 +65,28 @@ function AppContent() {
 
           <Route path="/main-dashboard" element={
             <ProtectedRoute>
-              <AuthNavBar />
-            <ChakraProvider value={system}>
-              <MainDashboard />
-            </ChakraProvider>
+              <ChakraProvider value={system}>
+                <AuthNavBar />
+                <MainDashboard />
+              </ChakraProvider>
             </ProtectedRoute>
           } />
           <Route path="/data-sources" element={
             <ProtectedRoute>
-             <ChakraProvider value={system}><DataSources /></ChakraProvider>
+             <ChakraProvider value={system}>
+                <Toaster />
+                <AuthNavBar />
+                <DataSources/>
+              </ChakraProvider>
             </ProtectedRoute>
             } />
-          <Route path="/data-sources" element={
-            <ProtectedRoute>
-              <AuthNavBar />
-              < DataSources/>
-            </ProtectedRoute>
-          } />
+
           <Route path="/processes" element={
             <ProtectedRoute>
-              <AuthNavBar />
-              <Processes />
+              <ChakraProvider value={system}>
+                <AuthNavBar />
+                <Processes />
+              </ChakraProvider>
             </ProtectedRoute>
           } />
           
