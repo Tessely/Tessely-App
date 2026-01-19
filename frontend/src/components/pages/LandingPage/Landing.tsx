@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../../ui/button';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
-import { Play, Database, Lightbulb, Shield, Package, Factory, Heart, TrendingUp, ArrowRight } from 'lucide-react';
+import { Play, Database, Zap, Shield, Package, Factory, Heart, TrendingUp, ArrowRight } from 'lucide-react';
 import LandingPageBackground from '../../../assets/icons/LandingPageBackground.svg';
 
 export function Landing() {
@@ -24,19 +24,19 @@ export function Landing() {
 
   const speedClarityControl = [
     {
-      icon: Database,
+      icon: Zap,
       title: 'Plug & Play Integration',
       description: 'Connect your systems in minutes, without data preparation or rebuilding.',
     },
     {
-      icon: Lightbulb,
+      icon: Database,
       title: 'Process Clarity',
       description: 'See the operational reality of how processes actually run.',
     },
     {
-      icon: Shield,
-      title: 'No-Code Access',
-      description: 'Built for operations teams, accessible to everyone.',
+      icon: TrendingUp,
+      title: 'Actionable Insight',
+      description: 'Focus on what matters and act with confidence.',
     },
   ];
 

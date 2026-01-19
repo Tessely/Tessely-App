@@ -100,7 +100,7 @@ export function Signup() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-gray-900 mb-2">Create Your Free Account</h1>
+          <h1 className="text-gray-900 mb-2" style={{fontWeight: 'bold'}}>Create Your Free Account</h1>
           <p className="text-gray-600">
             Start your 14-day free trial. No credit card required.
           </p>

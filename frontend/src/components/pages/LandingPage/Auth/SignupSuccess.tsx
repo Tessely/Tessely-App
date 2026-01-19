@@ -13,7 +13,7 @@ export function SignupSuccess() {
         className="max-w-lg w-full"
       >
         {/* Success Card */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-12 text-center">
+        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-12 text-center">
           {/* Success Icon */}
           <motion.div
             initial={{ scale: 0 }}
@@ -43,17 +43,22 @@ export function SignupSuccess() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-blue-50/50 border border-blue-100 rounded-xl p-4 mb-8"
+            className="w-1/2 mx-auto mb-8"
           >
-            <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 text-[#0047AB] flex-shrink-0 mt-0.5" />
-              <div className="text-left">
-                <p className="text-sm text-gray-700 mb-1">
-                  We've sent a verification email to your inbox.
-                </p>
-                <p className="text-xs text-gray-600">
-                  Please verify your email to unlock all features.
-                </p>
+            <div
+              className="bg-blue-50/50 border rounded-xl p-4"
+              style={{backgroundColor: '#CCEDEA'}}
+            >
+              <div className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-[#0047AB] flex-shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="text-sm text-gray-700 mb-1">
+                    We've sent a verification email to your inbox.
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Please verify your email to unlock all features.
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
