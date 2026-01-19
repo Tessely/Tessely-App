@@ -19,11 +19,13 @@ import { SignupSuccess } from './components/pages/LandingPage/Auth/SignupSuccess
 import { ForgotPassword } from './components/pages/LandingPage/Auth/ForgotPassword';
 import { ResetPassword } from './components/pages/LandingPage/Auth/ResetPassword';
 
+import DataSources from './components/pages/Auth_Pages/DataSources';
 import ProtectedRoute from './ProtectedRoute';
 import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
 import { Processes } from './components/pages/Auth_Pages/Processes';
-import { DataSources } from './components/pages/Auth_Pages/DataSources';
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
+import { ThemeProvider } from "next-themes"
+import { Toaster, toaster } from "./components/ui/toaster"
 import { system } from "./theme"
 
 function AppContent() {
@@ -32,13 +34,18 @@ function AppContent() {
     location.pathname === '/login' ||
     location.pathname === '/forgot-password' ||
     location.pathname === '/main-dashboard' ||
-    location.pathname ==='/data-sources' ||
     location.pathname === '/processes' ||
     location.pathname === '/data-sources';
+  const AuthNav =
+    location.pathname === '/main-dashboard'||
+    location.pathname === '/processes' ||
+    location.pathname === '/data-sources';
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {!hideNavAndFooter && <Navbar />}
       <main className="flex-1">
+        
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
@@ -58,24 +65,28 @@ function AppContent() {
 
           <Route path="/main-dashboard" element={
             <ProtectedRoute>
-              <AuthNavBar />
-            <ChakraProvider value={system}>
-              <MainDashboard />
-            </ChakraProvider>
+              <ChakraProvider value={system}>
+                <AuthNavBar />
+                <MainDashboard />
+              </ChakraProvider>
             </ProtectedRoute>
           } />
           <Route path="/data-sources" element={
             <ProtectedRoute>
-              <AuthNavBar />
-              <ChakraProvider value={system}>
-                <DataSources />
+             <ChakraProvider value={system}>
+                <Toaster />
+                <AuthNavBar />
+                <DataSources/>
               </ChakraProvider>
             </ProtectedRoute>
-          } />
+            } />
+
           <Route path="/processes" element={
             <ProtectedRoute>
-              <AuthNavBar />
-              <Processes />
+              <ChakraProvider value={system}>
+                <AuthNavBar />
+                <Processes />
+              </ChakraProvider>
             </ProtectedRoute>
           } />
           

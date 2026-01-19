@@ -57,14 +57,14 @@
       "devDependencies": {
             "@chakra-ui/cli": "^3.30.0",
             "@types/node": "^20.10.0",
-            "@types/react": "^18.3.3",
-            "@types/react-dom": "^18.3.1",
+            "@types/react": "^19.2.7",
+            "@types/react-dom": "^19.2.3",
             "@types/react-router-dom": "^5.3.3",
             "@vitejs/plugin-react-swc": "^3.10.2",
             "typescript": "^5.9.3",
             "vite": "6.3.5",
             "vite-plugin-svgr": "^4.5.0",
-            "vite-tsconfig-paths": "^6.0.3"
+            "vite-tsconfig-paths": "^6.0.4"
       },
       "scripts": {
             "dev": "vite",

@@ -1,12 +1,30 @@
 import React from 'react';
-import { Navbar } from './Components/NavBar';
+import { useEffect,useState } from 'react';
 import { Box, Card, Heading, VStack, Text, HStack} from '@chakra-ui/react';
 import { DataSourceCard } from './Components/DatasourceCard';
-
+import { getUserCSVFiles, deleteUserCSVFile } from '../../../api/datasource';
+import { UserCSVFile } from '../../../types';
+import { Toaster,toaster } from '../../ui/toaster';
 
 interface DataSourcesProps {}
 
-export const DataSources: React.FC<DataSourcesProps> = () => {
+const DataSources: React.FC<DataSourcesProps> = () => {
+    const [files, setFiles]=useState<UserCSVFile[]>([]);
+    useEffect(() => {
+        const fetchFiles = async () => {
+        try {
+            const data = await getUserCSVFiles(); // fetch files from API
+            console.log("Fetched files:", data);
+            setFiles(data); // set state with fetched files
+        } catch (err) {
+            console.error("Failed to fetch files:", err);
+        }
+        };
+
+        fetchFiles(); // call the async function
+  }, []); // empty dependency array -> runs once on mount
+
+  
 
     return (
         <>
@@ -17,7 +35,35 @@ export const DataSources: React.FC<DataSourcesProps> = () => {
                     <Card.Body alignItems="start" gap={6} px={2}>
                         <VStack alignItems="start">
                             <Text fontWeight="medium">Current</Text>
-                            <Text fontWeight="thin">No data sources yet, start uploading some!</Text>
+                            {files.length>0?(
+                                <HStack wrap="wrap" gap={5}>
+                                    {files.map((file:any)=>(
+                                    <DataSourceCard
+                                    imageSrc="excel"
+                                    label={file.file_name}
+                                    variant="active"
+                                    fileID={file.id}
+                                    handleDelete={async () => {
+                                          const deletePromise = deleteUserCSVFile(file.id);
+                                            toaster.promise(deletePromise, {
+                                                loading: { title: `Deleting ${file.file_name}...` },
+                                                success: { title: "Deleted!", description: `${file.file_name} removed` },
+                                                error: { title: "Delete failed" },
+                                            });
+
+                                            deletePromise.then(() => {
+                                                setFiles(prev => prev.filter(f => f.id !== file.id)); // automatically updates UI
+                                            });
+                                       
+                                    }}
+                                />
+                                ))}
+                                </HStack>
+                                
+                            ):
+                            (
+                                <Text fontWeight="thin">No data sources yet, start uploading some!</Text>
+                            )}
                         </VStack>
                         <VStack alignItems="start">
                             <Text fontWeight="medium">Custom File</Text>

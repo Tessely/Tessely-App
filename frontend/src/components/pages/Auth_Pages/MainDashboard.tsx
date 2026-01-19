@@ -23,6 +23,8 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../../api/auth';
 import { fetchCaseRoots } from '../../../api/processMining';
 import { CaseRootsResponse } from '../../../types';
 
