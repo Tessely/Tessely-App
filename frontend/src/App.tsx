@@ -23,6 +23,8 @@ import ProtectedRoute from './ProtectedRoute';
 import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
 import { Processes } from './components/pages/Auth_Pages/Processes';
 import { DataSources } from './components/pages/Auth_Pages/DataSources';
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
+import { system } from "./theme"
 
 function AppContent() {
   const location = useLocation();
@@ -30,6 +32,7 @@ function AppContent() {
     location.pathname === '/login' ||
     location.pathname === '/forgot-password' ||
     location.pathname === '/main-dashboard' ||
+    location.pathname ==='/data-sources' ||
     location.pathname === '/processes' ||
     location.pathname === '/data-sources';
   const AuthNav =
@@ -61,13 +64,17 @@ function AppContent() {
           <Route path="/main-dashboard" element={
             <ProtectedRoute>
               <AuthNavBar />
+            <ChakraProvider value={system}>
               <MainDashboard />
+            </ChakraProvider>
             </ProtectedRoute>
           } />
           <Route path="/data-sources" element={
             <ProtectedRoute>
               <AuthNavBar />
-              < DataSources/>
+              <ChakraProvider value={system}>
+                <DataSources />
+              </ChakraProvider>
             </ProtectedRoute>
           } />
           <Route path="/processes" element={
@@ -85,10 +92,11 @@ function AppContent() {
   );
 }
 
+
 export default function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+      <Router>
+        <AppContent />
+      </Router>
   );
 }
