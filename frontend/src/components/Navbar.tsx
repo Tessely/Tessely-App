@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Button } from './ui/button';
+import { Button } from '@chakra-ui/react';
 import { Menu, X } from 'lucide-react';
+
 import TesselyLogo from '../assets/icons/TesselyLogo.svg';
 
 export function Navbar() {
@@ -32,11 +33,11 @@ export function Navbar() {
         isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2">
             <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
-            <span className="text-[#0047AB]">Tessely</span>
+            <span className="text-[#003F72] font-medium">Tessely.ai</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -45,8 +46,8 @@ export function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm transition-colors hover:text-[#0047AB] ${
-                  location.pathname === link.path ? 'text-[#0047AB]' : 'text-gray-600'
+                className={`text-sm transition-colors hover:text-[#003F72] cursor-pointer ${
+                  location.pathname === link.path ? 'text-[#003F72] font-bold' : 'text-gray-600'
                 }`}
               >
                 {link.name}
@@ -56,9 +57,14 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-3">
             <Link to="/login">
-              <Button className="bg-[#0047AB] hover:bg-[#003380] text-white">
+              <Button className="bg-[#003F72] hover:bg-[#003380] text-white cursor-pointer">
                 Login
               </Button>
+            </Link>
+            <Link to="/signup">
+                <Button variant="outline">
+                  Sign Up
+                </Button>
             </Link>
           </div>
 
@@ -70,7 +76,7 @@ export function Navbar() {
             {isMobileMenuOpen ? (
               <X className="w-6 h-6 text-gray-600" />
             ) : (
-              <Menu className="w-6 h-6 text-gray-600" />
+              <Menu className="w-6 h-6 text-gray-600 cursor-pointer" />
             )}
           </button>
         </div>
@@ -83,22 +89,23 @@ export function Navbar() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-sm transition-colors hover:text-[#0047AB] ${
-                    location.pathname === link.path ? 'text-[#0047AB]' : 'text-gray-600'
+                  className={`text-sm transition-colors hover:text-[#003F72] cursor-pointer ${
+                    location.pathname === link.path ? 'text-[#003F72]' : 'text-gray-600'
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
+
               <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="outline" className="border-gray-300 text-gray-700 w-full">
+                <Button className="bg-[#003F72] hover:bg-[#003380] text-white w-full cursor-pointer">
                   Log In
                 </Button>
               </Link>
-              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="bg-[#0047AB] hover:bg-[#003380] text-white w-full">
-                  Log In
+              <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="outline" width={'full'}>
+                  Sign Up
                 </Button>
               </Link>
             </div>
