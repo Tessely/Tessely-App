@@ -62,6 +62,7 @@ const config = defineConfig({
           "success": { value: "#28894C" },
           "border": { value: "#E4E4E7" },
           "greybg": { value: "#F8F8F8"},
+          "second_blue": { value: "#235D86" },
         },
       },
     },

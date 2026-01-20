@@ -125,7 +125,7 @@ export function Footer() {
           gap={4}
         >
           <Text fontSize="sm" color="gray.500">
-            © 2025 Tessely. All rights reserved.
+            © 2026 Tessely. All rights reserved.
           </Text>
           <HStack gap={6}>
             <Link href="#" fontSize="sm" color="gray.500" _hover={{ color: '#003F72' }}>
