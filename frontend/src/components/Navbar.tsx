@@ -35,7 +35,7 @@ export function Navbar() {
     >
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
             <Text fontWeight="medium" color="brand.primary">
               Tessely.ai
@@ -72,10 +72,10 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/login">
+            <Link href="/login">
               <Button variant="solid">Login</Button>
             </Link>
-            <Link to="/signup">
+            <Link href="/signup">
               <Button variant="outline">Sign Up</Button>
             </Link>
           </div>
@@ -124,12 +124,12 @@ export function Navbar() {
                 );
               })}
 
-              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="solid" width={"full"}>
                   Log In
                 </Button>
               </Link>
-              <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="outline" width={"full"}>
                   Sign Up
                 </Button>
