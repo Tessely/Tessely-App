@@ -23,7 +23,7 @@ export function Footer() {
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
-              <span className="text-[#0047AB]">Tessely</span>
+              <span className="text-[#003F72]">Tessely</span>
             </Link>
             <p className="text-gray-600 text-sm mb-4">
               Making AI Simple for Everyone.
@@ -33,7 +33,7 @@ export function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#0047AB] hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#003F72] hover:text-white transition-colors"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
@@ -41,7 +41,7 @@ export function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#0047AB] hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#003F72] hover:text-white transition-colors"
               >
                 <Twitter className="w-5 h-5" />
               </a>
@@ -53,22 +53,22 @@ export function Footer() {
             <h3 className="text-gray-900 mb-4" style={{fontWeight: '500'}}>Quick Links</h3>
             <div className="space-y-2">
               <div>
-                <Link to="/how-it-works" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
+                <Link to="/how-it-works" className="text-sm text-gray-600 hover:text-[#003F72] transition-colors">
                   How It Works
                 </Link>
               </div>
               <div>
-                <Link to="/solutions" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
+                <Link to="/solutions" className="text-sm text-gray-600 hover:text-[#003F72] transition-colors">
                   Solutions
                 </Link>
               </div>
               <div>
-                <Link to="/about" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
+                <Link to="/about" className="text-sm text-gray-600 hover:text-[#003F72] transition-colors">
                   About
                 </Link>
               </div>
               <div>
-                <Link to="/careers" className="text-sm text-gray-600 hover:text-[#0047AB] transition-colors">
+                <Link to="/careers" className="text-sm text-gray-600 hover:text-[#003F72] transition-colors">
                   Careers
                 </Link>
               </div>
@@ -89,7 +89,7 @@ export function Footer() {
               />
               <Button
                 type="submit"
-                className="w-full bg-[#0047AB] hover:bg-[#003380] text-white text-sm"
+                className="w-full bg-[#003F72] hover:bg-[#003380] text-white text-sm"
               >
                 Subscribe
               </Button>
@@ -103,10 +103,10 @@ export function Footer() {
             © 2025 Tessely. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-sm text-gray-500 hover:text-[#0047AB] transition-colors">
+            <a href="#" className="text-sm text-gray-500 hover:text-[#003F72] transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-sm text-gray-500 hover:text-[#0047AB] transition-colors">
+            <a href="#" className="text-sm text-gray-500 hover:text-[#003F72] transition-colors">
               Terms of Service
             </a>
           </div>

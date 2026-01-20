@@ -2,6 +2,14 @@ import { defineRecipe, createSystem, defaultConfig, defineConfig } from "@chakra
 const buttonRecipe = defineRecipe({
   variants: {
     variant: {
+      white:{
+        bg: "white",
+        color: "brand.primary",
+        _hover: {
+          bg: "white",
+          opacity: 0.8,
+        }
+      },
       solid: {
         bg: "brand.primary",
         color: "white",

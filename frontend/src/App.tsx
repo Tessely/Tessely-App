@@ -18,7 +18,7 @@ import { Signup } from './components/pages/LandingPage/Auth/SignUp';
 import { SignupSuccess } from './components/pages/LandingPage/Auth/SignupSuccess';
 import { ForgotPassword } from './components/pages/LandingPage/Auth/ForgotPassword';
 import { ResetPassword } from './components/pages/LandingPage/Auth/ResetPassword';
-
+import './index.css';
 import DataSources from './components/pages/Auth_Pages/DataSources';
 import ProtectedRoute from './ProtectedRoute';
 import { MainDashboard } from './components/pages/Auth_Pages/MainDashboard';
@@ -47,7 +47,8 @@ function AppContent() {
       <main className="flex-1">
         
         <Routes>
-          <Route path="/" element={<Landing />} />
+            <Route path="/" element={<Landing />} />
+          
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/about" element={<About />} />
@@ -65,28 +66,22 @@ function AppContent() {
 
           <Route path="/main-dashboard" element={
             <ProtectedRoute>
-              <ChakraProvider value={system}>
-                <AuthNavBar />
-                <MainDashboard />
-              </ChakraProvider>
+              <AuthNavBar />
+              <MainDashboard />
             </ProtectedRoute>
           } />
           <Route path="/data-sources" element={
             <ProtectedRoute>
-             <ChakraProvider value={system}>
-                <Toaster />
-                <AuthNavBar />
-                <DataSources/>
-              </ChakraProvider>
+              <Toaster />
+              <AuthNavBar />
+              <DataSources/>
             </ProtectedRoute>
             } />
 
           <Route path="/processes" element={
             <ProtectedRoute>
-              <ChakraProvider value={system}>
-                <AuthNavBar />
-                <Processes />
-              </ChakraProvider>
+              <AuthNavBar />
+              <Processes />
             </ProtectedRoute>
           } />
           
@@ -101,8 +96,10 @@ function AppContent() {
 
 export default function App() {
   return (
+    <ChakraProvider value={system}>
       <Router>
         <AppContent />
       </Router>
+    </ChakraProvider>
   );
 }
