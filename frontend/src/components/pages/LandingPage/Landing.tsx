@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import {
   Button,
   Box,
-  ButtonGroup,
+  Heading,
+  Highlight,
   Image,
   VStack,
   Text,
@@ -49,17 +50,17 @@ export function Landing() {
       icon: Zap,
       title: "Plug & Play Integration",
       description:
-        "Connect your systems in minutes, without data preparation or rebuilding.",
+        "Connect your systems in minutes,\n without data preparation\nor rebuilding.",
     },
     {
       icon: Database,
       title: "Process Clarity",
-      description: "See the operational reality of how processes actually run.",
+      description: "See the operational reality of how\nprocesses actually run.",
     },
     {
       icon: TrendingUp,
       title: "Actionable Insight",
-      description: "Focus on what matters and act with confidence.",
+      description: "Focus on what matters and act \nwith confidence.",
     },
   ];
 
@@ -96,7 +97,7 @@ export function Landing() {
       title: "Finance",
       benefit: "Streamline approval workflows and reduce processing time",
       description:
-        "Improve end-to-end O2C efficiency with automated order validation, invoicing, & payment reconciliation.",
+        "Improve end-to-end O2C efficiency with automated order validation, invoicing, and payment reconciliation",
       color: "from-emerald-500 to-emerald-600",
     },
     {
@@ -143,33 +144,59 @@ export function Landing() {
           w="100%"
         >
           <VStack gap={4} w="100%" alignItems="start">
-            <Text color="white" fontWeight="medium" textStyle="4xl">
-              Process Intelligence <br /> without the{" "}
-              <Text as="span" fontWeight="bold">
-                {" "}
-                complexity.
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <Heading size="4xl" color="white" fontWeight="medium" whiteSpace="pre-line">
+                <Highlight
+                  query={"complexity"}
+                  styles={{ fontWeight: "bold"}}
+                >
+                  {"Process Intelligence\nwithout the complexity."}
+                </Highlight>
+              </Heading>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            >
+              <Text fontSize="xl" color="white" opacity={0.75}>
+                Built for real-world operations, Tessely integrates seamlessly
+                with your systems. Uncover how work actually runs — no data
+                modeling, event logs, or re-engineering required.
               </Text>
-            </Text>
-            <Text fontSize="xl" color="white" opacity={0.75}>
-              Built for real-world operations, Tessely integrates seamlessly
-              with your systems. Uncover how work actually runs — no data
-              modeling, event logs, or re-engineering required.
-            </Text>
+            </motion.div>
           </VStack>
-          <Group>
-            <Link to="/login">
-              <Button variant="solid" size="xl">
-                Login
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button variant="white" size="xl">
-                Try Out Our Demo
-              </Button>
-            </Link>
-          </Group>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+          >
+            <Group>
+              <Link to="/login">
+                <Button variant="solid" size="xl">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button variant="white" size="xl">
+                  Try Out Our Demo
+                </Button>
+              </Link>
+            </Group>
+          </motion.div>
         </VStack>
-        <Image src={datamap} w="full" alt="Datamap" />
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          style={{ width: "100%" }}
+        >
+          <Image src={datamap} w="full" alt="Datamap" />
+        </motion.div>
       </Box>
       {/* Speed, Clarity, Control Section */}
       <Box width="100%" p={12}>
@@ -180,13 +207,13 @@ export function Landing() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-gray-900 mb-4" style={{ fontWeight: "bold" }}>
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
               Built for Speed, Clarity, and Control
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            </Text>
+            <Text color="gray.600" maxW="2xl" mx="auto">
               Process intelligence without the complexity, from integration to
               action.
-            </p>
+            </Text>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {speedClarityControl.map((feature, index) => (
@@ -196,10 +223,10 @@ export function Landing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-all group"
+                className="text-center p-8 rounded-2xl border border-gray-100 transition-all group"
               >
                 <div
-                  className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"
+                  className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center transition-transform"
                   style={{
                     background:
                       "linear-gradient(to bottom right, #003f72, #99b2c7)",
@@ -207,15 +234,14 @@ export function Landing() {
                 >
                   <feature.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3
-                  className="text-gray-900 mb-3 "
-                  style={{ fontWeight: "bold" }}
-                >
+       
+                  <Text fontSize="lg" color="gray.900" mb={4} fontWeight="bold">
                   {feature.title}
-                </h3>
-                <p className="text-sm" style={{ color: "#003F72" }}>
-                  {feature.description}
-                </p>
+                  </Text>
+                  <Text color={"brand.primary"} whiteSpace="pre-line">
+                    {feature.description}
+                  </Text>
+
               </motion.div>
             ))}
           </div>
@@ -231,11 +257,12 @@ export function Landing() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-gray-900 mb-4">From Chaos to Clarity</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Watch how Tessely transforms complex processes into clear,
-              actionable insights in minutes.
-            </p>
+           <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              From Chaos to Clarity
+            </Text>
+            <Text color="gray.600" maxW="2xl" mx="auto" whiteSpace="pre-line">
+              {"Watch how Tessely transforms complex processes into clear,\nactionable insights in minutes."}
+            </Text>
           </motion.div>
 
           <motion.div
@@ -278,14 +305,12 @@ export function Landing() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-gray-900 mb-4">
-            Eliminate Data Management Overhead
-          </h2>
-          <p className="text-gray-600">
-            We handle data complexity so you don't have to. Tessely provides the
-            data capabilities required for process intelligence, without
-            separate data platforms or long preparation cycles.
-          </p>
+          <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              Eliminate Data Management Overhead
+            </Text>
+            <Text color="gray.600" maxW="5xl" mx="auto" whiteSpace="pre-line">
+            {"We handle data complexity so you don't have to. Tessely provides the data capabilities required for process intelligence,\nwithout separate data platforms or long preparation cycles."}
+            </Text>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -296,11 +321,11 @@ export function Landing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
-              className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#003f72]/30 hover:shadow-lg transition-all group"
+              className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#003f72]/30 transition-all group"
             >
               <div className="flex items-start gap-4">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform"
                   style={{ backgroundColor: "#003f72" }}
                 >
                   <svg
@@ -318,13 +343,12 @@ export function Landing() {
                   </svg>
                 </div>
                 <div>
-                  <h3
-                    className="text-gray-900 mb-1"
-                    style={{ fontWeight: "500" }}
-                  >
-                    {problem.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm">{problem.description}</p>
+                  <Text color="gray.900" mb={1}>
+                  {problem.title}
+                  </Text>
+                  <Text fontSize="sm"color={"gray.600"}>
+                    {problem.description}
+                  </Text>
                 </div>
               </div>
             </motion.div>
@@ -339,12 +363,12 @@ export function Landing() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-gray-900 mb-4" style={{ fontWeight: "bold" }}>
-            Use Cases
-          </h2>
-          <p className="text-gray-600">
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              Use Cases
+            </Text>
+            <Text color="gray.600" maxW="5xl" mx="auto" whiteSpace="pre-line">
             Solutions That Work Across Every Industry
-          </p>
+            </Text>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -365,22 +389,17 @@ export function Landing() {
                 >
                   <useCase.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3
-                  className="text-gray-900 mb-3"
-                  style={{ fontWeight: "bold" }}
-                >
+
+                 <Text fontSize="lg" color="gray.900" mb={4} fontWeight="bold">
                   {useCase.title}
-                </h3>
-                <p
-                  className="text-[#003f72] text-sm mb-4"
-                  style={{ color: "#003f72" }}
-                >
-                  {useCase.description}
-                </p>
-                <div className="text-sm flex items-center gap-2 group-hover:gap-3 transition-all" style={{ color: "#003f72" }}>
-                  Learn More
+                  </Text>
+                  <Text color={"brand.primary"} mb={4}>
+                    {useCase.description}
+                  </Text>
+                <Text color={"brand.primary"} gap={1} display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                    Learn More
                   <ArrowRight className="w-4 h-4" />
-                </div>
+                  </Text>
               </div>
             </Link>
             </motion.div>
@@ -396,14 +415,15 @@ export function Landing() {
           className="text-center mb-12"
         >
           <Box p={12}>
-          <h2 className="text-gray-900 mb-4" style={{ fontWeight: "bold" }}>
-            Expert Guidance, When You Need It
-          </h2>
-          <p className="text-gray-600">
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+               Expert Guidance, When You Need It
+            </Text>
+            <Text color="gray.600" maxW="5xl" mx="auto" whiteSpace="pre-line">
             Tessely is designed to be intuitive and self-serve. For teams
             integrating process intelligence for the first time, we also offer
             consultation to accelerate adoption.
-          </p>
+            </Text>
+          
           </Box>
           
         </motion.div>
@@ -424,7 +444,7 @@ export function Landing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-white mb-6">
+            <h2 className="text-white mb-6" >
               Ready to see your process clearly?
             </h2>
             <Link to="/contact">

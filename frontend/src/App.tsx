@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { AuthNavBar } from './components/AuthNavBar';
+import { ScrollToTop } from './components/ScrollToTop';
 import { Footer } from './components/Footer';
 
 import { Landing } from './components/pages/LandingPage/Landing';
@@ -43,6 +44,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <ScrollToTop />
       {!hideNavAndFooter && <Navbar />}
       <main className="flex-1">
         
