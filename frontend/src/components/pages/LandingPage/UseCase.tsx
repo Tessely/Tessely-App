@@ -208,7 +208,7 @@ export function UseCase() {
   return (
     <div>
       {/* Hero Section */}
-      <section className={`bg-gradient-to-br ${currentCase.color} py-20 text-white`}>
+      <section className="py-20 text-white" style={{ backgroundColor: '#5ECFC0' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -365,7 +365,7 @@ export function UseCase() {
             className="bg-white rounded-2xl p-12 border border-gray-100 shadow-lg"
           >
             <div className="text-center">
-              <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${currentCase.color} mx-auto mb-6 flex items-center justify-center`}>
+              <div className={`w-16 h-16 rounded-full bg-${currentCase.color} mx-auto mb-6 flex items-center justify-center`}>
                 <currentCase.icon className="w-8 h-8 text-white" />
               </div>
               <p className="text-xl text-gray-700 italic mb-6">
