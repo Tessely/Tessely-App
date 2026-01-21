@@ -54,8 +54,6 @@ export function Navbar() {
                   aria-current={isCurrent ? "page" : undefined}
                   display="flex"
                   alignItems="center"
-                  gap={2}
-                  p={2}
                   fontWeight="semi-bold"
                   rounded="xl"
                   _currentPage={{
@@ -64,6 +62,7 @@ export function Navbar() {
                   }}
                   _hover={{ bg: "brand.selected", color: "brand.primary" }}
                   transition="all 0.2s"
+                  truncate
                 >
                   {link.name}
                 </Link>

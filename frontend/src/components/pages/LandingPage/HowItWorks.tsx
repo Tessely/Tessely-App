@@ -15,9 +15,11 @@ import processmappingpreview from "/images/processmappingpreview.png?url";
 import dashboardpreview from "/images/dashboardpreview.png?url";
 import aiinsightspreview from "/images/aiinsightspreview.png?url";
 import heroBg from "/images/bg2.png?url";
+import { UserCSVFile } from '../../../types';
 
 export function HowItWorks() {
-  const [showPreview, setShowPreview] = useState(false);
+  const [files, setFiles]=useState<File[]>([]);
+  
 
   const steps = [
     {
