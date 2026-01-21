@@ -3,6 +3,7 @@ import { Button } from '../../../ui/button';
 import { Input } from '../../../ui/input';
 import { Lock, Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Text } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { resetPassword } from '../../../../api/auth';
 import TesselyLogo from '../../../../assets/icons/TesselyLogo.svg';
@@ -13,6 +14,7 @@ export function ResetPassword() {
   const [accessToken, setAccessToken] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [passwordError, setPasswordError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -28,7 +30,7 @@ export function ResetPassword() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     // Check if passwords match
     if (newPassword !== confirmPassword) {
       setPasswordError('Passwords do not match');
@@ -64,7 +66,9 @@ export function ResetPassword() {
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
               <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
-              <span className="text-2xl text-[#0047AB]">Tessely.ai</span>
+              <Text fontWeight="medium" color="brand.primary">
+                            Tessely.ai
+                          </Text>
             </Link>
             <h1 className="text-gray-900 mb-2" style={{fontWeight: 'bold'}}>New Password</h1>
             <p className="text-gray-600">

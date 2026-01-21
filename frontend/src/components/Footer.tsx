@@ -50,13 +50,16 @@ export function Footer() {
               Making AI Simple for Everyone.
             </Text>
             <HStack gap={4}>
-              <IconButton variant="surface" rounded="full" as="a" href="#" aria-label="LinkedIn" >
-                <FaLinkedinIn></FaLinkedinIn>
-              </IconButton>
-              <IconButton variant="surface" rounded="full" as="a" href="#" aria-label="LinkedIn" >
-                <FaTwitter></FaTwitter>
-              </IconButton>
-      
+              <Link href="#" aria-label="LinkedIn">
+                <IconButton variant="surface" rounded="full" aria-label="LinkedIn">
+                  <FaLinkedinIn />
+                </IconButton>
+              </Link>
+              <Link href="#" aria-label="Twitter">
+                <IconButton variant="surface" rounded="full" aria-label="Twitter">
+                  <FaTwitter />
+                </IconButton>
+              </Link>
             </HStack>
           </GridItem>
 

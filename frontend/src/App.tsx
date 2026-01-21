@@ -33,6 +33,7 @@ function AppContent() {
   const location = useLocation();
   const hideNavAndFooter =
     location.pathname === '/login' ||
+    location.pathname === '/signup' ||
     location.pathname === '/forgot-password' ||
     location.pathname === '/main-dashboard' ||
     location.pathname === '/processes' ||

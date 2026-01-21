@@ -25,7 +25,7 @@ import LandingPageBackground from "../../../assets/icons/LandingPageBackground.s
 import datamap from "/images/datamap.png?url";
 // import heroBg from '/images/heroBg.png?url'
 import heroBg from "/images/bg2.png?url";
-
+import bannerbg from "/images/bannerbg.png?url";
 import { Group } from "@chakra-ui/react";
 
 export function Landing() {
@@ -431,8 +431,8 @@ export function Landing() {
           w="full"
           minH="screen"
           bgAttachment="fixed"
-          bgImage={`url(${heroBg})`}
-          bgSize="cover"
+          bgImage={`url(${bannerbg})`}
+          bgSize="100% 100%"
           display="flex"
           flexDirection="column"
           alignItems="center"
@@ -444,11 +444,12 @@ export function Landing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-white mb-6" >
-              Ready to see your process clearly?
-            </h2>
+            <Text fontSize="xl" color="white" mb={6}>
+               Ready to see your process clearly?
+            </Text>
+           
             <Link to="/contact">
-              <Button variant={"white"}>Start Free Today</Button>
+              <Button variant={"white"} size="lg">Start Free Today</Button>
             </Link>
           </motion.div>
         </Box>

@@ -1,18 +1,22 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../../../ui/button';
+import { Button } from '@chakra-ui/react';
 import { Input } from '../../../ui/input';
 import { Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { Text } from '@chakra-ui/react';
 import { forgetPassword } from '../../../../api/auth';
 import TesselyLogo from '../../../../assets/icons/TesselyLogo.svg';
 
 export function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     await forgetPassword(email);
     setIsSubmitted(true);
   };
@@ -27,9 +31,11 @@ export function ForgotPassword() {
         >
           {/* Logo and Header */}
           <div className="text-center mb-8">
-            <Link to="/" className="inline-flex items-center gap-2 mb-6">
+                        <Link to="/" className="inline-flex items-center gap-2 mb-6">
               <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
-              <span className="text-2xl text-[#0047AB]">Tessely.ai</span>
+              <Text fontWeight="medium" color="brand.primary">
+                            Tessely.ai
+                          </Text>
             </Link>
             <h1 className="text-gray-900 mb-2" style={{fontWeight: 'bold'}}>Reset Your Password</h1>
             <p className="text-gray-600">
@@ -67,7 +73,9 @@ export function ForgotPassword() {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#0047AB] to-[#00D9B5] text-white hover:opacity-90 py-6"
+                  className="w-full " size="md"
+                  loading={isLoading}
+                onClick={() => setIsLoading(isLoading)}
                 >
                   Send Reset Link
                   <ArrowRight className="w-4 h-4 ml-2" />

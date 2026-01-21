@@ -1,9 +1,20 @@
-import { Button } from '../../ui/button';
-import { Target, Eye, Lightbulb, Users, Heart, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Target, Eye, Lightbulb, Users, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { ImageWithFallback } from '../../figma/ImageWithFallback';
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Box,
+  VStack,
+  HStack,
+  Text,
+  Heading,
+  Button,
+  Grid,
+  GridItem,
+  Group,
+} from '@chakra-ui/react';
+import bannerbg from "/images/bannerbg.png?url";
 
 export function About() {
   const values = [
@@ -119,68 +130,124 @@ export function About() {
     <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <VStack
+            align="center"
+            gap={2}
+            mb={12}
+            p={{ base: 4, sm: 6, lg: 8 }}
+            textAlign="center"
           >
-            <h1 className="text-gray-900 mb-6" style={{fontWeight: 'bold'}}>
+            <Heading
+              size="2xl"
+              color="black"
+              fontWeight="black"
+              whiteSpace="pre-line"
+            >
               Empowering Every Business to Be AI-Ready.
-            </h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            </Heading>
+            <Text color="gray.600" maxW="2xl">
               We're on a mission to democratize process intelligence and make AI accessible to businesses of all sizes.
-            </p>
-          </motion.div>
-        </div>
+            </Text>
+          </VStack>
+        </motion.div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <Box p={12} bg="white" width={"100%"}>
+        <Grid
+          templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+          gap={12}
+        >
+          <GridItem>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-gray-100"
             >
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
-                <Target className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-gray-900 mb-4">Our Mission</h2>
-              <p className="text-gray-600">
-                Make process mining accessible to all businesses, regardless of size or technical expertise. We believe every organization deserves the power to understand and optimize their operations through AI.
-              </p>
-            </motion.div>
+              <Box
+                bgColor={"#F0FAF9"}
 
+                borderRadius="2xl"
+                p={8}
+                borderWidth="1px"
+                borderColor="#F3F4F6"
+              >
+                <Box
+                  w={16}
+                  h={16}
+                  borderRadius="2xl"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  mb={6}
+                  bg="linear-gradient(to bottom, #003F72, #C6EBE7)"
+                >
+                  <Target className="w-8 h-8 text-white" />
+                </Box>
+                <Text color="gray.900" mb={4}>
+                  Our Mission
+                </Text>
+                <Text color="gray.600">
+                  Make process mining accessible to all businesses, regardless of size or technical expertise. We believe every organization deserves the power to understand and optimize their operations through AI.
+                </Text>
+              </Box>
+            </motion.div>
+          </GridItem>
+
+          <GridItem>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border border-gray-100"
             >
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
-                <Eye className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-gray-900 mb-4">Our Vision</h2>
-              <p className="text-gray-600">
-                Turn data into clarity and efficiency for every business. We envision a world where process optimization is intuitive, automated, and available to everyone at the click of a button.
-              </p>
+              <Box
+                bgColor={"#F0FAF9"}
+
+                borderRadius="2xl"
+                p={8}
+                borderWidth="1px"
+                borderColor="#F3F4F6"
+              >
+                <Box
+                  w={16}
+                  h={16}
+                  borderRadius="2xl"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  mb={6}
+                  bg="linear-gradient(to bottom, #003F72, #C6EBE7)"
+                >
+                  <Eye className="w-8 h-8 text-white" />
+                </Box>
+                <Text color="gray.900" mb={4}>
+                  Our Vision
+                </Text>
+                <Text color="gray.600">
+                  Turn data into clarity and efficiency for every business. We envision a world where process optimization is intuitive, automated, and available to everyone at the click of a button.
+                </Text>
+              </Box>
             </motion.div>
-          </div>
-        </div>
-      </section>
+          </GridItem>
+        </Grid>
+      </Box>
 
       {/* Values Grid */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Our Values</h2>
-            <p className="text-gray-600">
+      <section className="bg-gradient-to-b from-white to-gray-50">
+        <Box p={12} width="100%">
+          <VStack textAlign="center" mb={12}>
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              Our Values
+            </Text>
+            <Text color="gray.600">
               The principles that guide everything we do
-            </p>
-          </div>
+            </Text>
+          </VStack>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((value, index) => (
@@ -190,60 +257,87 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow"
               >
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0047AB]/10 to-[#00D9B5]/10 flex items-center justify-center mb-6">
-                  <value.icon className="w-8 h-8 text-[#0047AB]" />
-                </div>
-                <h3 className="text-gray-900 mb-3">{value.title}</h3>
-                <p className="text-gray-600 text-sm">{value.description}</p>
+                <Box
+                  bg="white"
+                  borderRadius="2xl"
+                  p={8}
+                  borderWidth="1px"
+                  borderColor="gray.100"
+                  _hover={{ shadow: "lg" }}
+                  transition="all 0.2s"
+                >
+                  <Box
+                    w={16}
+                    h={16}
+                    borderRadius="2xl"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    mb={6}
+                    bg="#F0FAF9"
+                  >
+                    <value.icon color="#003F72" className="w-8 h-8" />
+                  </Box>
+                  <Text color="gray.900" mb={3}>
+                    {value.title}
+                  </Text>
+                  <Text color="gray.600" fontSize="sm">
+                    {value.description}
+                  </Text>
+                </Box>
               </motion.div>
             ))}
           </div>
-        </div>
+        </Box>
       </section>
 
       {/* Team Section with Scroll */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Meet the Team</h2>
-            <p className="text-gray-600 mb-2">
+      <Box p={12} bg="white">
+        <Box px={{ base: 4, sm: 6, lg: 8 }}>
+          <VStack textAlign="center" mb={12}>
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              Meet the Team
+            </Text>
+            <Text color="gray.600" mb={4}>
               Passionate experts dedicated to your success
-            </p>
-            <p className="text-sm text-gray-500">
+            </Text>
+            <Text fontSize="sm" color="gray.500">
               Growing to 10+ team members by June 2026
-            </p>
-          </div>
+            </Text>
+          </VStack>
 
-          <div className="relative">
+          <Box position="relative">
             {/* Scroll Buttons */}
             {canScrollLeft && (
               <button
                 onClick={() => scroll('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-all"
                 aria-label="Scroll left"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer border-none hover:bg-gray-50 transition-all"
               >
                 <ChevronLeft className="w-6 h-6 text-[#0047AB]" />
               </button>
             )}
-            
+
             {canScrollRight && (
               <button
                 onClick={() => scroll('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-all"
                 aria-label="Scroll right"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer border-none hover:bg-gray-50 transition-all"
               >
                 <ChevronRight className="w-6 h-6 text-[#0047AB]" />
               </button>
             )}
 
             {/* Scrollable Container */}
-            <div
+            <HStack
               ref={scrollContainerRef}
               onScroll={checkScroll}
-              className="flex gap-8 overflow-x-auto scroll-smooth pb-4 px-2 scrollbar-hide"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              gap={8}
+              overflowX="auto"
+              pb={4}
+              px={2}
+              css={{ scrollbarWidth: 'none', msOverflowStyle: 'none', '&::-webkit-scrollbar': { display: 'none' } }}
             >
               {team.map((member, index) => (
                 <motion.div
@@ -252,97 +346,146 @@ export function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  className="text-center group flex-shrink-0 w-64"
+                  style={{ flexShrink: 0, width: '16rem' }}
                 >
-                  <div className="mb-4 relative">
-                    <div className="w-48 h-48 mx-auto rounded-2xl bg-gradient-to-br from-[#0047AB]/10 to-[#00D9B5]/10 overflow-hidden">
-                      <ImageWithFallback
-                        src={`https://images.unsplash.com/photo-${1500000000000 + index * 100000}?auto=format&fit=crop&w=400&h=400`}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <a
-                      href="https://linkedin.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute bottom-2 right-8 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <svg className="w-5 h-5 text-[#0047AB]" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                    </a>
-                  </div>
-                  <h3 className="text-gray-900 mb-1">{member.name}</h3>
-                  <p className="text-[#0047AB] text-sm mb-2">{member.role}</p>
-                  <p className="text-gray-600 text-sm">{member.bio}</p>
+                  <VStack textAlign="center">
+                    <Box mb={4}>
+                      <Box
+                        w={48}
+                        h={48}
+                        mx="auto"
+                        borderRadius="2xl"
+                        overflow="hidden"
+                        bg="#5ECFC0"
+                      >
+                        <ImageWithFallback
+                          src={`https://images.unsplash.com/photo-${1500000000000 + index * 100000}?auto=format&fit=crop&w=400&h=400`}
+                          alt={member.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </Box>
+                    </Box>
+                    <Text color="gray.900" fontWeight="medium" mb={1}>
+                      {member.name}
+                    </Text>
+                    <Text color="brand.primary" fontSize="sm" mb={2}>
+                      {member.role}
+                    </Text>
+                    <Text color="gray.600" fontSize="sm">
+                      {member.bio}
+                    </Text>
+                  </VStack>
                 </motion.div>
               ))}
-            </div>
+            </HStack>
 
             {/* Gradient Overlays for Visual Effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none" />
-          </div>
+            <Box
+              position="absolute"
+              left={0}
+              top={0}
+              bottom={0}
+              w={8}
+              bgGradient="to-r"
+              gradientFrom="white"
+              gradientTo="transparent"
+              pointerEvents="none"
+            />
+            <Box
+              position="absolute"
+              right={0}
+              top={0}
+              bottom={0}
+              w={8}
+              bgGradient="to-l"
+              gradientFrom="white"
+              gradientTo="transparent"
+              pointerEvents="none"
+            />
+          </Box>
 
           {/* Mobile Hint */}
-          <div className="text-center mt-6 text-sm text-gray-500 md:hidden">
-            ← Swipe to see more team members →
-          </div>
-        </div>
-      </section>
+          <Text
+            textAlign="center"
+            mt={6}
+            fontSize="sm"
+            color="gray.500"
+            display={{ base: "block", md: "none" }}
+          >
+            Swipe to see more team members
+          </Text>
+        </Box>
+      </Box>
 
       {/* Story Section */}
-      <section className="py-20 bg-gradient-to-b">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-6">Our Story</h2>
-          </div>
-          <div className="bg-white rounded-2xl p-8 md:p-12 border border-gray-100 shadow-sm">
-            <div className="space-y-6 text-gray-600">
-              <p>
+      <Box p={12} className="bg-gradient-to-b">
+        <Box px={{ base: 4, sm: 6, lg: 8 }}>
+          <VStack textAlign="center" mb={12}>
+            <Text fontSize="xl" color="gray.900" fontWeight="bold">
+              Our Story
+            </Text>
+          </VStack>
+          <Box
+            bg="white"
+            borderRadius="2xl"
+            p={{ base: 8, md: 12 }}
+            borderWidth="1px"
+            borderColor="gray.100"
+            shadow="sm"
+          >
+            <VStack gap={6} color="brand.second_blue" align="stretch">
+              <Text>
                 Tessely was born from a simple observation: while process mining technology had incredible potential, it remained out of reach for most businesses due to complexity and cost.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Our founders, Sarah and Marcus, spent years watching companies struggle with inefficient processes, unable to identify bottlenecks or optimize workflows. They knew AI could help, but existing solutions required data scientists, consultants, and months of implementation.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 In 2023, they decided to change that. Tessely was created to make process intelligence as simple as asking a question. No technical knowledge required. No data preparation needed. Just instant, actionable insights.
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Today, we're helping businesses across industries transform their operations with AI-powered process mining that truly works for everyone.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+              </Text>
+            </VStack>
+          </Box>
+        </Box>
+      </Box>
 
       {/* CTA Section */}
-      <section className="max-w-7xl mx-auto py-20 rounded-2xl" style={{ background: 'radial-gradient(circle at center, #003F72 0%, #bdebe6 100%)', marginBottom: '20px' }}>
-        <div className="px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-white mb-6">
-              Want to Join Our Mission?
-            </h2>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/solutions">
-                <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
-                  Explore Solutions
-                </Button>
-              </Link>
-              <Link to="/how-it-works">
-                <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
-                  Try Demo
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <Box
+        w="full"
+        minH="screen"
+        bgAttachment="fixed"
+        bgImage={`url(${bannerbg})`}
+        bgSize="100% 100%"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        p={16}
+        textAlign={"center"}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <Text fontSize="xl" color="white" mb={4}>
+            Ready to Get Started?
+          </Text>
+          <Group gap={4}>
+            <Link to="/solutions">
+              <Button variant={"white"} size="lg">
+                Explore Solutions
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button variant={"white"} size="lg">
+                Free Trial
+              </Button>
+            </Link>
+          </Group>
+        </motion.div>
+      </Box>
     </div>
   );
 }
