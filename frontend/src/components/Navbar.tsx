@@ -60,7 +60,7 @@ export function Navbar() {
                     color: "brand.primary",
                     fontWeight: "medium",
                   }}
-                  _hover={{ bg: "brand.selected", color: "brand.primary" }}
+                  _hover={{color: "brand.primary" }}
                   transition="all 0.2s"
                   truncate
                 >
