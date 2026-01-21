@@ -69,22 +69,32 @@ function AppContent() {
 
           <Route path="/main-dashboard" element={
             <ProtectedRoute>
-              <AuthNavBar />
+              <ChakraProvider value={system}>
+                <AuthNavBar />
               <MainDashboard />
+              </ChakraProvider>
+              
             </ProtectedRoute>
           } />
           <Route path="/data-sources" element={
             <ProtectedRoute>
+              <ChakraProvider value={system}>
               <Toaster />
               <AuthNavBar />
               <DataSources/>
+              </ChakraProvider>
+              
             </ProtectedRoute>
             } />
 
           <Route path="/processes" element={
+            
             <ProtectedRoute>
+              <ChakraProvider value={system}>
+              <Toaster />
               <AuthNavBar />
               <Processes />
+              </ChakraProvider>
             </ProtectedRoute>
           } />
           
