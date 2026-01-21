@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../../../ui/button';
+import { Button } from '@chakra-ui/react';
 import { Input } from '../../../ui/input';
 import { Label } from '../../../ui/label';
 import { ArrowLeft } from 'lucide-react';
@@ -216,8 +216,10 @@ export function Signup() {
 
             {/* Submit Button */}
             <Button
-              type="submit"
-              className="w-full bg-[#0047AB] hover:bg-[#003380] text-white py-6"
+              type="submit" size="lg"
+              className="w-full"
+              loading={isLoading}
+                onClick={() => setIsLoading(isLoading)}
             >
               Create Account
             </Button>

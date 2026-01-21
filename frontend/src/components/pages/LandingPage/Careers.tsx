@@ -1,7 +1,18 @@
-import { Button } from '../../ui/button';
 import { Briefcase, MapPin, Clock, Heart, Book, Globe, Quote } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import {
+  Box,
+  VStack,
+  HStack,
+  Text,
+  Heading,
+  Button,
+  Grid,
+  GridItem,
+  Group,
+} from '@chakra-ui/react';
+import bannerbg from "/images/bannerbg.png?url";
 
 export function Careers() {
   const openRoles = [
@@ -88,31 +99,43 @@ export function Careers() {
     <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <VStack
+            align="center"
+            gap={2}
+            mb={12}
+            p={{ base: 4, sm: 6, lg: 8 }}
+            textAlign="center"
           >
-            <h1 className="text-gray-900 mb-6" style={{fontWeight: 'bold'}}>
+            <Heading
+              size="2xl"
+              color="black"
+              fontWeight="black"
+              whiteSpace="pre-line"
+            >
               Build the Future of Process Intelligence.
-            </h1>
-            <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+            </Heading>
+            <Text color="gray.600" maxW="2xl">
               Join a team redefining how businesses understand data
-            </p>
-          </motion.div>
-        </div>
+            </Text>
+          </VStack>
+        </motion.div>
       </section>
 
       {/* Open Roles */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Open Positions</h2>
-            <p className="text-gray-600">
+        <Box p={12} width="100%">
+          <VStack textAlign="center" mb={12}>
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              Open Positions
+            </Text>
+            <Text color="gray.600">
               Find your next opportunity
-            </p>
-          </div>
+            </Text>
+          </VStack>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {openRoles.map((role, index) => (
@@ -122,51 +145,70 @@ export function Careers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-lg transition-all group"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0047AB]/10 to-[#00D9B5]/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Briefcase className="w-6 h-6 text-[#0047AB]" />
-                  </div>
-                  <span className="text-xs px-3 py-1 rounded-full bg-emerald-50 text-emerald-700">
-                    {role.department}
-                  </span>
-                </div>
-                <h3 className="text-gray-900 mb-4">{role.title}</h3>
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin className="w-4 h-4" />
-                    {role.location}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Clock className="w-4 h-4" />
-                    {role.type}
-                  </div>
-                </div>
-                <Button className="w-full bg-[#0047AB] hover:bg-[#003380] text-white">
-                  Apply Now
-                </Button>
+                <Box
+                  bg="white"
+                  borderRadius="xl"
+                  p={6}
+                  borderWidth="1px"
+                  borderColor="gray.100"
+                  _hover={{ shadow: "lg" }}
+                  transition="all 0.2s"
+                >
+                  <HStack justify="space-between" mb={4} align="start">
+                    <Box
+                      w={12}
+                      h={12}
+                      borderRadius="xl"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      bg="#F0FAF9"
+                    >
+                      <Briefcase className="w-6 h-6 text-[#0047AB]" />
+                    </Box>
+                    <Text fontSize="xs" color="brand.teal_ocean" bgColor="#ECFDF5" className="text-xs px-3 py-1 rounded-full">
+                      {role.department}
+                    </Text>
+                  </HStack>
+                  <Text color="gray.900" mb={4}>
+                    {role.title}
+                  </Text>
+                  <VStack gap={2} mb={6} align="stretch">
+                    <HStack gap={2} fontSize="sm" color="gray.600">
+                      <MapPin className="w-4 h-4" />
+                      <Text>{role.location}</Text>
+                    </HStack>
+                    <HStack gap={2} fontSize="sm" color="gray.600">
+                      <Clock className="w-4 h-4" />
+                      <Text>{role.type}</Text>
+                    </HStack>
+                  </VStack>
+                  <Button w="full" >
+                    Apply Now
+                  </Button>
+                </Box>
               </motion.div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Button variant="outline" className="border-[#0047AB] text-[#0047AB] hover:bg-[#0047AB]/5 px-8 py-6">
+          <VStack textAlign="center" mt={12}>
+            <Button variant="outline" borderColor="brand.primary" color="brand.primary" px={8} py={6} _hover={{ opacity: 0.9 }}>
               View All Roles
             </Button>
-          </div>
-        </div>
-      </section>
+          </VStack>
+        </Box>
 
       {/* Testimonials */}
-      <section className="max-w-7xl mx-auto py-20 rounded-3xl" style={{backgroundColor: '#CCEDEA'}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">What Our Team Says</h2>
-            <p className="text-gray-600">
+      <Box  p={12}  bg="#EEF9F8">
+          <VStack textAlign="center" mb={12}>
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              What Our Team Says
+            </Text>
+            <Text color="gray.600">
               Hear from the people who make Tessely great
-            </p>
-          </div>
+            </Text>
+          </VStack>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
@@ -176,29 +218,46 @@ export function Careers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm"
               >
-                <Quote className="w-10 h-10 text-[#00D9B5] mb-4" />
-                <p className="text-gray-600 mb-6 italic">"{testimonial.quote}"</p>
-                <div>
-                  <p className="text-gray-900">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.role}</p>
-                </div>
+                <Box
+                  bg="white"
+                  borderRadius="2xl"
+                  p={8}
+                  height="100%"
+                  borderWidth="1px"
+                  borderColor="gray.100"
+                  shadow="sm"
+                  display="flex"
+                  flexDirection="column"
+                >
+                  <Quote className="w-10 h-10 text-[#00D9B5] mb-4" />
+                  <Text color="gray.600" mb={6} fontStyle="italic" flex={1}>
+                    "{testimonial.quote}"
+                  </Text>
+                  <Box>
+                    <Text color="gray.900" fontWeight="medium">
+                      {testimonial.name}
+                    </Text>
+                    <Text fontSize="sm" color="gray.500">
+                      {testimonial.role}
+                    </Text>
+                  </Box>
+                </Box>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+      </Box>
 
       {/* Perks & Benefits */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Perks & Benefits</h2>
-            <p className="text-gray-600">
+        <Box p={12} width="100%">
+          <VStack textAlign="center" mb={12}>
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              Perks & Benefits
+            </Text>
+            <Text color="gray.600">
               We invest in our team's growth and well-being
-            </p>
-          </div>
+            </Text>
+          </VStack>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {perks.map((perk, index) => (
@@ -208,64 +267,102 @@ export function Careers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center"
               >
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#0047AB]/10 to-[#00D9B5]/10 flex items-center justify-center">
-                  <perk.icon className="w-8 h-8 text-[#0047AB]" />
-                </div>
-                <h3 className="text-gray-900 mb-2">{perk.title}</h3>
-                <p className="text-sm text-gray-600">{perk.description}</p>
+                <VStack textAlign="center">
+                  <Box
+                    w={16}
+                    h={16}
+                    mx="auto"
+                    mb={4}
+                    borderRadius="2xl"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    bgColor="#F0FAF9"
+                  >
+                    <perk.icon color="#003F72" className="w-8 h-8" />
+                  </Box>
+                  <Text color="gray.900" mb={2} fontWeight="medium">
+                    {perk.title}
+                  </Text>
+                  <Text fontSize="sm" color="gray.600" textWrap="balance">
+                    {perk.description}
+                  </Text>
+                </VStack>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </Box>
 
       {/* Culture Section */}
-      <section className="py-20 max-w-7xl mx-auto">
-        <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl p-12">
-          <div className="text-center mb-8">
-            <h2 className="text-gray-900 mb-4" style={{fontWeight: 'bold'}}>Our Culture</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+      <Box pb={20} p={12} mx="auto">
+        <Box
+          className="bg-gradient-to-br from-blue-50 to-emerald-50"
+          borderRadius="3xl"
+          p={12}
+        >
+          <VStack textAlign="center" mb={8}>
+            <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+              Our Culture
+            </Text>
+            <Text color="gray.600" maxW="2xl">
               We're building more than a product — we're building a team that values curiosity, collaboration, and continuous learning.
-            </p>
-          </div>
+            </Text>
+          </VStack>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {['Innovation First', 'Remote-Friendly', 'Inclusive & Diverse'].map((value, index) => (
-              <div key={value} className="bg-white rounded-xl p-6 text-center">
-                <div className="w-12 h-12 mx-auto mb-3 rounded-full text-white flex items-center justify-center" style={{ background: 'linear-gradient(to bottom, #003F72, #C6EBE7)' }}>
+              <Box key={value} bg="white" borderRadius="xl" p={6} textAlign="center">
+                <Box
+                  w={12}
+                  h={12}
+                  mx="auto"
+                  mb={3}
+                  borderRadius="full"
+                  color="white"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  bg="linear-gradient(to bottom, #003F72, #C6EBE7)"
+                >
                   {index + 1}
-                </div>
-                <p className="text-gray-900">{value}</p>
-              </div>
+                </Box>
+                <Text color="gray.900">
+                  {value}
+                </Text>
+              </Box>
             ))}
           </div>
-        </div>
-      </section>
+        </Box>
+      </Box>
 
       {/* CTA Section */}
-      <section className="max-w-7xl mx-auto py-20 rounded-2xl" style={{ background: 'radial-gradient(circle at center, #003F72 0%, #bdebe6 100%)', marginBottom: '20px' }}>
-        <div className="px-4 sm:px-6 lg:px-8 text-center">
+      <Box
+          w="full"
+          minH="screen"
+          bgAttachment="fixed"
+          bgImage={`url(${bannerbg})`}
+          bgSize="100% 100%"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          p={16}
+          textAlign={"center"}
+        >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-white mb-6">
-              Don't See the Right Role?
-            </h2>
-            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-              We're always looking for talented people. Send us your resume and tell us how you'd like to contribute.
-            </p>
-            <Link to="/">
-              <Button className="px-8 py-6 hover:opacity-90 transition-opacity" style={{ backgroundColor: 'white', color: '#003F72' }}>
-                Send Open Application
-              </Button>
+            <Text fontSize="xl" color="white" mb={6}>
+               Ready to see your process clearly?
+            </Text>
+           
+            <Link to="/contact">
+              <Button variant={"white"} size="lg">Start Free Today</Button>
             </Link>
           </motion.div>
-        </div>
-      </section>
+        </Box>
     </div>
   );
 }

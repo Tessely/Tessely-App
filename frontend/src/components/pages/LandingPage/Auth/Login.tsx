@@ -1,10 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../../../ui/button';
 import { Input } from '../../../ui/input';
 import { Checkbox } from '../../../ui/checkbox';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { Text, Button} from '@chakra-ui/react';
 import { login } from '../../../../api/auth';
 import type { LoginPayload } from '../../../../types';
 import TesselyLogo from '../../../../assets/icons/TesselyLogo.svg';
@@ -61,7 +61,9 @@ export function Login() {
             <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
               <img src={TesselyLogo} alt="Tessely Logo" className="w-8 h-8" />
-              <span className="text-2xl text-[#0047AB]">Tessely.ai</span>
+              <Text fontWeight="medium" color="brand.primary">
+                            Tessely.ai
+                          </Text>
             </Link>
             <h1 className="text-gray-900 mb-2" style={{fontWeight: 'bold'}}>Welcome Back</h1>
             <p className="text-gray-600">Sign in to your account to continue</p>
@@ -140,7 +142,9 @@ export function Login() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full bg-[#0047AB] hover:bg-[#003380] text-white py-6"
+                className="w-full" size="lg"
+                loading={isLoading}
+                onClick={() => setIsLoading(isLoading)}
               >
                 Sign In
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -207,7 +211,7 @@ export function Login() {
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
               <Link to="/signup" className="text-[#0047AB] hover:underline">
-                Start free trial
+                Sign Up
               </Link>
             </p>
           </div>
