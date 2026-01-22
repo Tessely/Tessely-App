@@ -62,7 +62,7 @@ const DataSources: React.FC<DataSourcesProps> = () => {
                                 
                             ):
                             (
-                                <Text fontWeight="thin">No data sources yet, start uploading some!</Text>
+                                <Text fontWeight="light">No data sources yet, start uploading some!</Text>
                             )}
                         </VStack>
                         <VStack alignItems="start">

@@ -1,8 +1,22 @@
 import { Link, useParams } from 'react-router-dom';
-import { Button } from '../../ui/button';
-import { Factory, DollarSign, Heart, Package, Truck, CheckCircle, TrendingUp, Clock, DollarSign as Cost, ArrowRight } from 'lucide-react';
+import { Factory, DollarSign, Heart, Package, Truck, CheckCircle, TrendingUp, Clock, DollarSign as Cost, ArrowRight, Check, CircleCheckBig, ChartArea } from 'lucide-react';
 import { motion } from 'motion/react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Rectangle } from 'recharts';
+import {
+  Box,
+  VStack,
+  HStack,
+  Text,
+  Heading,
+  Button,
+  Grid,
+  GridItem,
+  Group,
+  useBreakpointValue,
+} from '@chakra-ui/react';
+import { Chart, useChart } from "@chakra-ui/charts"
+
+import bannerbg from "/images/bannerbg.png?url";
 
 export function UseCase() {
   const { industry } = useParams<{ industry: string }>();
@@ -192,209 +206,328 @@ export function UseCase() {
 
   const currentCase = useCases[industry || 'manufacturing'];
 
+  const chart = useChart({
+    data: currentCase?.processSteps || [],
+    series: [
+      { name: "efficiency", label: "Efficiency", color: "teal.solid" },
+    ],
+  });
+
+  const showXAxisTick = useBreakpointValue({ base: false, md: true });
+
   if (!currentCase) {
     return (
-      <div className="py-20 text-center">
-        <h1 className="text-gray-900 mb-4">Use Case Not Found</h1>
+      <Box py={20} textAlign="center">
+        <Heading size="xl" color="gray.900" mb={4}>Use Case Not Found</Heading>
         <Link to="/solutions">
-          <Button className="bg-[#0047AB] hover:bg-[#003380] text-white">
+          <Button variant="solid">
             Back to Solutions
           </Button>
         </Link>
-      </div>
+      </Box>
     );
   }
 
   return (
     <div>
       {/* Hero Section */}
-      <section className={`bg-gradient-to-br ${currentCase.color} py-20 text-white`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Box as="section" py={20} bg="#5ECFC0" color="white">
+        <Box maxW="7xl" mx="auto" px={{ base: 4, sm: 6, lg: 8 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row items-center gap-8"
           >
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center">
-                  <currentCase.icon className="w-8 h-8 text-white" />
-                </div>
-                <Link to="/solutions" className="text-sm text-white/80 hover:text-white">
-                  ← Back to Solutions
-                </Link>
-              </div>
-              <h1 className="text-white mb-4">{currentCase.title}</h1>
-              <p className="text-xl text-white/90 mb-6">
-                {currentCase.subtitle}
-              </p>
-            </div>
-            <div className="flex-1">
-              <div className="grid grid-cols-2 gap-4">
-                {currentCase.benefits.map((benefit: any, index: number) => (
-                  <motion.div
-                    key={benefit.label}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-white/10 backdrop-blur rounded-xl p-4 text-center"
+            <Grid
+              templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+              gap={8}
+              alignItems="center"
+            >
+              <GridItem>
+                <HStack gap={3} mb={4}>
+                  <Box
+                    w={16}
+                    h={16}
+                    borderRadius="2xl"
+                    bg="whiteAlpha.200"
+                    backdropFilter="blur(8px)"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    <benefit.icon className="w-6 h-6 text-white mx-auto mb-2" />
-                    <div className="text-2xl text-white mb-1">{benefit.value}</div>
-                    <p className="text-sm text-white/80">{benefit.label}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+                    <currentCase.icon className="w-8 h-8 text-white" />
+                  </Box>
+                  <Link to="/solutions">
+                    <Text fontSize="sm" color="whiteAlpha.800" _hover={{ color: "white" }}>
+                      ← Back to Solutions
+                    </Text>
+                  </Link>
+                </HStack>
+                <Heading size="2xl" color="white" mb={4} fontWeight="black">
+                  {currentCase.title}
+                </Heading>
+                <Text fontSize="xl" color="whiteAlpha.900" mb={6}>
+                  {currentCase.subtitle}
+                </Text>
+              </GridItem>
+              <GridItem>
+                <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                  {currentCase.benefits.map((benefit: any, index: number) => (
+                    <motion.div
+                      key={benefit.label}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Box
+                        bg="whiteAlpha.100"
+                        backdropFilter="blur(8px)"
+                        borderRadius="xl"
+                        p={4}
+                        textAlign="center"
+                      >
+                        <benefit.icon className="w-6 h-6 text-white mx-auto mb-2" />
+                        <Text fontSize="2xl" color="white" mb={1}>
+                          {benefit.value}
+                        </Text>
+                        <Text fontSize="sm" color="whiteAlpha.800">
+                          {benefit.label}
+                        </Text>
+                      </Box>
+                    </motion.div>
+                  ))}
+                </Grid>
+              </GridItem>
+            </Grid>
           </motion.div>
-        </div>
-      </section>
+        </Box>
+      </Box>
 
       {/* Challenge & Solution */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <Box as="section" p={12} bg="white" width="100%">
+        <Grid
+          templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+          gap={12}
+        >
+          <GridItem>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-gray-900 mb-4">The Challenge</h2>
-              <p className="text-gray-600">{currentCase.challenge}</p>
+              <Text fontSize="xl" color="gray.900" mb={4}>
+                The Challenge
+              </Text>
+              <Text color="gray.600">{currentCase.challenge}</Text>
             </motion.div>
+          </GridItem>
+          <GridItem>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-gray-900 mb-4">The Tessely Solution</h2>
-              <p className="text-gray-600">{currentCase.solution}</p>
+              <Text fontSize="xl" color="gray.900" mb={4}>
+                The Tessely Solution
+              </Text>
+              <Text color="gray.600">{currentCase.solution}</Text>
             </motion.div>
-          </div>
-        </div>
-      </section>
+          </GridItem>
+        </Grid>
+      </Box>
 
       {/* Process Visualization */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Process Efficiency Analysis</h2>
-            <p className="text-gray-600">
-              See how Tessely identifies optimization opportunities
-            </p>
-          </div>
+      <Box as="section" p={12} width="100%" className="bg-gradient-to-b from-white to-gray-50">
+        <VStack textAlign="center" mb={12}>
+          <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+            Process Efficiency Analysis
+          </Text>
+          <Text color="gray.600">
+            See how Tessely identifies optimization opportunities
+          </Text>
+        </VStack>
 
-          <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={currentCase.processSteps}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} domain={[0, 100]} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'white',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '8px',
-                  }}
-                />
-                <Bar dataKey="efficiency" radius={[8, 8, 0, 0]}>
-                  {currentCase.processSteps.map((entry: any, index: number) => (
-                    <rect
-                      key={`cell-${index}`}
-                      fill={entry.efficiency > 80 ? '#00D9B5' : entry.efficiency > 70 ? '#FFA500' : '#FF6B6B'}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+        <Box
+          bg="white"
+          borderRadius="2xl"
+          p={8}
+          borderWidth="1px"
+          borderColor="gray.100"
+          shadow="sm"
+        >
+          <Chart.Root chart={chart} maxH="sm">
+            <BarChart data={chart.data}>
+              <CartesianGrid stroke={chart.color("border.muted")} vertical={false} />
+              <XAxis
+                tickLine={false}
+                dataKey="name"
+                stroke={chart.color("border")}
+                tick={showXAxisTick ? { fontSize: 12 } : false}
+              />
+              <YAxis
+                tickLine={false}
+                stroke={chart.color("border")}
+                tick={{ fontSize: 12 }}
+                domain={[0, 100]}
+              />
+              <Tooltip
+                cursor={{ fill: chart.color("bg.muted") }}
+                animationDuration={100}
+                content={<Chart.Tooltip />}
+              />
+              <Bar
+                dataKey={chart.key("efficiency")}
+                name="Efficiency"
+                radius={[8, 8, 0, 0]}
+                isAnimationActive={false}
+                shape={(props: any) => {
+                  const { efficiency } = props.payload;
+                  const color = "black";
+                  return <Rectangle {...props} fill={color} />;
+                }}
+              />
+            </BarChart>
+          </Chart.Root>
 
-            <div className="mt-6 flex items-center justify-center gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-[#00D9B5]" />
-                <span className="text-gray-600">Optimal (&gt;80%)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-[#FFA500]" />
-                <span className="text-gray-600">Needs Attention (70-80%)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-[#FF6B6B]" />
-                <span className="text-gray-600">Critical (&lt;70%)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          <Box
+            mt={6}
+            display="flex"
+            justifyContent="center"
+            gap={{ base: 3, md: 6 }}
+            fontSize="sm"
+            flexWrap="wrap"
+            rowGap={3}
+          >
+            {/* <HStack gap={2}>
+              <Box w={4} h={4} borderRadius="md" bg="#00D9B5" flexShrink={0} />
+              <Text color="gray.600">Optimal (&gt;80%)</Text>
+            </HStack>
+            <HStack gap={2}>
+              <Box w={4} h={4} borderRadius="md" bg="#FFA500" flexShrink={0} />
+              <Text color="gray.600">Needs Attention (70-80%)</Text>
+            </HStack>
+            <HStack gap={2}>
+              <Box w={4} h={4} borderRadius="md" bg="#FF6B6B" flexShrink={0} />
+              <Text color="gray.600">Critical (&lt;70%)</Text>
+            </HStack> */}
+          </Box>
+        </Box>
+      </Box>
 
       {/* Features */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-gray-900 mb-4">Key Features for {currentCase.title}</h2>
-            <p className="text-gray-600">
-              Industry-specific capabilities designed for your needs
-            </p>
-          </div>
+      <Box as="section" p={12} bg="white" width="100%">
+        <VStack textAlign="center" mb={12}>
+          <Text fontSize="xl" color="gray.900" mb={4} fontWeight="bold">
+            Key Features for {currentCase.title}
+          </Text>
+          <Text color="gray.600">
+            Industry-specific capabilities designed for your needs
+          </Text>
+        </VStack>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentCase.features.map((feature: string, index: number) => (
-              <motion.div
-                key={feature}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="flex items-start gap-3 p-6 bg-gradient-to-br from-blue-50/50 to-emerald-50/50 rounded-xl border border-gray-100"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentCase.features.map((feature: string, index: number) => (
+            <motion.div
+              key={feature}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <HStack
+                align="flex-start"
+                gap={3}
+                p={6}
+                className="bg-gradient-to-br from-blue-50/50 to-emerald-50/50"
+                borderRadius="xl"
+                borderWidth="1px"
+                borderColor="gray.100"
               >
-                <CheckCircle className="w-5 h-5 text-[#00D9B5] flex-shrink-0 mt-0.5" />
-                <span className="text-gray-700">{feature}</span>
-              </motion.div>
-            ))}
-          </div>
+                
+                <CircleCheckBig className="w-5 h-5 text-[#00D9B5] flex-shrink-0 mt-0.5" />
+                <Text color="gray.700">{feature}</Text>
+              </HStack>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </Box>
 
       {/* Testimonial */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Box as="section" p={12} width="100%" className="bg-gradient-to-b from-white to-gray-50">
+        <Box mx="auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-2xl p-12 border border-gray-100 shadow-lg"
           >
-            <div className="text-center">
-              <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${currentCase.color} mx-auto mb-6 flex items-center justify-center`}>
-                <currentCase.icon className="w-8 h-8 text-white" />
-              </div>
-              <p className="text-xl text-gray-700 italic mb-6">
-                &ldquo;{currentCase.testimonial.quote}&rdquo;
-              </p>
-              <div>
-                <p className="text-gray-900">{currentCase.testimonial.author}</p>
-                <p className="text-sm text-gray-600">{currentCase.testimonial.role}</p>
-                <p className="text-sm text-[#0047AB]">{currentCase.testimonial.company}</p>
-              </div>
-            </div>
+            <Box
+              bg="white"
+              borderRadius="2xl"
+              p={{ base: 8, md: 12 }}
+              borderWidth="1px"
+              borderColor="gray.100"
+              shadow="lg"
+            >
+              <VStack textAlign="center">
+                <Box
+                  w={16}
+                  h={16}
+                  borderRadius="full"
+                  bg="#5ECFC0"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  mb={6}
+                >
+                  <currentCase.icon className="w-8 h-8 text-white" />
+                </Box>
+                <Text fontSize="xl" color="gray.700" fontStyle="italic" mb={6}>
+                  &ldquo;{currentCase.testimonial.quote}&rdquo;
+                </Text>
+                <VStack gap={1}>
+                  <Text color="gray.900" fontWeight="medium">
+                    {currentCase.testimonial.author}
+                  </Text>
+                  <Text fontSize="sm" color="gray.600">
+                    {currentCase.testimonial.role}
+                  </Text>
+                  <Text fontSize="sm" color="brand.primary">
+                    {currentCase.testimonial.company}
+                  </Text>
+                </VStack>
+              </VStack>
+            </Box>
           </motion.div>
-        </div>
-      </section>
+        </Box>
+      </Box>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#0047AB] to-[#00D9B5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white mb-6">
-            Ready to Get Started?
-          </h2>
-          <Link to="/signup">
-            <Button className="bg-white text-[#0047AB] hover:bg-gray-100 px-8 py-6">
-              Start Free Trial
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </Link>
-        </div>
-      </section>
+      <Box
+          w="full"
+          minH="screen"
+          bgAttachment="fixed"
+          bgImage={`url(${bannerbg})`}
+          bgSize="100% 100%"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          p={16}
+          textAlign={"center"}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Text fontSize="xl" color="white" mb={6}>
+               Ready to see your process clearly?
+            </Text>
+           
+            <Link to="/contact">
+              <Button variant={"white"} size="lg">Start Free Today</Button>
+            </Link>
+          </motion.div>
+        </Box>
     </div>
   );
 }

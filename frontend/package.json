@@ -3,6 +3,7 @@
       "version": "0.1.0",
       "private": true,
       "dependencies": {
+            "@chakra-ui/charts": "^3.31.0",
             "@chakra-ui/react": "^3.31.0",
             "@emotion/react": "^11.14.0",
             "@emotion/styled": "^11.14.1",
@@ -50,7 +51,7 @@
             "react-icons": "^5.5.0",
             "react-resizable-panels": "^2.1.7",
             "react-router-dom": "*",
-            "recharts": "^2.15.2",
+            "recharts": "^3.7.0",
             "sonner": "^2.0.3",
             "tailwind-merge": "*",
             "vaul": "^1.1.2"

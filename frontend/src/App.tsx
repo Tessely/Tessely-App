@@ -37,7 +37,9 @@ function AppContent() {
     location.pathname === '/forgot-password' ||
     location.pathname === '/main-dashboard' ||
     location.pathname === '/processes' ||
-    location.pathname === '/data-sources';
+    location.pathname === '/data-sources' ||
+    location.pathname === '/reset-password' ||
+    location.pathname === '/signup-success';
   const AuthNav =
     location.pathname === '/main-dashboard'||
     location.pathname === '/processes' ||
@@ -69,22 +71,32 @@ function AppContent() {
 
           <Route path="/main-dashboard" element={
             <ProtectedRoute>
-              <AuthNavBar />
+              <ChakraProvider value={system}>
+                <AuthNavBar />
               <MainDashboard />
+              </ChakraProvider>
+              
             </ProtectedRoute>
           } />
           <Route path="/data-sources" element={
             <ProtectedRoute>
+              <ChakraProvider value={system}>
               <Toaster />
               <AuthNavBar />
               <DataSources/>
+              </ChakraProvider>
+              
             </ProtectedRoute>
             } />
 
           <Route path="/processes" element={
+            
             <ProtectedRoute>
+              <ChakraProvider value={system}>
+              <Toaster />
               <AuthNavBar />
               <Processes />
+              </ChakraProvider>
             </ProtectedRoute>
           } />
           

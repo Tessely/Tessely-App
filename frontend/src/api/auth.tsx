@@ -4,6 +4,14 @@ const TOKEN_KEY = '@auth_token';
 // const API_BASE_URL = 'http://localhost:8000';
 const API_BASE_URL = 'https://tessely-app-production.up.railway.app';
 
+export function getAuthToken(): string | null {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function isAuthenticated(): boolean {
+  return !!localStorage.getItem(TOKEN_KEY);
+}
+
 export async function login(payload: LoginPayload) {
   const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
     method: 'POST',
@@ -14,6 +22,9 @@ export async function login(payload: LoginPayload) {
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Invalid Username or Password');
+    }
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   const data = await response.json();
@@ -95,3 +106,4 @@ export async function resetPassword(newPassword: string, accessToken: string) {
   }
   return response.json();
 }
+
