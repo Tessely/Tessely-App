@@ -355,7 +355,7 @@ export function UseCase() {
           borderColor="gray.100"
           shadow="sm"
         >
-          <Chart.Root chart={chart} maxH="sm">
+          <Chart.Root chart={chart} maxH="4xl">
             <BarChart data={chart.data}>
               <CartesianGrid stroke={chart.color("border.muted")} vertical={false} />
               <XAxis
