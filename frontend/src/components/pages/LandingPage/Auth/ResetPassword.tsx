@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../../../ui/button';
 import { Input } from '../../../ui/input';
 import { Lock, Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
-import { Text } from '@chakra-ui/react';
+import { Text, Button } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { resetPassword } from '../../../../api/auth';
 import TesselyLogo from '../../../../assets/icons/TesselyLogo.svg';
@@ -82,7 +81,7 @@ export function ResetPassword() {
           {/* Reset Form or Success Message */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
             {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="space-y-6 mt-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="newPassword" className="block text-sm text-gray-700 mb-2">
                     New Password
@@ -129,7 +128,8 @@ export function ResetPassword() {
                   )}
                   <Button
                     type="submit"
-                    className="w-full bg-[#0047AB] hover:bg-[#003380] text-white text-white hover:opacity-90 py-6 mt-4"
+                    className="w-full"
+                    mt={6}
                   >
                     Update Password
                     <ArrowRight className="w-4 h-4 ml-2" />

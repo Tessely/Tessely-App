@@ -37,7 +37,9 @@ function AppContent() {
     location.pathname === '/forgot-password' ||
     location.pathname === '/main-dashboard' ||
     location.pathname === '/processes' ||
-    location.pathname === '/data-sources';
+    location.pathname === '/data-sources' ||
+    location.pathname === '/reset-password' ||
+    location.pathname === '/signup-success';
   const AuthNav =
     location.pathname === '/main-dashboard'||
     location.pathname === '/processes' ||
