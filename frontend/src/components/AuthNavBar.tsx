@@ -196,6 +196,13 @@ export function AuthNavBar() {
                   </Menu.Item>
                   <Menu.Item
                     cursor="pointer"
+                    value="landing-page"
+                    onSelect={() => navigate("/#")}
+                  >
+                    Landing Page
+                  </Menu.Item>
+                  <Menu.Item
+                    cursor="pointer"
                     value="logout"
                     color="brand.error"
                     onSelect={handleLogout}

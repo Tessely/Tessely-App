@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import {
   Database,
   GitBranch,
@@ -20,16 +20,68 @@ import {
   FileUpload,
   VStack,
   Icon,
+  Dialog,
+  Portal,
+  CloseButton,
 } from "@chakra-ui/react";
+import { DataLoading } from "../Auth_Pages/Components/DataLoading";
+import { uploadCSV } from "../../../api/datasource";
+import { isAuthenticated } from "../../../api/auth";
+import { Toaster, toaster } from "../../ui/toaster";
 import datasourcespreview from "/images/datasourcespreview.png?url";
 import processmappingpreview from "/images/processmappingpreview.png?url";
 import dashboardpreview from "/images/dashboardpreview.png?url";
 import aiinsightspreview from "/images/aiinsightspreview.png?url";
 import bannerbg from "/images/bannerbg.png?url";
-import { UserCSVFile } from "../../../types";
+
 
 export function HowItWorks() {
   const [files, setFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const navigate = useNavigate();
+  const handleUpload = async () => {
+    if (files.length === 0) {
+      toaster.create({
+        title: "No files selected",
+        description: "Please select files first.",
+        type: "error",
+      });
+      return;
+    }
+    if (!isAuthenticated()) {
+      setShowAuthDialog(true);
+      return;
+    }
+    setIsUploading(true);
+    
+    const uploadPromise = uploadCSV(files);
+    uploadPromise
+      .then(() => {
+        setFiles([]);
+      })
+      .catch((error) => {
+        console.error("Upload error:", error);
+      })
+      .finally(() => {
+        setIsUploading(false);
+        navigate("/data-sources");
+      });
+    toaster.promise(uploadPromise, {
+      success: {
+        title: "Successfully uploaded!",
+        description: "Your files have been uploaded.",
+      },
+      error: {
+        title: "Upload failed",
+        description: "Something went wrong with the upload",
+      },
+      loading: {
+        title: "Uploading...",
+        description: "Please wait",
+      },
+    });
+  };
 
   const steps = [
     {
@@ -73,6 +125,7 @@ export function HowItWorks() {
 
   return (
     <div>
+      <Toaster />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 py-20">
         <motion.div
@@ -254,7 +307,50 @@ export function HowItWorks() {
               <FileUpload.List />
             </FileUpload.Root>
             <Group alignItems="end">
-              <Button size="md">Upload</Button>
+              <Button size="md" onClick={handleUpload}>Upload</Button>
+              <Dialog.Root open={isUploading} placement={"center"} motionPreset="slide-in-bottom" onOpenChange={(e) => !e.open && setIsUploading(false)}>
+                <Portal>
+                  <Dialog.Backdrop />
+                  <Dialog.Positioner>
+                    <Dialog.Content>
+                      <Dialog.Header>
+                        <Dialog.Title>Uploading Data</Dialog.Title>
+                      </Dialog.Header>
+                      <DataLoading />
+                    </Dialog.Content>
+                  </Dialog.Positioner>
+                </Portal>
+              </Dialog.Root>
+              <Dialog.Root open={showAuthDialog} onOpenChange={(e) => setShowAuthDialog(e.open)} placement={"center"} motionPreset="slide-in-bottom">
+                <Portal>
+                  <Dialog.Backdrop />
+                  <Dialog.Positioner>
+                    <Dialog.Content>
+                      <Dialog.Header>
+                        <Dialog.Title>Account Required</Dialog.Title>
+                        <Dialog.CloseTrigger asChild>
+                          <CloseButton size="sm" />
+                        </Dialog.CloseTrigger>
+                      </Dialog.Header>
+                      <Dialog.Body>
+                        <Text color="gray.600">
+                          You need to be logged in to upload files. Please sign up or log in to continue.
+                        </Text>
+                      </Dialog.Body>
+                      <Dialog.Footer>
+                        <HStack gap={3}>
+                          <Link to="/login">
+                            <Button variant="outline">Log In</Button>
+                          </Link>
+                          <Link to="/signup">
+                            <Button>Sign Up</Button>
+                          </Link>
+                        </HStack>
+                      </Dialog.Footer>
+                    </Dialog.Content>
+                  </Dialog.Positioner>
+                </Portal>
+              </Dialog.Root>
             </Group>
           </VStack>
         </div>

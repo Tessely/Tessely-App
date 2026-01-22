@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, Text, Link } from "@chakra-ui/react";
 import { Menu, X } from "lucide-react";
+import { isAuthenticated } from "../api/auth";
 
 import TesselyLogo from "../assets/icons/TesselyLogo.svg";
 
@@ -71,12 +72,20 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/login">
-              <Button variant="solid">Login</Button>
-            </Link>
-            <Link href="/signup">
-              <Button variant="outline">Sign Up</Button>
-            </Link>
+            {isAuthenticated() ? (
+              <Link href="/main-dashboard">
+                <Button variant="solid">Access Dashboard</Button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="solid">Login</Button>
+                </Link>
+                <Link href="/signup">
+                  <Button variant="outline">Sign Up</Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -123,16 +132,26 @@ export function Navbar() {
                 );
               })}
 
-              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="solid" width={"full"}>
-                  Log In
-                </Button>
-              </Link>
-              <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="outline" width={"full"}>
-                  Sign Up
-                </Button>
-              </Link>
+              {isAuthenticated() ? (
+                <Link href="/main-dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="solid" width={"full"}>
+                    Access Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="solid" width={"full"}>
+                      Log In
+                    </Button>
+                  </Link>
+                  <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="outline" width={"full"}>
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

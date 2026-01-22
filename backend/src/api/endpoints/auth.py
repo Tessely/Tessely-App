@@ -24,7 +24,7 @@ from src.models.auth import (
 from src.services.auth_service import AuthService
 
 router = APIRouter()
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("uvicorn.error")
 
 
 def handle_auth_error(e: Exception) -> HTTPException:
@@ -118,15 +118,19 @@ async def login(
     auth_service: AuthService = Depends(get_auth_service),
 ) -> AuthResponse:
     """Log in with email and password"""
+    logger.info(f"Login attempt for email: {user_data.email}")
     try:
         result = await auth_service.login(user_data)
+        logger.info(f"Login successful for email: {user_data.email}")
         return format_auth_response(result)
     except ValueError:
+        logger.warning(f"Login failed - invalid credentials for email: {user_data.email}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=ErrorMessages.INVALID_CREDENTIALS,
         ) from None
     except Exception as e:
+        logger.error(f"Login error for email: {user_data.email} - {e}")
         raise handle_auth_error(e) from e
 
 
